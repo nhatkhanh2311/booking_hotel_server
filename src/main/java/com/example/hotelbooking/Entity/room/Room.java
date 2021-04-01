@@ -1,6 +1,6 @@
-package com.example.demo.Entity.room;
+package com.example.hotelbooking.Entity.room;
 
-import com.example.demo.Entity.hotel.Hotel;
+import com.example.hotelbooking.Entity.hotel.Hotel;
 
 import javax.persistence.*;
 

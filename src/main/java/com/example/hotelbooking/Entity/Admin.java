@@ -1,4 +1,4 @@
-package com.example.demo.Entity;
+package com.example.hotelbooking.Entity;
 
 import com.sun.istack.internal.NotNull;
 

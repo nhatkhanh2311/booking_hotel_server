@@ -1,4 +1,4 @@
-package com.example.demo.Entity.hotel;
+package com.example.hotelbooking.Entity.hotel;
 
 import javax.persistence.*;
 import java.util.List;

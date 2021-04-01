@@ -1,4 +1,4 @@
-package com.example.demo.Entity.Guest;
+package com.example.hotelbooking.Entity.Guest;
 
 import javax.persistence.*;
 import java.sql.Date;

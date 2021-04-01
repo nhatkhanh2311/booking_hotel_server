@@ -1,6 +1,6 @@
-package com.example.demo.Entity.room;
+package com.example.hotelbooking.Entity.room;
 
-import com.example.demo.Entity.Guest.RoomBooking;
+import com.example.hotelbooking.Entity.Guest.RoomBooking;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 

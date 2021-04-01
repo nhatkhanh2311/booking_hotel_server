@@ -1,7 +1,7 @@
-package com.example.demo.Entity.Guest;
+package com.example.hotelbooking.Entity.Guest;
 
-import com.example.demo.Entity.hotel.Hotel;
-import com.example.demo.Entity.room.RoomType;
+import com.example.hotelbooking.Entity.hotel.Hotel;
+import com.example.hotelbooking.Entity.room.RoomType;
 
 import javax.persistence.*;
 import java.sql.Date;
