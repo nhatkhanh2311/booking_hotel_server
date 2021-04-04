@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CityRepository extends CrudRepository<City,Integer> {
-    public List<City> findByCountryId(int id);
+    public City findByCountryId(int id);
     public City findByCityName (String cityName);
 }

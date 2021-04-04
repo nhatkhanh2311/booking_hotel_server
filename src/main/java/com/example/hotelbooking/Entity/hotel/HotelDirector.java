@@ -2,6 +2,8 @@ package com.example.hotelbooking.Entity.hotel;
 
 import javax.persistence.*;
 import java.util.List;
+import com.example.hotelbooking.Entity.hotel.Hotel;
+
 
 @Entity
 @Table(name = "hotelDirector")

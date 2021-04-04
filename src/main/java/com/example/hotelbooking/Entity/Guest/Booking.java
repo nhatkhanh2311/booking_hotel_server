@@ -3,6 +3,9 @@ package com.example.hotelbooking.Entity.Guest;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+import com.example.hotelbooking.Entity.Guest.RoomBooking;
+import com.example.hotelbooking.Entity.Guest.Guest;
+
 
 @Entity
 @Table(name = "booking")
@@ -22,7 +25,7 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "guestId")
-    private Guest guest;
+    private com.example.hotelbooking.Entity.Guest.Guest guest;
 
     public List<RoomBooking> getRoomBookings() {
         return roomBookings;

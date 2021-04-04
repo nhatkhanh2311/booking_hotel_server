@@ -1,4 +1,5 @@
 package com.example.hotelbooking.Entity.room;
+import com.example.hotelbooking.Entity.room.RoomType;
 
 import com.example.hotelbooking.Entity.hotel.Hotel;
 

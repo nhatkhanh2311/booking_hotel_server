@@ -1,4 +1,5 @@
 package com.example.hotelbooking.Entity.room;
+import com.example.hotelbooking.Entity.room.Room;
 
 import com.example.hotelbooking.Entity.Guest.RoomBooking;
 import org.hibernate.annotations.LazyCollection;

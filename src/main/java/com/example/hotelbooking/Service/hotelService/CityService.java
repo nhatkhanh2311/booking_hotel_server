@@ -13,8 +13,8 @@ public class CityService {
     @Autowired
     private CityRepository cityRepository;
 
-    public List<City> findAllCityByCountryId(int id){
-        return  cityRepository.findByCountryId(id);
+    public City findAllCityByCountryId(int id){
+        return cityRepository.findByCountryId(id);
     }
     public City findCityByName(String cityName){
         return  cityRepository.findByCityName(cityName);

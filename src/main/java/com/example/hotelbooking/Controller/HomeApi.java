@@ -14,7 +14,7 @@ public class HomeApi {
     @Autowired
     private CityService cityService;
     @GetMapping("/city/{contryId}")
-    public List<City> getCityByCountryId (@PathVariable("contryId") int countryId){
+    public City getCityByCountryId (@PathVariable("contryId") int countryId){
         return  cityService.findAllCityByCountryId(countryId);
     }
 

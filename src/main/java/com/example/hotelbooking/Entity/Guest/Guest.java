@@ -2,6 +2,7 @@ package com.example.hotelbooking.Entity.Guest;
 
 import javax.persistence.*;
 import java.util.List;
+import com.example.hotelbooking.Entity.Guest.Booking;
 
 @Entity
 @Table( name = "Guest")

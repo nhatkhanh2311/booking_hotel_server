@@ -1,4 +1,5 @@
 package com.example.hotelbooking.Entity.hotel;
+import com.example.hotelbooking.Entity.hotel.City;
 
 import javax.persistence.*;
 

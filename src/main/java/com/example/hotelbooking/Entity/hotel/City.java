@@ -1,5 +1,9 @@
 package com.example.hotelbooking.Entity.hotel;
 
+import com.example.hotelbooking.Entity.hotel.Country;
+import com.example.hotelbooking.Entity.hotel.BeautySpot;
+import com.example.hotelbooking.Entity.hotel.Hotel;
+
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 

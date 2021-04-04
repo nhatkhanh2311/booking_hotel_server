@@ -7,6 +7,10 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
+import com.example.hotelbooking.Entity.hotel.City;
+import com.example.hotelbooking.Entity.hotel.Category;
+import com.example.hotelbooking.Entity.hotel.HotelDirector;
+
 
 @Entity
 @Table(name = "hotel")

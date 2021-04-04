@@ -1,5 +1,7 @@
 package com.example.hotelbooking.Entity.hotel;
 
+import com.example.hotelbooking.Entity.hotel.Hotel;
+
 import javax.persistence.*;
 import java.util.List;
 
