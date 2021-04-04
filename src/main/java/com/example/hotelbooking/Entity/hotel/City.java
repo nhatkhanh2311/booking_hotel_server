@@ -13,15 +13,19 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
     @Column(name = "cityName")
     private String cityName;
 
-    @OneToMany(mappedBy = "city", fetch = FetchType.EAGER)
-    private List<BeautySpot> beautySpot;
 
     @ManyToOne
     @JoinColumn(name = "countryId")
     private Country country;
+
+
+
+    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
+    private List<BeautySpot> beautySpot;
 
 
     @LazyCollection(LazyCollectionOption.FALSE)

@@ -1,2 +1,7 @@
-package com.example.hotelbooking.Service.hotelService;public interface CountryService {
+package com.example.hotelbooking.Service.hotelService;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class CountryService {
 }
