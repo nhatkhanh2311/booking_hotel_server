@@ -23,6 +23,7 @@ import java.util.Set;
 public class SignupController {
     @Autowired
     UserRepository userRepository;
+
     @Autowired
     RoleRepository roleRepository;
 
@@ -37,7 +38,6 @@ public class SignupController {
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
-
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
@@ -57,6 +57,7 @@ public class SignupController {
              ) {
             System.out.println(i.getName().name() + " role duoc in ra");
         }
+        user.setRoles(roles);
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
