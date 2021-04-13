@@ -53,9 +53,6 @@ public class SignupController {
         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found 1."));
             roles.add(userRole);
-        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found 1."));
-        roles.add(adminRole);
         for (Role i: roles
              ) {
             System.out.println(i.getName().name() + " role duoc in ra");
