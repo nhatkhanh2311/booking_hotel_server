@@ -23,6 +23,31 @@ public class SignupRequest {
     @Size(min = 6, max = 40)
     private String password;
 
+    @NotBlank
+    @Size(min = 10, max = 12)
+    private String phoneNumber;
+
+    @NotBlank
+    @Size(min = 10, max = 250)
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+
     public String getUsername() {
         return username;
     }
@@ -46,14 +71,6 @@ public class SignupRequest {
     public void setPassword(String password) {
         this.password = password;
     }
-
-//    public Set<String> getRole() {
-//        return this.role;
-//    }
-//
-//    public void setRole(Set<String> role) {
-//        this.role = role;
-//    }
 
     public UserDetails getUserDetails() {
         return userDetails;

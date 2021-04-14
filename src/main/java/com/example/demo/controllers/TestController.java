@@ -38,8 +38,8 @@ public class TestController {
         return "User Content.";
     }
 
-    @GetMapping("/dir")
-    @PreAuthorize("hasRole('DIRECTER')")
+    @GetMapping("/mod")
+    @PreAuthorize("hasRole('MODERATOR')")
     public String moderatorAccess() {
         return "Moderator Board.";
     }
