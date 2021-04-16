@@ -32,12 +32,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//import com.example.demo.payload.request.SignupRequest;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
-public class SigninController {
+public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
 
