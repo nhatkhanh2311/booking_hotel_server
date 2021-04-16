@@ -3,9 +3,12 @@ package com.example.demo.security.jwt;
 
 import java.util.Date;
 
+import com.example.demo.models.User;
 import com.example.demo.security.services.UserDetailsImpl;
+import com.example.demo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -16,6 +19,7 @@ import io.jsonwebtoken.*;
 @Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+
 
 
     private final String jwtSecret = "Hotel";
@@ -36,6 +40,15 @@ public class JwtUtils {
 
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public int getUserIdFromJWT(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return Integer.parseInt(claims.getSubject());
     }
 
     public boolean validateJwtToken(String authToken) {

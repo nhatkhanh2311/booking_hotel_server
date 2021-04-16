@@ -1,7 +1,9 @@
 package com.example.demo.controllers;
+import com.example.demo.models.User;
 import com.example.demo.security.jwt.AuthEntryPointJwt;
 import com.example.demo.security.jwt.AuthTokenFilter;
 import com.example.demo.security.services.UserDetailsServiceImpl;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,18 +20,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
-    @GetMapping("/all")
-    public String allAccess() {
-        return "Public Content.";
+    @Autowired
+    UserService userService;
+    @GetMapping("/user/{id}")
+    public User allAccess(@PathVariable int id) {
+        return userService.getUserById(id);
     }
 
     @GetMapping("/user")
@@ -38,7 +42,7 @@ public class TestController {
         return "User Content.";
     }
 
-    @GetMapping("/dir")
+    @GetMapping("/directer")
     @PreAuthorize("hasRole('DIRECTER')")
     public String moderatorAccess() {
         return "Moderator Board.";
@@ -49,4 +53,5 @@ public class TestController {
     public String adminAccess() {
         return "Admin Board.";
     }
+
 }
