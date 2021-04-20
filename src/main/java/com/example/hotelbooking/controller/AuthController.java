@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -70,7 +69,7 @@ public class AuthController {
                 roles));
     }
 
-    @PostMapping(value = "/home")
+    @PostMapping(value = "/")
     String hello() {
         return "xin chao nha";
     }
