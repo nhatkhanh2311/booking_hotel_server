@@ -1,0 +1,43 @@
+package com.example.hotelbooking.service;
+
+import com.example.hotelbooking.entity.User;
+import com.example.hotelbooking.exception.UserNotFoundException;
+import com.example.hotelbooking.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public class UserService {
+    @Autowired
+    UserRepository userRepository;
+
+    public Optional<User> getUserByUserName(String username){
+        return  userRepository.findByUsername(username);
+    }
+
+    public User getUserById(long id){
+        return userRepository.findById(id);
+    }
+
+    public boolean lockUser(long userId) throws UserNotFoundException {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFoundException("Khong ton tai tai khoan");
+        }
+        User user = userRepository.findById(userId);
+        user.setLocked(true);
+        userRepository.save(user);
+        return true;
+    }
+
+    public boolean UnlockUser(long userId) throws UserNotFoundException {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFoundException("Khong ton tai tai khoan");
+        }
+        User user = userRepository.findById(userId);
+        user.setLocked(false);
+        userRepository.save(user);
+        return true;
+    }
+}
