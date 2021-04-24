@@ -1,4 +1,4 @@
-package com.example.demo.models;
+package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -7,20 +7,20 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "userDetails")
-public class UserDetails {
+@Table(name = "userDetail")
+public class UserDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonIgnore
-    @Lob
-    @Column(name = "avatar", nullable = true)
-    private byte[] avatar;
+//    @JsonIgnore
+//    @Lob
+//    @Column(name = "avatar", nullable = true)
+//    private byte[] avatar;
 
 
-    @Column(name = "nameUserDetails", nullable = true)
-    private String nameUserDetails;
+    @Column(name = "nameUserDetail", nullable = true)
+    private String nameUserDetail;
 
 
     @Column(name = "phoneNumber", nullable = true)
@@ -40,27 +40,25 @@ public class UserDetails {
         return id;
     }
 
-    public UserDetails() {
-    }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public byte[] getAvatar() {
-        return avatar;
+//    public byte[] getAvatar() {
+//        return avatar;
+//    }
+//
+//    public void setAvatar(byte[] avatar) {
+//        this.avatar = avatar;
+//    }
+
+    public String getNameUserDetail() {
+        return nameUserDetail;
     }
 
-    public void setAvatar(byte[] avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getNameUserDetails() {
-        return nameUserDetails;
-    }
-
-    public void setNameUserDetails(String nameUserDetails) {
-        this.nameUserDetails = nameUserDetails;
+    public void setNameUserDetail(String nameUserDetail) {
+        this.nameUserDetail = nameUserDetail;
     }
 
     public String getPhoneNumber() {
