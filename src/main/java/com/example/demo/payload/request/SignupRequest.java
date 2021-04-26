@@ -1,9 +1,15 @@
 package com.example.demo.payload.request;
+<<<<<<< HEAD
 import com.example.demo.entity.UserDetails;
+=======
+>>>>>>> origin/master
 
+import com.example.demo.entity.UserDetail;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
-
-import javax.validation.constraints.*;
 
 public class SignupRequest {
     @NotBlank
@@ -17,7 +23,7 @@ public class SignupRequest {
 
     private Set<String> role;
 
-    private UserDetails userDetails;
+    private UserDetail userDetail;
 
     @NotBlank
     @Size(min = 6, max = 40)
@@ -55,11 +61,11 @@ public class SignupRequest {
         this.role = role;
     }
 
-    public UserDetails getUserDetails() {
-        return userDetails;
+    public UserDetail getUserDetail() {
+        return userDetail;
     }
 
-    public void setUserDetails(UserDetails userDetails) {
-        this.userDetails = userDetails;
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
     }
 }

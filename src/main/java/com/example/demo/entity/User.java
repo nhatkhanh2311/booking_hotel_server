@@ -2,16 +2,16 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
-@Table(	name = "users",
+@Table(name = "user",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
@@ -46,14 +46,16 @@ public class User {
     @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.PERSIST)
     @PrimaryKeyJoinColumn
-    private UserDetails userDetails;
-
+    private UserDetail userDetail;
 
     public User() {
     }
 
+<<<<<<< HEAD:src/main/java/com/example/demo/models/User.java
 
 
+=======
+>>>>>>> thai:src/main/java/com/example/demo/entity/User.java
     public User(@NotBlank @Size(max = 20) String username, @NotBlank @Size(max = 50) @Email String email, @NotBlank @Size(max = 120) String password) {
         this.username = username;
         this.email = email;
@@ -68,12 +70,12 @@ public class User {
         this.locked = locked;
     }
 
-    public UserDetails getUserDetails() {
-        return userDetails;
+    public UserDetail getUserDetail() {
+        return userDetail;
     }
 
-    public void setUserDetails(UserDetails userDetails) {
-        this.userDetails = userDetails;
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
     }
 
     public Long getId() {
@@ -115,5 +117,4 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
 }

@@ -1,6 +1,9 @@
-package com.example.demo.security.services;
+package com.example.demo.security.service;
 
+<<<<<<< HEAD:src/main/java/com/example/demo/security/services/UserDetailsServiceImpl.java
 
+=======
+>>>>>>> origin/master:src/main/java/com/example/demo/security/service/UserDetailsServiceImpl.java
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
     UserRepository userRepository;
 
@@ -24,6 +27,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return UserDetailsImpl.build(user);
     }
-
-
 }

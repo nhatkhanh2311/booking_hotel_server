@@ -1,16 +1,27 @@
 package com.example.demo.security.jwt;
 
+<<<<<<< HEAD
 
 import java.util.Date;
 
 import com.example.demo.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+=======
+import com.example.demo.security.service.UserDetailsImpl;
+import io.jsonwebtoken.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+>>>>>>> thai
+>>>>>>> origin/master
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-//import com.bezkoder.springjwt.security.services.UserDetailsImpl;
-import io.jsonwebtoken.*;
+import java.util.Date;
 
 @Component
 public class JwtUtils {

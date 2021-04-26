@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 package com.example.demo.controller;
 import com.example.demo.entity.ERole;
@@ -6,10 +7,24 @@ import com.example.demo.entity.User;
 import com.example.demo.entity.UserDetails;
 import com.example.demo.payload.reponse.MessageResponse;
 import com.example.demo.payload.request.SignupRequest;
+=======
+package com.example.demo.controller;
+
+import com.example.demo.entity.ERole;
+import com.example.demo.entity.Role;
+import com.example.demo.entity.User;
+import com.example.demo.entity.UserDetail;
+import com.example.demo.payload.request.SignupRequest;
+import com.example.demo.payload.response.MessageResponse;
+>>>>>>> origin/master
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
+=======
+import org.springframework.security.core.userdetails.UserDetails;
+>>>>>>> origin/master
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,11 +67,19 @@ public class SignupController {
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
+<<<<<<< HEAD
         UserDetails userDetails = new UserDetails();
         userDetails.setNameUserDetails(signUpRequest.getUserDetails().getNameUserDetails());
         userDetails.setBirth(signUpRequest.getUserDetails().getBirth());
         userDetails.setPhoneNumber(signUpRequest.getUserDetails().getPhoneNumber());
         user.setUserDetails(userDetails);
+=======
+        UserDetail userDetail = new UserDetail();
+        userDetail.setNameUserDetail(signUpRequest.getUserDetail().getNameUserDetail());
+        userDetail.setBirth(signUpRequest.getUserDetail().getBirth());
+        userDetail.setPhoneNumber(signUpRequest.getUserDetail().getPhoneNumber());
+        user.setUserDetail(userDetail);
+>>>>>>> origin/master
 
 
         Set<String> strRoles = signUpRequest.getRole();
@@ -77,8 +100,13 @@ public class SignupController {
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found.2"));
                         roles.add(adminRole);
                         break;
+<<<<<<< HEAD
                     case "directer":
                         Role dirRole = roleRepository.findByName(ERole.ROLE_DIRECTER)
+=======
+                    case "director":
+                        Role dirRole = roleRepository.findByName(ERole.ROLE_DIRECTOR)
+>>>>>>> origin/master
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found.3"));
                         roles.add(dirRole);
                         break;
@@ -91,7 +119,11 @@ public class SignupController {
             });
         }
         user.setRoles(roles);
+<<<<<<< HEAD
         userDetails.setUser(user);
+=======
+        userDetail.setUser(user);
+>>>>>>> origin/master
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
