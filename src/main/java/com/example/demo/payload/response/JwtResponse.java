@@ -1,5 +1,4 @@
-package com.example.demo.payload.reponse;
-
+package com.example.demo.payload.response;
 
 import java.util.List;
 

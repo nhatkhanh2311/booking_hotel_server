@@ -1,4 +1,5 @@
-package com.example.demo.payload.reponse;
+package com.example.demo.payload.response;
+
 public class MessageResponse {
     private String message;
 
