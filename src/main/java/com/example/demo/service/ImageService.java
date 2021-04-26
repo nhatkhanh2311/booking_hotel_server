@@ -10,10 +10,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ImageService {
-    private static String UPLOADED_FOLDER = "E:/DOANCNPM_2021/booking_hotel_server/src/main/resources/image";
+    private static String UPLOADED_FOLDER = "E:/DOANCNPM_2021/booking_hotel_server/src/main/resources/image/";
     @Autowired
     private ImageRepository imageRepository;
 
@@ -28,15 +30,21 @@ public class ImageService {
         return image;
     }
 
+   public List<Image> addListImage (MultipartFile[] files) throws IOException {
+      List<Image> images = new ArrayList<>();
+        for(int i= 0; i< files.length; i++){
+            byte[] bytes = files[i].getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + files[i].getOriginalFilename().replaceAll(" ", ""));
+            Files.write(path, bytes);
+            Image image = new Image();
+            image.setPath("../image/" + files[i].getOriginalFilename().replaceAll(" ", ""));
+            imageRepository.save(image);
+            images.add(image);
+        }
+        return images;
 
-    /** Sets default user's avatar while register.
-     * @return
-     */
-    public Image defaultUserImage() {
+   }
 
-        Image image = new Image();
-        image.setPath("../image/default.jpg");
-        imageRepository.save(image);
-        return image;
-    }
+
+
 }
