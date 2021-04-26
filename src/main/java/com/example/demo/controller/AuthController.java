@@ -39,6 +39,11 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @PostMapping("/")
+    public String hello() {
+        return "Hello world";
+    }
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     // nhận user pass rồi kiẻm tra để xác thực
