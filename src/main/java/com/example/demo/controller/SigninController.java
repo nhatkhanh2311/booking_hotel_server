@@ -1,16 +1,12 @@
-package com.example.demo.controllers;
+package com.example.demo.controller;
 
-import com.example.demo.models.ERole;
-import com.example.demo.models.Role;
-import com.example.demo.models.User;
-import com.example.demo.payload.reponse.JwtResponse;
-import com.example.demo.payload.reponse.MessageResponse;
 import com.example.demo.payload.request.LoginRequest;
 import com.example.demo.payload.request.SignupRequest;
+import com.example.demo.payload.response.JwtResponse;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
-import com.example.demo.security.services.UserDetailsImpl;
+import com.example.demo.security.service.UserDetailsImpl;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,7 +51,7 @@ public class SigninController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-    // nhận user pass rồi kiẻm tra để xác thực
+        // nhận user pass rồi kiẻm tra để xác thực
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
