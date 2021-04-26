@@ -46,7 +46,7 @@ public class User {
     @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.PERSIST)
     @PrimaryKeyJoinColumn
-    private UserDetails userDetails;
+    private UserDetail userDetail;
 
 
     public User() {
@@ -68,12 +68,12 @@ public class User {
         this.locked = locked;
     }
 
-    public UserDetails getUserDetails() {
-        return userDetails;
+    public UserDetail getUserDetails() {
+        return userDetail;
     }
 
-    public void setUserDetails(UserDetails userDetails) {
-        this.userDetails = userDetails;
+    public void setUserDetails(UserDetail userDetail) {
+        this.userDetail = userDetail;
     }
 
     public Long getId() {

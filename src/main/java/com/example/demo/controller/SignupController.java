@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.ERole;
 import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
-import com.example.demo.entity.UserDetails;
+import com.example.demo.entity.UserDetail;
 import com.example.demo.payload.reponse.MessageResponse;
 import com.example.demo.payload.request.SignupRequest;
 import com.example.demo.repository.RoleRepository;
@@ -52,11 +52,11 @@ public class SignupController {
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
-        UserDetails userDetails = new UserDetails();
-        userDetails.setNameUserDetails(signUpRequest.getUserDetails().getNameUserDetails());
-        userDetails.setBirth(signUpRequest.getUserDetails().getBirth());
-        userDetails.setPhoneNumber(signUpRequest.getUserDetails().getPhoneNumber());
-        user.setUserDetails(userDetails);
+        UserDetail userDetail = new UserDetail();
+        userDetail.setNameUserDetails(signUpRequest.getUserDetails().getNameUserDetails());
+        userDetail.setBirth(signUpRequest.getUserDetails().getBirth());
+        userDetail.setPhoneNumber(signUpRequest.getUserDetails().getPhoneNumber());
+        user.setUserDetails(userDetail);
 
 
         Set<String> strRoles = signUpRequest.getRole();
@@ -77,8 +77,8 @@ public class SignupController {
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found.2"));
                         roles.add(adminRole);
                         break;
-                    case "directer":
-                        Role dirRole = roleRepository.findByName(ERole.ROLE_DIRECTER)
+                    case "director":
+                        Role dirRole = roleRepository.findByName(ERole.ROLE_DIRECTOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found.3"));
                         roles.add(dirRole);
                         break;
@@ -91,7 +91,7 @@ public class SignupController {
             });
         }
         user.setRoles(roles);
-        userDetails.setUser(user);
+        userDetail.setUser(user);
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

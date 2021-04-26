@@ -1,5 +1,5 @@
 package com.example.demo.payload.request;
-import com.example.demo.entity.UserDetails;
+import com.example.demo.entity.UserDetail;
 
 import java.util.Set;
 
@@ -17,7 +17,7 @@ public class SignupRequest {
 
     private Set<String> role;
 
-    private UserDetails userDetails;
+    private UserDetail userDetail;
 
     @NotBlank
     @Size(min = 6, max = 40)
@@ -55,11 +55,11 @@ public class SignupRequest {
         this.role = role;
     }
 
-    public UserDetails getUserDetails() {
-        return userDetails;
+    public UserDetail getUserDetails() {
+        return userDetail;
     }
 
-    public void setUserDetails(UserDetails userDetails) {
-        this.userDetails = userDetails;
+    public void setUserDetails(UserDetail userDetail) {
+        this.userDetail = userDetail;
     }
 }

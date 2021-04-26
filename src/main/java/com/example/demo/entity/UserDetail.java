@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "userDetails")
-public class UserDetails {
+@Table(name = "userDetail")
+public class UserDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -40,7 +40,7 @@ public class UserDetails {
         return id;
     }
 
-    public UserDetails() {
+    public UserDetail() {
     }
 
     public void setId(long id) {
