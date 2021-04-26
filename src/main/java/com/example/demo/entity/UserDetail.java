@@ -19,8 +19,8 @@ public class UserDetail {
     private byte[] avatar;
 
 
-    @Column(name = "nameUserDetails", nullable = true)
-    private String nameUserDetails;
+    @Column(name = "nameUserDetail", nullable = true)
+    private String nameUserDetail;
 
 
     @Column(name = "phoneNumber", nullable = true)
@@ -55,12 +55,12 @@ public class UserDetail {
         this.avatar = avatar;
     }
 
-    public String getNameUserDetails() {
-        return nameUserDetails;
+    public String getNameUserDetail() {
+        return nameUserDetail;
     }
 
-    public void setNameUserDetails(String nameUserDetails) {
-        this.nameUserDetails = nameUserDetails;
+    public void setNameUserDetail(String nameUserDetail) {
+        this.nameUserDetail = nameUserDetail;
     }
 
     public String getPhoneNumber() {
