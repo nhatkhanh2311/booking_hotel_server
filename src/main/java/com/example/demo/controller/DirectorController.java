@@ -7,6 +7,7 @@ import com.example.demo.entity.User;
 import com.example.demo.payload.reponse.JwtResponse;
 import com.example.demo.repository.HotelRepository;
 import com.example.demo.security.jwt.GetUserFromToken;
+import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.service.HotelService;
 import com.example.demo.service.ImageService;
 import com.example.demo.service.LocalizationService;
@@ -39,7 +40,9 @@ public class DirectorController {
     private HotelRepository hotelRepository;
 
     private JwtResponse jwtResponse;
+    @Autowired
     private GetUserFromToken getUserFromToken;
+
 
     @PostMapping("/")
     public String hello() {
@@ -49,23 +52,24 @@ public class DirectorController {
 
 
     @PostMapping ("hotel/addhotel")
-    public ResponseEntity<String> addHotel(  @RequestParam("image") MultipartFile file, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> addHotel( @RequestParam("image") MultipartFile file, @RequestHeader("Authorization") String token) {
 
         if (file.isEmpty()) {
             return  ResponseEntity.ok("false");
         }
-        System.out.println("------------------------------------------------------");
-        System.out.println();
         try {
             System.out.println("------------------------------------------------------");
-            System.out.println("token la: " + token);
+            String newToken = token.substring(7);
+            System.out.println("token la: " + newToken);
 //            Localization localization = (Localization) jsonObject.get("localization");
 
 //            List<Image> images = imageService.addListImage(files);
             Image image = imageService.addNewImage(file);
-
-            User user = getUserFromToken.getUser(token);
-            System.out.println(user.getUserDetails().getNameUserDetail());
+            User user = getUserFromToken.getUserByUserNameFromJwt(newToken);
+            if(user == null){
+                System.out.println("null user from token");
+            }
+            System.out.println("tai khoan co ten khach hang  la " + user.getUserDetails().getNameUserDetail());
 //            Hotel hotel = new Hotel();
 //            hotel.setName((String) jsonObject.get("name"));
 //            hotel.setAddress(localization);
