@@ -5,12 +5,16 @@ import com.example.demo.entity.Image;
 import com.example.demo.entity.Localization;
 import com.example.demo.entity.User;
 import com.example.demo.payload.reponse.JwtResponse;
+import com.example.demo.repository.HotelRepository;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.HotelService;
 import com.example.demo.service.ImageService;
 import com.example.demo.service.LocalizationService;
 import com.example.demo.service.UserService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/director")
@@ -30,46 +35,55 @@ public class DirectorController {
     private HotelService hotelService;
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private HotelRepository hotelRepository;
 
     private JwtResponse jwtResponse;
     private GetUserFromToken getUserFromToken;
 
-    /**
-     * Adding new hotel to current user (Manager Role)
-     * @param model
-     * @param redirectAttributes
-     * @param hotel
-     *            - hotel that is being added.
-     * @param localization
-     *            - localization of the hotel
-     * @param bresult
-     * @param file
-     *            - image of the hotel that is uploaded.
-     * @return
-     */
+    @PostMapping("/")
+    public String hello() {
+//        in helloworld
+        return "Hello world";
+    }
+
+
     @PostMapping ("hotel/addhotel")
-    public String addHotel(Model model, RedirectAttributes redirectAttributes, Hotel hotel, Localization localization, BindingResult bresult,
-                           @RequestParam("file") MultipartFile file, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> addHotel(  @RequestParam("image") MultipartFile file, @RequestHeader("Authorization") String token) {
 
         if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return "redirect:/manager/hotelForm";
+            return  ResponseEntity.ok("false");
         }
-
+        System.out.println("------------------------------------------------------");
+        System.out.println();
         try {
-            Image image = imageService.addNewImage(file);
-            Localization hotelLocalization = localizationService.newLocalization(localization);
-            User user = getUserFromToken.getUser(token);
+            System.out.println("------------------------------------------------------");
+            System.out.println("token la: " + token);
+//            Localization localization = (Localization) jsonObject.get("localization");
 
-            hotelService.addHotell(hotel, image, hotelLocalization, user);
-            localizationService.hotelLocalization(hotelLocalization, hotel);
-            redirectAttributes.addFlashAttribute("info", "Hotel has been added.");
+//            List<Image> images = imageService.addListImage(files);
+            Image image = imageService.addNewImage(file);
+
+            User user = getUserFromToken.getUser(token);
+            System.out.println(user.getUserDetails().getNameUserDetail());
+//            Hotel hotel = new Hotel();
+//            hotel.setName((String) jsonObject.get("name"));
+//            hotel.setAddress(localization);
+//            hotel.setImages(image);
+//            hotel.sethOwner(user);
+//            hotelRepository.save(hotel);
+
+//            System.out.println(hotel.getAddress().getStreet());
+//            System.out.println(hotel.gethOwner().getUsername());
+//            System.out.println(hotel.getId());
+//            System.out.println(hotel.getName());
+
+
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
 
-        return "redirect:/manager/hotels";
+        return  ResponseEntity.ok("Hello");
     }
 
 }

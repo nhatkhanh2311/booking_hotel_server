@@ -10,7 +10,7 @@ public class GetUserFromToken {
     @Autowired
     JwtUtils jwtUtils;
     public User getUser(String token) {
-        int id = jwtUtils.getUserIdFromJWT(token);
+        Long id = jwtUtils.getUserIdFromJWT(token);
         return  userService.getUserById(id);
     }
 }
