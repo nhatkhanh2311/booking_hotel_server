@@ -1,5 +1,5 @@
 //package com.example.demo.controllers;
-//import com.example.demo.models.User;
+//import com.example.demo.entity.User;
 //import com.example.demo.security.jwt.AuthEntryPointJwt;
 //import com.example.demo.security.jwt.AuthTokenFilter;
 //import com.example.demo.security.services.UserDetailsServiceImpl;

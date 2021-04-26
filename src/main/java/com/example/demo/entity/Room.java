@@ -1,4 +1,4 @@
-package com.example.demo.models;
+package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 

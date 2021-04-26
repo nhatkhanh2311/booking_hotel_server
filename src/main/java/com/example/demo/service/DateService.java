@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.models.Date;
-import com.example.demo.models.User;
+import com.example.demo.entity.Date;
+import com.example.demo.entity.User;
 import com.example.demo.repository.DateRepository;
 import com.example.demo.repository.RoomRepository;
 import org.joda.time.format.DateTimeFormat;

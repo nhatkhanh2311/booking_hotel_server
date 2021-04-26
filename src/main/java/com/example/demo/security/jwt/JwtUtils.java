@@ -3,13 +3,9 @@ package com.example.demo.security.jwt;
 
 import java.util.Date;
 
-import com.example.demo.models.User;
 import com.example.demo.security.services.UserDetailsImpl;
-import com.example.demo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 

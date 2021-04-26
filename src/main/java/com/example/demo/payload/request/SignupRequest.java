@@ -1,5 +1,5 @@
 package com.example.demo.payload.request;
-import com.example.demo.models.UserDetails;
+import com.example.demo.entity.UserDetails;
 
 import java.util.Set;
 

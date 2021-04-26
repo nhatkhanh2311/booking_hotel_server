@@ -1,9 +1,9 @@
 
-package com.example.demo.controllers;
-import com.example.demo.models.ERole;
-import com.example.demo.models.Role;
-import com.example.demo.models.User;
-import com.example.demo.models.UserDetails;
+package com.example.demo.controller;
+import com.example.demo.entity.ERole;
+import com.example.demo.entity.Role;
+import com.example.demo.entity.User;
+import com.example.demo.entity.UserDetails;
 import com.example.demo.payload.reponse.MessageResponse;
 import com.example.demo.payload.request.SignupRequest;
 import com.example.demo.repository.RoleRepository;

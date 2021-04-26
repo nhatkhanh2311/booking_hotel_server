@@ -1,7 +1,9 @@
-package com.example.demo.models;
+package com.example.demo.entity;
+
+import org.joda.time.LocalDate;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+
 
 @Entity
 public class Date {

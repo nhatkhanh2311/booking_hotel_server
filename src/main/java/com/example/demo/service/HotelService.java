@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.models.Hotel;
-import com.example.demo.models.Image;
-import com.example.demo.models.Localization;
-import com.example.demo.models.User;
+import com.example.demo.entity.Hotel;
+import com.example.demo.entity.Image;
+import com.example.demo.entity.Localization;
+import com.example.demo.entity.User;
 import com.example.demo.repository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class HotelService {
     public  Hotel  findHotelById (long id){
         return  hotelRepository.findById(id);
     }
-    public void addHotell(Hotel hotel, Image image, Localization localization, User  user){
+    public void addHotell(Hotel hotel, Image image, Localization localization, User user){
         hotel.sethOwner(user);
         hotel.setAddress(localization);
         hotel.setImages(image);

@@ -1,10 +1,10 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.UserDetails;
+import com.example.demo.entity.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserDetailRepository extends JpaRepository<UserDetails, Long> {
-
+public interface ImageRepository extends JpaRepository<Image, Long> {
+    Image findById (long id);
 }
