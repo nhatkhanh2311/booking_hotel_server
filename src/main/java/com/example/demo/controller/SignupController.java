@@ -51,10 +51,10 @@ public class SignupController {
                 encoder.encode(signUpRequest.getPassword()));
 
         UserDetail userDetail = new UserDetail();
-        userDetail.setNameUserDetails(signUpRequest.getUserDetails().getNameUserDetails());
-        userDetail.setBirth(signUpRequest.getUserDetails().getBirth());
-        userDetail.setPhoneNumber(signUpRequest.getUserDetails().getPhoneNumber());
-        user.setUserDetails(userDetail);
+        userDetail.setNameUserDetail(signUpRequest.getUserDetail().getNameUserDetail());
+        userDetail.setBirth(signUpRequest.getUserDetail().getBirth());
+        userDetail.setPhoneNumber(signUpRequest.getUserDetail().getPhoneNumber());
+        user.setUserDetail(userDetail);
 
 
         Set<String> strRoles = signUpRequest.getRole();

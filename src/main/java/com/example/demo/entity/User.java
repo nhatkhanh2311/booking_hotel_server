@@ -72,7 +72,7 @@ public class User {
         return userDetail;
     }
 
-    public void setUserDetails(UserDetail userDetail) {
+    public void setUserDetail(UserDetail userDetail) {
         this.userDetail = userDetail;
     }
 
@@ -108,7 +108,7 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
+    public Set<Role> getRole() {
         return roles;
     }
 
