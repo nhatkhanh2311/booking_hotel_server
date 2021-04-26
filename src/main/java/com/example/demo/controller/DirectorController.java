@@ -4,7 +4,7 @@ import com.example.demo.entity.Hotel;
 import com.example.demo.entity.Image;
 import com.example.demo.entity.Localization;
 import com.example.demo.entity.User;
-import com.example.demo.payload.reponse.JwtResponse;
+import com.example.demo.payload.response.JwtResponse;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.HotelService;
 import com.example.demo.service.ImageService;

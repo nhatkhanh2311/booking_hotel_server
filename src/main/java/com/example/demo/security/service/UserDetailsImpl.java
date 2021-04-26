@@ -11,16 +11,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-<<<<<<< HEAD:src/main/java/com/example/demo/security/services/UserDetailsImpl.java
-import com.example.demo.entity.User;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import org.springframework.security.core.userdetails.UserDetails;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-=======
->>>>>>> origin/master:src/main/java/com/example/demo/security/service/UserDetailsImpl.java
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 

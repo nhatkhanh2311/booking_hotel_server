@@ -1,11 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.payload.reponse.JwtResponse;
 import com.example.demo.payload.request.LoginRequest;
+import com.example.demo.payload.response.JwtResponse;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
-import com.example.demo.security.services.UserDetailsImpl;
+import com.example.demo.security.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

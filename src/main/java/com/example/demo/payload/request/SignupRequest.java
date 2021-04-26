@@ -1,8 +1,4 @@
 package com.example.demo.payload.request;
-<<<<<<< HEAD
-import com.example.demo.entity.UserDetails;
-=======
->>>>>>> origin/master
 
 import com.example.demo.entity.UserDetail;
 
