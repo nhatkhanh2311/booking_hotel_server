@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controller;
 
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.security.jwt.JwtUtils;
