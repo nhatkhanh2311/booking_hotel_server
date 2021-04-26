@@ -55,11 +55,11 @@ public class SignupRequest {
         this.role = role;
     }
 
-    public UserDetail getUserDetails() {
+    public UserDetail getUserDetail() {
         return userDetail;
     }
 
-    public void setUserDetails(UserDetail userDetail) {
+    public void setUserDetail(UserDetail userDetail) {
         this.userDetail = userDetail;
     }
 }
