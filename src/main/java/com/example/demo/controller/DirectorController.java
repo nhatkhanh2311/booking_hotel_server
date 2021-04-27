@@ -52,7 +52,7 @@ public class DirectorController {
 //        in helloworld
         return "Hello world";
     }
-    @PostMapping(value = "/hotel/addHotell", consumes = {"multipart/form-data"})
+    @PostMapping(value = "/hotel/addhotel", consumes = {"multipart/form-data"})
     public ResponseEntity<String> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam("images") MultipartFile[] images, @RequestHeader("Authorization") String token){
 
         try {
