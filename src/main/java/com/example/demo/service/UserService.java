@@ -13,29 +13,29 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public Optional<User> findByUserName(String username){
+    public User findByUserName(String username){
         return  userRepository.findByUsername(username);
     }
 
-    public User getUserById(long id){
-        return userRepository.findById(id);
+    public User getUserById(Long id){
+        return userRepository.getOne(id);
     }
 
-    public boolean lockUser(long userId) throws UserNotFoundException {
+    public boolean lockUser(Long userId) throws UserNotFoundException {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException("Khong ton tai tai khoan");
         }
-        User user = userRepository.findById(userId);
+        User user = userRepository.getOne(userId);
         user.setLocked(true);
         userRepository.save(user);
         return true;
     }
 
-    public boolean UnlockUser(long userId) throws UserNotFoundException {
+    public boolean UnlockUser(Long userId) throws UserNotFoundException {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException("Khong ton tai tai khoan");
         }
-        User user = userRepository.findById(userId);
+        User user = userRepository.getOne(userId);
         user.setLocked(false);
         userRepository.save(user);
         return true;
