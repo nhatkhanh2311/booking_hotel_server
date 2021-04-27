@@ -16,14 +16,11 @@ public class Localization {
 	private String city;
 	
 	private String street;
-		
-	
+
 	@OneToOne
 	@JsonBackReference
 	private Hotel hotel;
-	
 
-	
 	public Localization() {	}
 
 	public Localization(String country, String city, String street) {
@@ -81,8 +78,4 @@ public class Localization {
 		return "Localization [id=" + id + ", country=" + country + ", city=" + city + ", street=" + street + ", hotel="
 				+ hotel + "";
 	}
-	
-	
-
-	
 }

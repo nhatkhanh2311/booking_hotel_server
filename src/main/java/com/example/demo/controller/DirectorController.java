@@ -33,31 +33,27 @@ public class DirectorController {
     @Autowired
     private HotelService hotelService;
     @Autowired
-    private UserService userService;
-    @Autowired
-    private HotelRepository hotelRepository;
-
-    private JwtResponse jwtResponse;
-    @Autowired
     private GetUserFromToken getUserFromToken;
     @Autowired
     private RoomService roomService;
-
 
     @PostMapping("/")
     public String hello() {
 //        in helloworld
         return "Hello world";
     }
+<<<<<<< HEAD
     @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
+=======
+    @PostMapping(value = "/hotel/addhotel", consumes = {"multipart/form-data"})
+>>>>>>> origin/master
     public ResponseEntity<String> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam("images") MultipartFile[] images, @RequestHeader("Authorization") String token){
 
         try {
             String newToken = token.substring(7);
             User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
             if(images == null){
-
-                ResponseEntity.ok("failse");
+                ResponseEntity.ok("Please choose the image");
             }
 
             List<Image> imageList = imageService.addListImage(images);
@@ -68,6 +64,7 @@ public class DirectorController {
             hotel.sethOwner(hOwner);
             hotel.setImages(imageList);
             hotel.setName(hotelRequest.getName());
+
             Localization localization = new Localization();
             localization.setCity(hotelRequest.getLocalization().getCity());
             localization.setCountry(hotelRequest.getLocalization().getCountry());
@@ -102,14 +99,18 @@ public class DirectorController {
 
             roomService.saveRoom(room);
 
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+<<<<<<< HEAD
         return ResponseEntity.ok("Done add room");
     }
 
 
 
+=======
+        return  ResponseEntity.ok("Done");
+    }
+
+>>>>>>> origin/master
 }
