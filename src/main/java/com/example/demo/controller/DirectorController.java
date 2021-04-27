@@ -1,18 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Hotel;
-import com.example.demo.entity.Image;
-import com.example.demo.entity.Localization;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
 import com.example.demo.payload.reponse.JwtResponse;
 import com.example.demo.payload.request.HotelRequest;
+import com.example.demo.payload.request.RoomRequest;
 import com.example.demo.repository.HotelRepository;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.security.jwt.JwtUtils;
-import com.example.demo.service.HotelService;
-import com.example.demo.service.ImageService;
-import com.example.demo.service.LocalizationService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.*;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,33 +33,30 @@ public class DirectorController {
     @Autowired
     private HotelService hotelService;
     @Autowired
-    private UserService userService;
-    @Autowired
-    private HotelRepository hotelRepository;
-
-    private JwtResponse jwtResponse;
-    @Autowired
     private GetUserFromToken getUserFromToken;
-
+    @Autowired
+    private RoomService roomService;
 
     @PostMapping("/")
     public String hello() {
 //        in helloworld
         return "Hello world";
     }
-    @PostMapping(value = "/hotel/addHotell", consumes = {"multipart/form-data"})
+<<<<<<< HEAD
+    @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
+=======
+    @PostMapping(value = "/hotel/addhotel", consumes = {"multipart/form-data"})
+>>>>>>> origin/master
     public ResponseEntity<String> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam("images") MultipartFile[] images, @RequestHeader("Authorization") String token){
 
         try {
             String newToken = token.substring(7);
             User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
             if(images == null){
-
-                ResponseEntity.ok("failse");
+                ResponseEntity.ok("Please choose the image");
             }
 
             List<Image> imageList = imageService.addListImage(images);
-
             Gson gson = new Gson();
             HotelRequest hotelRequest = gson.fromJson(jsonHotel, HotelRequest.class) ;
 
@@ -72,6 +64,7 @@ public class DirectorController {
             hotel.sethOwner(hOwner);
             hotel.setImages(imageList);
             hotel.setName(hotelRequest.getName());
+
             Localization localization = new Localization();
             localization.setCity(hotelRequest.getLocalization().getCity());
             localization.setCountry(hotelRequest.getLocalization().getCountry());
@@ -80,17 +73,44 @@ public class DirectorController {
 
             localizationService.saveLoacation(localization);
             hotelService.saveHotel(hotel);
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return  ResponseEntity.ok("DOne");
+        return  ResponseEntity.ok("Done add hotel");
+    }
+
+    @PostMapping("/hotel/{hotelId}/new-room")
+    public ResponseEntity<String> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam("images") MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
+        try {
+            List<Image> imageRoomList = imageService.addListImage(images);
+            Hotel hotel = hotelService.findHotelById(hotelId);
+            Gson gson = new Gson();
+            RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class);
+            Room room = new Room();
+            room.setHotel(hotel);
+            room.setImages(imageRoomList);
+            room.setType(roomRequest.getType());
+            room.setArea(roomRequest.getArea());
+            room.setCapacity(roomRequest.getCapacity());
+            room.setDescription(roomRequest.getDescription());
+            room.setName(roomRequest.getName());
+            room.setPrice(roomRequest.getPrice());
+
+            roomService.saveRoom(room);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+<<<<<<< HEAD
+        return ResponseEntity.ok("Done add room");
     }
 
 
 
+=======
+        return  ResponseEntity.ok("Done");
+    }
 
+>>>>>>> origin/master
 }
