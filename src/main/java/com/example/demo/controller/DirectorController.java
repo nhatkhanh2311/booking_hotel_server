@@ -88,7 +88,7 @@ public class DirectorController {
             e.printStackTrace();
         }
 
-        return  ResponseEntity.ok("DOne");
+        return  ResponseEntity.ok("Done");
     }
 
 
