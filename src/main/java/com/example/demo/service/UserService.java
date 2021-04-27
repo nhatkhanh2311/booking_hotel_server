@@ -13,7 +13,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public Optional<User> findByUserName(String username){
+    public User findByUserName(String username){
         return  userRepository.findByUsername(username);
     }
 

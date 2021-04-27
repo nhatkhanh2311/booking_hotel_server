@@ -5,14 +5,18 @@ import com.example.demo.entity.Image;
 import com.example.demo.entity.Localization;
 import com.example.demo.entity.User;
 import com.example.demo.payload.reponse.JwtResponse;
+import com.example.demo.payload.request.HotelRequest;
 import com.example.demo.repository.HotelRepository;
 import com.example.demo.security.jwt.GetUserFromToken;
+import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.service.HotelService;
 import com.example.demo.service.ImageService;
 import com.example.demo.service.LocalizationService;
 import com.example.demo.service.UserService;
+import com.google.gson.Gson;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -39,51 +43,54 @@ public class DirectorController {
     private HotelRepository hotelRepository;
 
     private JwtResponse jwtResponse;
+    @Autowired
     private GetUserFromToken getUserFromToken;
+
 
     @PostMapping("/")
     public String hello() {
 //        in helloworld
         return "Hello world";
     }
+    @PostMapping(value = "/hotel/addHotell", consumes = {"multipart/form-data"})
+    public ResponseEntity<String> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam("images") MultipartFile[] images, @RequestHeader("Authorization") String token){
 
-
-    @PostMapping ("hotel/addhotel")
-    public ResponseEntity<String> addHotel(  @RequestParam("image") MultipartFile file, @RequestHeader("Authorization") String token) {
-
-        if (file.isEmpty()) {
-            return  ResponseEntity.ok("false");
-        }
-        System.out.println("------------------------------------------------------");
-        System.out.println();
         try {
-            System.out.println("------------------------------------------------------");
-            System.out.println("token la: " + token);
-//            Localization localization = (Localization) jsonObject.get("localization");
+            String newToken = token.substring(7);
+            User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
+            if(images == null){
 
-//            List<Image> images = imageService.addListImage(files);
-            Image image = imageService.addNewImage(file);
+                ResponseEntity.ok("failse");
+            }
 
-            User user = getUserFromToken.getUser(token);
-            System.out.println(user.getUserDetails().getNameUserDetail());
-//            Hotel hotel = new Hotel();
-//            hotel.setName((String) jsonObject.get("name"));
-//            hotel.setAddress(localization);
-//            hotel.setImages(image);
-//            hotel.sethOwner(user);
-//            hotelRepository.save(hotel);
+            List<Image> imageList = imageService.addListImage(images);
 
-//            System.out.println(hotel.getAddress().getStreet());
-//            System.out.println(hotel.gethOwner().getUsername());
-//            System.out.println(hotel.getId());
-//            System.out.println(hotel.getName());
+            Gson gson = new Gson();
+            HotelRequest hotelRequest = gson.fromJson(jsonHotel, HotelRequest.class) ;
+
+            Hotel hotel = new Hotel();
+            hotel.sethOwner(hOwner);
+            hotel.setImages(imageList);
+            hotel.setName(hotelRequest.getName());
+            Localization localization = new Localization();
+            localization.setCity(hotelRequest.getLocalization().getCity());
+            localization.setCountry(hotelRequest.getLocalization().getCountry());
+            localization.setStreet(hotelRequest.getLocalization().getStreet());
+            hotel.setAddress(localization);
+
+            localizationService.saveLoacation(localization);
+            hotelService.saveHotel(hotel);
+
 
 
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
 
-        return  ResponseEntity.ok("Hello");
+        return  ResponseEntity.ok("DOne");
     }
+
+
+
 
 }

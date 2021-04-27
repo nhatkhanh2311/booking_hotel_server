@@ -28,11 +28,12 @@ public class HotelService {
     public  Hotel  findHotelById (long id){
         return  hotelRepository.findById(id);
     }
-    public void addHotell(Hotel hotel, Image image, Localization localization, User user){
+    public void addHotell(Hotel hotel, List<Image> image, Localization localization, User user){
         hotel.sethOwner(user);
         hotel.setAddress(localization);
         hotel.setImages(image);
         hotelRepository.save(hotel);
 
     }
+    public void saveHotel(Hotel hotel){hotelRepository.save(hotel);}
 }
