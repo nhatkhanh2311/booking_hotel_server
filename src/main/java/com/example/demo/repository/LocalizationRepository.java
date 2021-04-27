@@ -9,8 +9,6 @@ import java.util.List;
 
 @Repository
 public interface LocalizationRepository extends JpaRepository<Localization, Long> {
-
-
     /** Gives list of cities where rooms are located without repetitions.
      * @return
      */

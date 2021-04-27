@@ -4,7 +4,6 @@ import org.joda.time.LocalDate;
 
 import javax.persistence.*;
 
-
 @Entity
 public class Date {
 
@@ -26,8 +25,6 @@ public class Date {
 	
 	//======================
 
-	
-	
 	public long getId() {
 		return id;
 	}
@@ -67,7 +64,5 @@ public class Date {
 	public void setEnd(LocalDate end) {
 		this.end = end;
 	}
-	
-	
-	
+
 }

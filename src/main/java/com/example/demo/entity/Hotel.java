@@ -39,15 +39,12 @@ public class Hotel {
 	@MapKeyColumn(name = "id")
 	private Map<Long, Room> rooms = new HashMap<Long, Room>();
 
-
 	@JsonManagedReference
 	@OneToMany
 	@MapKeyColumn(name = "id")
 	private List<Image> images;
 	
-	
 	//----------------------------------------
-
 
 	public long getId() {
 		return id;
@@ -119,8 +116,4 @@ public class Hotel {
 				+ address + ", hOwner=" + hOwner + ", rooms=" + rooms +  ", images=" + images
 				+ "]";
 	}
-	
-	
-
-	
 }

@@ -38,14 +38,7 @@ public class DirectorController {
     @Autowired
     private HotelService hotelService;
     @Autowired
-    private UserService userService;
-    @Autowired
-    private HotelRepository hotelRepository;
-
-    private JwtResponse jwtResponse;
-    @Autowired
     private GetUserFromToken getUserFromToken;
-
 
     @PostMapping("/")
     public String hello() {
@@ -59,8 +52,7 @@ public class DirectorController {
             String newToken = token.substring(7);
             User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
             if(images == null){
-
-                ResponseEntity.ok("fail");
+                ResponseEntity.ok("Please choose the image");
             }
 
             List<Image> imageList = imageService.addListImage(images);
@@ -82,12 +74,9 @@ public class DirectorController {
             localizationService.saveLoacation(localization);
             hotelService.saveHotel(hotel);
 
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return  ResponseEntity.ok("Done");
     }
 
