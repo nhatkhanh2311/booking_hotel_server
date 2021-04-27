@@ -31,8 +31,7 @@ public class Room {
 	@ManyToOne
 	private Hotel hotel;
 
-	@ManyToOne
-	private User owner;
+
 
 	@ManyToMany
 	private List<User> host;
@@ -46,9 +45,7 @@ public class Room {
 	@MapKeyColumn(name = "id")
 	private List<Image> images;
 
-	@OneToOne
-	@JsonManagedReference
-	private Localization localization;
+
 
 	private LocalDate added;
 
@@ -99,13 +96,6 @@ public class Room {
 		this.added = added;
 	}
 
-	public User getOwner() {
-		return owner;
-	}
-
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
 
 	public String getName() {
 		return name;
@@ -124,13 +114,6 @@ public class Room {
 		this.images = images;
 	}
 
-	public Localization getLocalization() {
-		return localization;
-	}
-
-	public void setLocalization(Localization localization) {
-		this.localization = localization;
-	}
 
 	public String getDescription() {
 		return description;
@@ -148,13 +131,6 @@ public class Room {
 		this.promoted = promoted;
 	}
 
-	// public User getOwner() {
-	// return owner;
-	// }
-	//
-	// public void setOwner(User owner) {
-	// this.owner = owner;
-	// }
 
 	public List<User> getHost() {
 		return host;
@@ -212,7 +188,7 @@ public class Room {
 	public String toString() {
 		return "Room [id=" + id + ", area=" + area + ", type=" + type + ", availability=" + availability + ", date="
 				+ date + ", hotel=" + hotel + ", host=" + host + ", promoted=" + promoted + ", description="
-				+ description + ", image=" + images + ", localization=" + localization + "]";
+				+ description + ", image=" + images + "]";
 	}
 
 }

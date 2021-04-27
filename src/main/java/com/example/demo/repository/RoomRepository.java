@@ -9,12 +9,7 @@ import java.util.List;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
-    List<Room> findAllByOwnerId(long id);
-
     List<Room>	findAllByHotelId(long id);
-
-    List<Room> findAllByLocalizationCity(String city);
-
     List<Room> findAllByHotelAddressCity(String city);
 
     /** Gives list of rooms for which user by given id is a host.
