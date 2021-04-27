@@ -71,7 +71,4 @@ public class Image {
 	public String toString() {
 		return "Image [id=" + id + ", path=" + path + ", user=" + user + ", room=" + room + ", hotel=" + hotel + "]";
 	}
-	
-	
-	
 }

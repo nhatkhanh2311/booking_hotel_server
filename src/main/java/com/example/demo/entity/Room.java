@@ -31,8 +31,6 @@ public class Room {
 	@ManyToOne
 	private Hotel hotel;
 
-
-
 	@ManyToMany
 	private List<User> host;
 
@@ -45,8 +43,6 @@ public class Room {
 	@MapKeyColumn(name = "id")
 	private List<Image> images;
 
-
-
 	private LocalDate added;
 
 	@Column(columnDefinition = "Decimal(2,1) default 0.0")
@@ -56,10 +52,6 @@ public class Room {
 
 	// ------------------------------------------
 
-	
-	
-	
-	
 	public long getId() {
 		return id;
 	}
@@ -105,7 +97,6 @@ public class Room {
 		this.name = name;
 	}
 
-
 	public List<Image> getImages() {
 		return images;
 	}
@@ -113,7 +104,6 @@ public class Room {
 	public void setImages(List<Image> images) {
 		this.images = images;
 	}
-
 
 	public String getDescription() {
 		return description;

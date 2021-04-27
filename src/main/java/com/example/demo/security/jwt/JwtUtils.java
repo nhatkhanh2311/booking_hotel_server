@@ -1,6 +1,5 @@
 package com.example.demo.security.jwt;
 
-
 import java.util.Date;
 
 import com.example.demo.security.services.UserDetailsImpl;
@@ -15,8 +14,6 @@ import io.jsonwebtoken.*;
 @Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
-
-
 
     private final String jwtSecret = "Hotel";
 
@@ -62,7 +59,6 @@ public class JwtUtils {
         } catch (IllegalArgumentException e) {
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }
-
         return false;
     }
 }

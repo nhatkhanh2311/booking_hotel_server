@@ -33,7 +33,6 @@ public class HotelService {
         hotel.setAddress(localization);
         hotel.setImages(image);
         hotelRepository.save(hotel);
-
     }
     public void saveHotel(Hotel hotel){hotelRepository.save(hotel);}
 }

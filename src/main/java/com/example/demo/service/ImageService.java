@@ -45,9 +45,5 @@ public class ImageService {
             images.add(image);
         }
         return images;
-
    }
-
-
-
 }
