@@ -60,7 +60,7 @@ public class DirectorController {
             User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
             if(images == null){
 
-                ResponseEntity.ok("failse");
+                ResponseEntity.ok("fail");
             }
 
             List<Image> imageList = imageService.addListImage(images);
