@@ -72,6 +72,7 @@ public class DirectorController {
             hotel.sethOwner(hOwner);
             hotel.setImages(imageList);
             hotel.setName(hotelRequest.getName());
+
             Localization localization = new Localization();
             localization.setCity(hotelRequest.getLocalization().getCity());
             localization.setCountry(hotelRequest.getLocalization().getCountry());
