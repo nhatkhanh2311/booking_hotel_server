@@ -35,14 +35,7 @@ public class LocalizationService {
         localizationRepository.save(localization);
     }
 
-    /** Save given room to given localization.
-     * @param localization - localization of the room.
-     * @param room - room of given localization.
-     */
-    public void roomLocalization(Localization localization, Room room) {
-        localization.setRoom(room);
-        localizationRepository.save(localization);
-    }
+
     public void saveLoacation (Localization localization){
         localizationRepository.save(localization);
     }

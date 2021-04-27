@@ -22,9 +22,7 @@ public class Localization {
 	@JsonBackReference
 	private Hotel hotel;
 	
-	@OneToOne
-	@JsonBackReference
-	private Room room;
+
 	
 	public Localization() {	}
 
@@ -77,18 +75,11 @@ public class Localization {
 		this.hotel = hotel;
 	}
 
-	public Room getRoom() {
-		return room;
-	}
-
-	public void setRoom(Room room) {
-		this.room = room;
-	}
 
 	@Override
 	public String toString() {
 		return "Localization [id=" + id + ", country=" + country + ", city=" + city + ", street=" + street + ", hotel="
-				+ hotel + ", room=" + room + "]";
+				+ hotel + "";
 	}
 	
 	
