@@ -41,8 +41,9 @@ public class Hotel {
 
 
 	@JsonManagedReference
-	@OneToOne
-	private Image images;
+	@OneToMany
+	@MapKeyColumn(name = "id")
+	private List<Image> images;
 	
 	
 	//----------------------------------------
@@ -104,11 +105,11 @@ public class Hotel {
 		this.rooms = rooms;
 	}
 
-	public Image getImages() {
+	public List<Image> getImages() {
 		return images;
 	}
 
-	public void setImages(Image images) {
+	public void setImages(List<Image> images) {
 		this.images = images;
 	}
 

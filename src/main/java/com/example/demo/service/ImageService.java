@@ -15,7 +15,10 @@ import java.util.List;
 
 @Service
 public class ImageService {
-    private static String UPLOADED_FOLDER = "E:/DOANCNPM_2021/booking_hotel_server/src/main/resources/image/";
+    private static Path currentPath = Paths.get(System.getProperty("user.dir"));
+    private static Path filePath = Paths.get(currentPath.toString(), "src", "main", "resources", "image");
+
+    private static String UPLOADED_FOLDER = filePath.toString()+ "\\";
     @Autowired
     private ImageRepository imageRepository;
 
@@ -25,7 +28,7 @@ public class ImageService {
         Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename().replaceAll(" ", ""));
         Files.write(path, bytes);
         Image image = new Image();
-        image.setPath("../image/" + file.getOriginalFilename().replaceAll(" ", ""));
+        image.setPath("..\\image\\" + file.getOriginalFilename().replaceAll(" ", ""));
         imageRepository.save(image);
         return image;
     }
@@ -37,7 +40,7 @@ public class ImageService {
             Path path = Paths.get(UPLOADED_FOLDER + files[i].getOriginalFilename().replaceAll(" ", ""));
             Files.write(path, bytes);
             Image image = new Image();
-            image.setPath("../image/" + files[i].getOriginalFilename().replaceAll(" ", ""));
+            image.setPath("..\\image\\" + files[i].getOriginalFilename().replaceAll(" ", ""));
             imageRepository.save(image);
             images.add(image);
         }

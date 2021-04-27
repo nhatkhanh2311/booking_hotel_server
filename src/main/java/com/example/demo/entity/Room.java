@@ -41,9 +41,10 @@ public class Room {
 
 	private String description;
 
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToMany(cascade = CascadeType.REMOVE)
 	@JsonManagedReference
-	private Image image;
+	@MapKeyColumn(name = "id")
+	private List<Image> images;
 
 	@OneToOne
 	@JsonManagedReference
@@ -114,12 +115,13 @@ public class Room {
 		this.name = name;
 	}
 
-	public Image getImage() {
-		return image;
+
+	public List<Image> getImages() {
+		return images;
 	}
 
-	public void setImage(Image image) {
-		this.image = image;
+	public void setImages(List<Image> images) {
+		this.images = images;
 	}
 
 	public Localization getLocalization() {
@@ -210,7 +212,7 @@ public class Room {
 	public String toString() {
 		return "Room [id=" + id + ", area=" + area + ", type=" + type + ", availability=" + availability + ", date="
 				+ date + ", hotel=" + hotel + ", host=" + host + ", promoted=" + promoted + ", description="
-				+ description + ", image=" + image + ", localization=" + localization + "]";
+				+ description + ", image=" + images + ", localization=" + localization + "]";
 	}
 
 }

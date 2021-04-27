@@ -43,4 +43,7 @@ public class LocalizationService {
         localization.setRoom(room);
         localizationRepository.save(localization);
     }
+    public void saveLoacation (Localization localization){
+        localizationRepository.save(localization);
+    }
 }
