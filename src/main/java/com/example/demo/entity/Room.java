@@ -174,6 +174,34 @@ public class Room {
 		this.hotel = hotel;
 	}
 
+	public Room() {
+	}
+
+	public Room(long id, double area, double price, @NotBlank String type, String name, boolean availability, List<Date> date, Hotel hotel, List<User> host, boolean promoted, String description, List<Image> images, LocalDate added, double rate, int capacity) {
+		this.id = id;
+		this.area = area;
+		this.price = price;
+		this.type = type;
+		this.name = name;
+		this.availability = availability;
+		this.date = date;
+		this.hotel = hotel;
+		this.host = host;
+		this.promoted = promoted;
+		this.description = description;
+		this.images = images;
+		this.added = added;
+		this.rate = rate;
+		this.capacity = capacity;
+	}
+
+	public Room(long id, String name, Hotel hotel, String description) {
+		this.id = id;
+		this.name = name;
+		this.hotel = hotel;
+		this.description = description;
+	}
+
 	@Override
 	public String toString() {
 		return "Room [id=" + id + ", area=" + area + ", type=" + type + ", availability=" + availability + ", date="
