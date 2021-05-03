@@ -35,4 +35,8 @@ public class HotelService {
         hotelRepository.save(hotel);
     }
     public void saveHotel(Hotel hotel){hotelRepository.save(hotel);}
+
+    public List<Hotel> getAllHotelsByCityName(Long cityName) {
+        return hotelRepository.findAllByCityName(cityName);
+    }
 }

@@ -11,6 +11,9 @@ public class RoomRequest {
     private String description;
     private int capacity;
 
+    public RoomRequest() {
+    }
+
     public RoomRequest(double area, double price, String type, String name, String description, int capacity) {
         this.area = area;
         this.price = price;

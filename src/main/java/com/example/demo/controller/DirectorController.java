@@ -42,11 +42,8 @@ public class DirectorController {
 //        in helloworld
         return "Hello world";
     }
-<<<<<<< HEAD
     @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
-=======
-    @PostMapping(value = "/hotel/addhotel", consumes = {"multipart/form-data"})
->>>>>>> origin/master
+
     public ResponseEntity<String> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam("images") MultipartFile[] images, @RequestHeader("Authorization") String token){
 
         try {
@@ -102,15 +99,8 @@ public class DirectorController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-<<<<<<< HEAD
+
         return ResponseEntity.ok("Done add room");
     }
 
-
-
-=======
-        return  ResponseEntity.ok("Done");
-    }
-
->>>>>>> origin/master
 }
