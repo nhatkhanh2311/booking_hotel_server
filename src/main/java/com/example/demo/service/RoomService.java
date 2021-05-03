@@ -25,7 +25,11 @@ public class RoomService {
        return roomRepository.findAllByHotelId(id);
     }
 
-//    public List<Room> searchRoom() {
-////        return roomRepository
-//    }
+
+    public List<Room> searchRoomByPriceDESC(Long hotelId){
+        return  roomRepository.searchRoomPriceDESC(hotelId);
+    }
+    public List<Room> searchRoomByCapacity(Long hotelId, int capacity){
+        return  roomRepository.searchRoomByCapacity(hotelId,capacity);
+    }
 }

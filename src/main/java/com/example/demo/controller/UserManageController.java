@@ -52,38 +52,38 @@ public class UserManageController {
         }
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
-
-    /*
-    * API thay doi mat khau
-    * */
-    @PreAuthorize("hasAnyRole('ADMIN', 'DIRECTOR', 'USER')")
-    @PutMapping("/authorized/user/change/{userId}")
-    public ResponseEntity<Void> thayDoiMatKhau (@PathVariable Long userId, @RequestHeader("Authorization") String token, @RequestBody JSONObject jsonObject ){
-        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
-        System.out.println("Day la userName" + user.getUsername());
-        boolean checkPermission = false;
-        if(userId == user.getId()){
-            checkPermission = true;
-        }
-        if(checkPermission){
-            try{
-                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                String oldPass = jsonObject.getString("oldPass");
-                String newPass = jsonObject.getString("newPass");
-                if(!passwordEncoder.matches(oldPass, user.getPassword())){
-                    new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
-                }
-                userService.changPassword(userId, passwordEncoder.encode(newPass));
-                    return new ResponseEntity<Void>(HttpStatus.OK);
-
-                } catch (TaiKhoanNotFoundException e) {
-                e.printStackTrace();
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Khong tim thay tai khoan trong CSDL", e);
-            }
-        }
-        else {
-            return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
-        }
-    }
+//
+//    /*
+//    * API thay doi mat khau
+//    * */
+//    @PreAuthorize("hasAnyRole('ADMIN', 'DIRECTOR', 'USER')")
+//    @PutMapping("/authorized/user/change/{userId}")
+//    public ResponseEntity<Void> thayDoiMatKhau (@PathVariable Long userId, @RequestHeader("Authorization") String token, @RequestBody JSONObject jsonObject ){
+//        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+//        System.out.println("Day la userName" + user.getUsername());
+//        boolean checkPermission = false;
+//        if(userId == user.getId()){
+//            checkPermission = true;
+//        }
+//        if(checkPermission){
+//            try{
+//                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//                String oldPass = jsonObject.getString("oldPass");
+//                String newPass = jsonObject.getString("newPass");
+//                if(!passwordEncoder.matches(oldPass, user.getPassword())){
+//                    new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
+//                }
+//                userService.changPassword(userId, passwordEncoder.encode(newPass));
+//                    return new ResponseEntity<Void>(HttpStatus.OK);
+//
+//                } catch (TaiKhoanNotFoundException e) {
+//                e.printStackTrace();
+//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Khong tim thay tai khoan trong CSDL", e);
+//            }
+//        }
+//        else {
+//            return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
+//        }
+//    }
 
 }
