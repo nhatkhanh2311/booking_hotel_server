@@ -28,16 +28,17 @@ public class Hotel {
 	private int standard;
 
 	@OneToOne
-	@JoinColumn(name = "localization_id")
+	@JoinColumn(name = "localizationId")
 	private Localization address;
 
 	@ManyToOne
 	@JsonBackReference
 	private User hOwner;
 
+	@JsonManagedReference
 	@OneToMany
 	@MapKeyColumn(name = "id")
-	private Map<Long, Room> rooms = new HashMap<Long, Room>();
+	private List<Room> rooms;
 
 	@JsonManagedReference
 	@OneToMany
@@ -94,11 +95,11 @@ public class Hotel {
 		this.hOwner = hOwner;
 	}
 
-	public Map<Long, Room> getRooms() {
+	public List<Room> getRooms() {
 		return rooms;
 	}
 
-	public void setRooms(Map<Long, Room> rooms) {
+	public void setRooms(List<Room> rooms) {
 		this.rooms = rooms;
 	}
 
