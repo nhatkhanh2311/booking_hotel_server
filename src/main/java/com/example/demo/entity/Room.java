@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class Room {
 	private List<Date> date;
 
 	@ManyToOne
+	@JsonBackReference
 	private Hotel hotel;
 
 	@ManyToMany
