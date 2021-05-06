@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 
 import javax.persistence.*;
 
