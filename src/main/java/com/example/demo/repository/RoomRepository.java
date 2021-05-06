@@ -20,4 +20,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findAllHost(long id);
     Room findById(long id);
 
+    @Query(value="select * from room where hotel_id= ?", nativeQuery=true)
+    List<Room> findAllRoomByHotelId(Long id);
+
 }

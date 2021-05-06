@@ -27,7 +27,7 @@ public class Room {
 	private boolean availability = true;
 
 	@OneToMany
-	private List<Date> date;
+	private List<BookingRoom> bookingRoom;
 
 	@ManyToOne
 	@JsonBackReference
@@ -53,6 +53,7 @@ public class Room {
 	private int capacity;
 
 	// ------------------------------------------
+
 
 	public long getId() {
 		return id;
@@ -89,7 +90,6 @@ public class Room {
 	public void setAdded(LocalDate added) {
 		this.added = added;
 	}
-
 
 	public String getName() {
 		return name;
@@ -132,12 +132,12 @@ public class Room {
 		this.host = host;
 	}
 
-	public List<Date> getDate() {
-		return date;
+	public List<BookingRoom> getBookingRoom() {
+		return bookingRoom;
 	}
 
-	public void setDate(List<Date> date) {
-		this.date = date;
+	public void setBookingRoom(List<BookingRoom> bookingRoom) {
+		this.bookingRoom = bookingRoom;
 	}
 
 	public void setId(long id) {
@@ -179,14 +179,14 @@ public class Room {
 	public Room() {
 	}
 
-	public Room(long id, double area, double price, @NotBlank String type, String name, boolean availability, List<Date> date, Hotel hotel, List<User> host, boolean promoted, String description, List<Image> images, LocalDate added, double rate, int capacity) {
+	public Room(long id, double area, double price, @NotBlank String type, String name, boolean availability, List<BookingRoom> bookingRoom, Hotel hotel, List<User> host, boolean promoted, String description, List<Image> images, LocalDate added, double rate, int capacity) {
 		this.id = id;
 		this.area = area;
 		this.price = price;
 		this.type = type;
 		this.name = name;
 		this.availability = availability;
-		this.date = date;
+		this.bookingRoom = bookingRoom;
 		this.hotel = hotel;
 		this.host = host;
 		this.promoted = promoted;
@@ -207,7 +207,7 @@ public class Room {
 	@Override
 	public String toString() {
 		return "Room [id=" + id + ", area=" + area + ", type=" + type + ", availability=" + availability + ", date="
-				+ date + ", hotel=" + hotel + ", host=" + host + ", promoted=" + promoted + ", description="
+				+ bookingRoom + ", hotel=" + hotel + ", host=" + host + ", promoted=" + promoted + ", description="
 				+ description + ", image=" + images + "]";
 	}
 
