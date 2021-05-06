@@ -39,4 +39,5 @@ public class HotelService {
     public List<Hotel> getAllHotelsByCityName(String cityName) {
         return hotelRepository.findAllByCityName(cityName);
     }
+    public List<Hotel> findRandomHotel(){return  hotelRepository.findRandomHotel();}
 }

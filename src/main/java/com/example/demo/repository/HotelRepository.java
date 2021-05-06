@@ -18,4 +18,7 @@ public interface HotelRepository  extends JpaRepository<Hotel,Long > {
 //            List<Hotel> findAllByCityName(Long id);
     @Query(value="SELECT * FROM hotel  join localization  on   hotel.localization_id = localization.id where localization.city = ?", nativeQuery=true)
     List<Hotel> findAllByCityName (String cityName);
+
+    @Query(value = "SELECT * FROM hotel order by rand() limit 10;", nativeQuery = true)
+    List<Hotel> findRandomHotel();
 }
