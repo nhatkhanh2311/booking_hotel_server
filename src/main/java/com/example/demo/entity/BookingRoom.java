@@ -1,11 +1,8 @@
 package com.example.demo.entity;
 
-//import org.joda.time.LocalDate;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
-//import java.time.LocalDate;
+
 
 @Entity
 public class BookingRoom {
@@ -16,13 +13,9 @@ public class BookingRoom {
 	
 	@ManyToOne
 	private Room room;
-	
-//	@Column(columnDefinition = "DATE")
-	@Temporal(TemporalType.TIMESTAMP)
+
 	private LocalDate start;
-	
-//	@Column(columnDefinition = "DATE")
-	@Temporal(TemporalType.TIMESTAMP)
+
 	private LocalDate end;
 	
 	@OneToOne
