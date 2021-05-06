@@ -7,6 +7,7 @@ import java.time.LocalDate;
 >>>>>>> origin/master:src/main/java/com/example/demo/entity/Date.java
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 //import java.time.LocalDate;
 
@@ -22,11 +23,11 @@ public class BookingRoom {
 	
 //	@Column(columnDefinition = "DATE")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date start;
+	private LocalDate start;
 	
 //	@Column(columnDefinition = "DATE")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date end;
+	private LocalDate end;
 	
 	@OneToOne
 	private User host;
@@ -57,20 +58,19 @@ public class BookingRoom {
 		this.room = room;
 	}
 
-	public Date getStart() {
+	public LocalDate getStart() {
 		return start;
 	}
 
-	public void setStart(Date start) {
+	public void setStart(LocalDate start) {
 		this.start = start;
 	}
 
-	public Date getEnd() {
+	public LocalDate getEnd() {
 		return end;
 	}
 
-	public void setEnd(Date end) {
+	public void setEnd(LocalDate end) {
 		this.end = end;
 	}
-
 }

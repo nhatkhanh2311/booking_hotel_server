@@ -10,12 +10,16 @@ import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.time.LocalDate;
 import java.time.format.*;
 =======
 //import org.joda.time.LocalDate;
+=======
+>>>>>>> origin/master
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 >>>>>>> origin/master
@@ -31,16 +35,22 @@ public class DateService  {
     /**
      * Gives start date by String from thymeleaf form
      *
-//     * @param from
+     * @param from
      *            - String to be parsed to LocalDate
      * @return LocalDate of start date.
      */
+<<<<<<< HEAD
 <<<<<<< HEAD
     public LocalDate startDate(String from) {
         DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         LocalDate localDate = LocalDate.parse(from, formatter);
 
+=======
+    public LocalDate startDate(String from) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(from, dtf);
+>>>>>>> origin/master
         return localDate;
     }
 
@@ -51,6 +61,7 @@ public class DateService  {
      * @return LocalDate of end date.
      */
     public LocalDate endDate(String to) {
+<<<<<<< HEAD
         DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         LocalDate localDate = LocalDate.parse(to, formatter);
@@ -113,6 +124,12 @@ public class DateService  {
 //        DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
 //        return dtf.parseLocalDate(to);
 //    }
+=======
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(to, dtf);
+        return localDate;
+    }
+>>>>>>> origin/master
 //    /**
 //     * Check whether dates given as a String are correct. End date must be after the
 //     * start date and start date must not be before today.
