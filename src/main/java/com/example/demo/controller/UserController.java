@@ -20,8 +20,6 @@ public class UserController {
     @Autowired
     HotelService hotelService;
 
-
-
     @Autowired
     RoomService roomService;
 
@@ -36,6 +34,7 @@ public class UserController {
         }
         return ResponseEntity.ok(hotels);
     }
+
     /*
     * Bo loc cua user
     * */
@@ -51,4 +50,9 @@ public class UserController {
         List<Room> rooms = roomService.searchRoomByCapacity(hotelId,capacity);
         return ResponseEntity.ok(rooms);
     }
+
+    /*
+    * BOOKING APIs
+    * */
+
 }
