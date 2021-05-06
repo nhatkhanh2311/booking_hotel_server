@@ -36,7 +36,8 @@ public class HotelService {
     }
     public void saveHotel(Hotel hotel){hotelRepository.save(hotel);}
 
-    public List<Hotel> getAllHotelsByCityName(Long cityName) {
+    public List<Hotel> getAllHotelsByCityName(String cityName) {
         return hotelRepository.findAllByCityName(cityName);
     }
+    public List<Hotel> findRandomHotel(){return  hotelRepository.findRandomHotel();}
 }
