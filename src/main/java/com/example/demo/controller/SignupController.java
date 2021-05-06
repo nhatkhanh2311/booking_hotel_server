@@ -35,7 +35,7 @@ public class SignupController {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .body(new MessageResponse("Error: Username is already taken"));
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -61,7 +61,11 @@ public class SignupController {
 
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+<<<<<<< HEAD
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found "));
+=======
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+>>>>>>> origin/master
 
             roles.add(userRole);
         } else {

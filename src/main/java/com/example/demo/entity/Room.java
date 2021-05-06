@@ -54,6 +54,7 @@ public class Room {
 
 	// ------------------------------------------
 
+
 	public long getId() {
 		return id;
 	}
@@ -89,7 +90,6 @@ public class Room {
 	public void setAdded(LocalDate added) {
 		this.added = added;
 	}
-
 
 	public String getName() {
 		return name;
@@ -132,11 +132,19 @@ public class Room {
 		this.host = host;
 	}
 
+<<<<<<< HEAD
 	public List<BookingRoom> getDate() {
 		return bookingRoom;
 	}
 
 	public void setDate(List<BookingRoom> bookingRoom) {
+=======
+	public List<BookingRoom> getBookingRoom() {
+		return bookingRoom;
+	}
+
+	public void setBookingRoom(List<BookingRoom> bookingRoom) {
+>>>>>>> origin/master
 		this.bookingRoom = bookingRoom;
 	}
 

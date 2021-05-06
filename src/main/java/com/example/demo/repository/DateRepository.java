@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.List;
+
 @Repository
 public interface DateRepository extends JpaRepository<BookingRoom, Long> {
 
@@ -35,5 +38,14 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
      */
     @Query(value="select * from date where room_id= ? and host_id= ?", nativeQuery=true)
     BookingRoom findByRoomIdAndHostId(long room, long host);
+<<<<<<< HEAD
+=======
+
+    @Query(value="SELECT * FROM booking_room where id not in (select id from booking_room where" +
+            "(DATE(end) BETWEEN ?1 AND ?2) or " +
+            "(DATE(start) between ?1 AND ?2))", nativeQuery=true)
+    List<BookingRoom> findRoomByDateBooking(Date startDate, Date endDate, Date startDate1, Date endDate1);
+
+>>>>>>> origin/master
 
 }
