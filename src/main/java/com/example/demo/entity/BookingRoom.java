@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.*;
 
 @Entity
-public class Date {
+public class BookingRoom {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

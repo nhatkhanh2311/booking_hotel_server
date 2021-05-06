@@ -1,14 +1,13 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Date;
+import com.example.demo.entity.BookingRoom;
 import com.example.demo.entity.User;
 import com.example.demo.repository.DateRepository;
 import com.example.demo.repository.RoomRepository;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
+import java.time.format.*;
 
 @Service
 public class DateService  {
@@ -26,8 +25,11 @@ public class DateService  {
      * @return LocalDate of start date.
      */
     public LocalDate startDate(String from) {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
-        return dtf.parseLocalDate(from);
+        DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        LocalDate localDate = LocalDate.parse(from, formatter);
+
+        return localDate;
     }
 
     /**
@@ -37,8 +39,11 @@ public class DateService  {
      * @return LocalDate of end date.
      */
     public LocalDate endDate(String to) {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
-        return dtf.parseLocalDate(to);
+        DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        LocalDate localDate = LocalDate.parse(to, formatter);
+
+        return localDate;
     }
     /**
      * Check whether dates given as a String are correct. End date must be after the
@@ -60,17 +65,17 @@ public class DateService  {
     /*
        Find all dates by given room id
      */
-    public Date[] findByRoomId(long id){
+    public BookingRoom[] findByRoomId(long id){
         return dateRepository.findAllByRoomId(id);
     }
 
     public void bookRoom(String from, String to, long id, User user) {
-        Date date = new Date();
-        date.setStart(startDate(from));
-        date.setEnd(endDate(to));
-        date.setRoom(roomRepository.findById(id));
-        date.setHost(user);
-        dateRepository.save(date);
+        BookingRoom bookingRoom = new BookingRoom();
+        bookingRoom.setStart(startDate(from));
+        bookingRoom.setEnd(endDate(to));
+        bookingRoom.setRoom(roomRepository.findById(id));
+        bookingRoom.setHost(user);
+        dateRepository.save(bookingRoom);
     }
 
     /** Gives Date for room where host is given by id/
@@ -78,7 +83,7 @@ public class DateService  {
      * @param host - id of user who is a host in the room.
      * @return
      */
-    public Date findyByRoomAndHost(long room, long host) {
+    public BookingRoom findyByRoomAndHost(long room, long host) {
         return dateRepository.findByRoomIdAndHostId(room, host);
     }
 
