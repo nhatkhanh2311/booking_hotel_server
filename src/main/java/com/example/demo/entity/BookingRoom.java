@@ -1,5 +1,11 @@
 package com.example.demo.entity;
 
+<<<<<<< HEAD
+=======
+
+import java.time.LocalDate;
+
+>>>>>>> 1bd560a66f42a3ad9fa7014d70b76141abf05dd0
 import javax.persistence.*;
 import java.time.LocalDate;
 

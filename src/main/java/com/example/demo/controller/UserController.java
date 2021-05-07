@@ -2,9 +2,15 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.BookingRoom;
 import com.example.demo.entity.Hotel;
+<<<<<<< HEAD
+import com.example.demo.entity.Localization;
+import com.example.demo.entity.Room;
+import com.example.demo.repository.RoomRepository;
+=======
 import com.example.demo.entity.Room;
 import com.example.demo.payload.request.SearchRequest;
 import com.example.demo.service.DateService;
+>>>>>>> origin/master
 import com.example.demo.service.HotelService;
 import com.example.demo.service.LocalizationService;
 import com.example.demo.service.RoomService;
@@ -28,6 +34,13 @@ public class UserController {
     @Autowired
     LocalizationService localizationService;
 
+<<<<<<< HEAD
+    @PostMapping(value = "/search/{cityName}")
+    public ResponseEntity<?> search(@PathVariable("cityName") String cityName) {
+        List<Hotel> hotels = hotelService.getAllHotelsByCityName(cityName);
+        for(Hotel hotel : hotels) {
+            System.out.println(hotel.getRooms());
+=======
     @Autowired
     DateService dateService;
 
@@ -49,8 +62,32 @@ public class UserController {
             }
             if (isEmpty)
                 hotelList.add(hotel);
+>>>>>>> origin/master
         }
 
+<<<<<<< HEAD
+    /*
+    * Bo loc cua user
+    * */
+
+    @GetMapping(value = "/search/{hotelId}/search-priceDESC")
+    public ResponseEntity<?> searchPriceDESC(@PathVariable("hotelId") Long hotelId){
+        List<Room> rooms = roomService.searchRoomByPriceDESC(hotelId);
+        return ResponseEntity.ok(rooms);
+    }
+
+    @GetMapping(value = "/search/{hotelId}/{capacity}")
+    public ResponseEntity<?> searchCapacity(@PathVariable("hotelId") Long hotelId, @PathVariable("capacity") int capacity){
+        List<Room> rooms = roomService.searchRoomByCapacity(hotelId,capacity);
+        return ResponseEntity.ok(rooms);
+    }
+
+    /*
+    * BOOKING APIs
+    * */
+
+=======
         return ResponseEntity.ok(hotelList);
     }
+>>>>>>> origin/master
 }
