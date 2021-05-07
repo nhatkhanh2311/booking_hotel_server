@@ -1,10 +1,7 @@
 package com.example.demo.entity;
 
-<<<<<<< HEAD:src/main/java/com/example/demo/entity/BookingRoom.java
+
 import java.time.LocalDate;
-=======
-//import org.joda.time.LocalDate;
->>>>>>> origin/master:src/main/java/com/example/demo/entity/Date.java
 
 import javax.persistence.*;
 import java.time.LocalDate;
