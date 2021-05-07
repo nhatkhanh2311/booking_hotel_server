@@ -10,6 +10,7 @@ import com.example.demo.service.HotelService;
 import com.example.demo.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class ResponeAPICotroller {
     @Autowired
     DateService dateService;
 
-    @PostMapping("/message")
+    @GetMapping("/message")
     public ResponseEntity<?> message() {
         List<Message> messageResponses = new ArrayList<>();
         messageResponses.add(new Message("signup trùng username", "username is taken"));
