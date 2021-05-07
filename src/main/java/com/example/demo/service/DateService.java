@@ -94,4 +94,8 @@ public class DateService  {
     public BookingRoom findyByRoomAndHost(long room, long host) {
         return dateRepository.findByRoomIdAndHostId(room, host);
     }
+
+    public List<BookingRoom> getAllRoomByDateBooking(LocalDate start, LocalDate end) {
+        return dateRepository.findRoomByDateBooking(start, end, start, end);
+    }
 }

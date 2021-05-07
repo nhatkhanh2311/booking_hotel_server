@@ -2,15 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.BookingRoom;
 import com.example.demo.entity.Hotel;
-<<<<<<< HEAD
-import com.example.demo.entity.Localization;
-import com.example.demo.entity.Room;
-import com.example.demo.repository.RoomRepository;
-=======
 import com.example.demo.entity.Room;
 import com.example.demo.payload.request.SearchRequest;
 import com.example.demo.service.DateService;
->>>>>>> origin/master
 import com.example.demo.service.HotelService;
 import com.example.demo.service.LocalizationService;
 import com.example.demo.service.RoomService;
@@ -34,38 +28,30 @@ public class UserController {
     @Autowired
     LocalizationService localizationService;
 
-<<<<<<< HEAD
-    @PostMapping(value = "/search/{cityName}")
-    public ResponseEntity<?> search(@PathVariable("cityName") String cityName) {
-        List<Hotel> hotels = hotelService.getAllHotelsByCityName(cityName);
-        for(Hotel hotel : hotels) {
-            System.out.println(hotel.getRooms());
-=======
     @Autowired
     DateService dateService;
 
     @PostMapping(value = "/search")
     public ResponseEntity<?> search(@RequestBody SearchRequest searchRequest) {
 
-        List<Hotel> hotels = hotelService.getAllHotelsByCityName(searchRequest.getHotelName());
+        List<Hotel> hotels = hotelService.getAllHotelsByCityName(searchRequest.getCityName());
         List<Hotel> hotelList = new ArrayList<>();
         List<BookingRoom> bookingRoomList = dateService.getAllRoomByDateBooking(searchRequest.getStart(), searchRequest.getEnd());
 
-        for (Hotel hotel: hotels) {
+        for (Hotel hotel : hotels) {
             List<Room> rooms = roomService.getAllRoomByHotelId(hotel.getId());
             Boolean isEmpty = false;
-            for (Room room: rooms) {
-                if(room.isAvailability() == true) {
+            for (Room room : rooms) {
+                if (room.isAvailability() == true) {
                     isEmpty = true;
                     break;
                 }
             }
             if (isEmpty)
                 hotelList.add(hotel);
->>>>>>> origin/master
         }
-
-<<<<<<< HEAD
+        return ResponseEntity.ok(hotelList);
+    }
     /*
     * Bo loc cua user
     * */
@@ -81,13 +67,4 @@ public class UserController {
         List<Room> rooms = roomService.searchRoomByCapacity(hotelId,capacity);
         return ResponseEntity.ok(rooms);
     }
-
-    /*
-    * BOOKING APIs
-    * */
-
-=======
-        return ResponseEntity.ok(hotelList);
-    }
->>>>>>> origin/master
 }

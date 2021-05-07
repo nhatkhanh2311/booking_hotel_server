@@ -16,14 +16,10 @@ public interface HotelRepository  extends JpaRepository<Hotel,Long > {
 
 //    @Query(value = "select * from hotel where localization_id =?", nativeQuery=true)
 //            List<Hotel> findAllByCityName(Long id);
-<<<<<<< HEAD
     @Query(value="SELECT * FROM hotel  join localization  on   hotel.localization_id = localization.id where localization.city = ?", nativeQuery=true)
     List<Hotel> findAllByCityName (String cityName);
 
     @Query(value = "SELECT * FROM hotel order by rand() limit 10;", nativeQuery = true)
     List<Hotel> findRandomHotel();
-=======
-    @Query(value="SELECT * FROM hotel join localization on  localization.id = hotel.localization_id where localization.city = ?", nativeQuery=true)
-    List<Hotel> findAllByCityName (String cityName);
->>>>>>> origin/master
+
 }

@@ -25,7 +25,6 @@ public class RoomService {
        return roomRepository.findAllRoomByHotelId(id);
     }
 
-<<<<<<< HEAD
 
     public List<Room> searchRoomByPriceDESC(Long hotelId){
         return  roomRepository.searchRoomPriceDESC(hotelId);
@@ -33,6 +32,5 @@ public class RoomService {
     public List<Room> searchRoomByCapacity(Long hotelId, int capacity){
         return  roomRepository.searchRoomByCapacity(hotelId,capacity);
     }
-=======
->>>>>>> origin/master
+
 }

@@ -5,41 +5,41 @@ import java.util.Date;
 
 public class SearchRequest {
     private String cityName;
-    private Date start;
-    private Date end;
+    private LocalDate start;
+    private LocalDate end;
     private int capacity;
 
     public SearchRequest() {
     }
 
-    public SearchRequest(String cityName, Date start, Date end, int capacity) {
+    public SearchRequest(String cityName, LocalDate start, LocalDate end, int capacity) {
         this.cityName = cityName;
         this.start = start;
         this.end = end;
         this.capacity = capacity;
     }
 
-    public String getHotelName() {
+    public String getCityName() {
         return cityName;
     }
 
-    public void setHotelName(String cityName) {
+    public void setCityName(String cityName) {
         this.cityName = cityName;
     }
 
-    public Date getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 
