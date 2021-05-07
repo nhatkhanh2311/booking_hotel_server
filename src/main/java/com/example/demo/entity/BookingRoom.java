@@ -1,11 +1,17 @@
 package com.example.demo.entity;
 
-import org.joda.time.LocalDate;
+<<<<<<< HEAD
+=======
 
+import java.time.LocalDate;
+
+>>>>>>> 1bd560a66f42a3ad9fa7014d70b76141abf05dd0
 import javax.persistence.*;
+import java.time.LocalDate;
+
 
 @Entity
-public class Date {
+public class BookingRoom {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,11 +19,9 @@ public class Date {
 	
 	@ManyToOne
 	private Room room;
-	
-//	@Column(columnDefinition = "DATE")
+
 	private LocalDate start;
-	
-//	@Column(columnDefinition = "DATE")
+
 	private LocalDate end;
 	
 	@OneToOne
@@ -64,5 +68,4 @@ public class Date {
 	public void setEnd(LocalDate end) {
 		this.end = end;
 	}
-
 }

@@ -20,7 +20,6 @@ import java.util.Set;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
 public class SignupController {
     @Autowired
     UserRepository userRepository;
@@ -36,7 +35,7 @@ public class SignupController {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .body(new MessageResponse("Error: Username is already taken"));
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -62,7 +61,11 @@ public class SignupController {
 
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found 1."));
+<<<<<<< HEAD
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found "));
+=======
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+>>>>>>> origin/master
 
             roles.add(userRole);
         } else {
@@ -72,17 +75,17 @@ public class SignupController {
                     case "admin":
                         System.out.println("admin");
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found.2"));
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                         roles.add(adminRole);
                         break;
                     case "director":
                         Role dirRole = roleRepository.findByName(ERole.ROLE_DIRECTOR)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found.3"));
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                         roles.add(dirRole);
                         break;
                     default:
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found.4"));
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                         roles.add(userRole);
 
                 }

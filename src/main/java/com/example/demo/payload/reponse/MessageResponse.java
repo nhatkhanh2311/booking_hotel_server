@@ -2,10 +2,6 @@ package com.example.demo.payload.reponse;
 public class MessageResponse {
     private String message;
 
-    public MessageResponse(String message) {
-        this.message = message;
-    }
-
     public String getMessage() {
         return message;
     }
@@ -13,4 +9,13 @@ public class MessageResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public MessageResponse(String message) {
+        this.message = message;
+    }
+
+    public MessageResponse() {
+    }
+
+
 }
