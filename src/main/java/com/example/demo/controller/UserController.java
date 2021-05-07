@@ -28,30 +28,7 @@ public class UserController {
     @Autowired
     LocalizationService localizationService;
 
-    @Autowired
-    DateService dateService;
 
-    @PostMapping(value = "/search")
-    public ResponseEntity<?> search(@RequestBody SearchRequest searchRequest) {
-
-        List<Hotel> hotels = hotelService.getAllHotelsByCityName(searchRequest.getCityName());
-        List<Hotel> hotelList = new ArrayList<>();
-        List<BookingRoom> bookingRoomList = dateService.getAllRoomByDateBooking(searchRequest.getStart(), searchRequest.getEnd());
-
-        for (Hotel hotel : hotels) {
-            List<Room> rooms = roomService.getAllRoomByHotelId(hotel.getId());
-            Boolean isEmpty = false;
-            for (Room room : rooms) {
-                if (room.isAvailability() == true) {
-                    isEmpty = true;
-                    break;
-                }
-            }
-            if (isEmpty)
-                hotelList.add(hotel);
-        }
-        return ResponseEntity.ok(hotelList);
-    }
     /*
     * Bo loc cua user
     * */

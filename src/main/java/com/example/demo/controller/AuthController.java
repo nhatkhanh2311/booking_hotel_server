@@ -63,9 +63,7 @@ public class AuthController {
                     userDetails.getEmail(),
                     roles));
         }catch (Exception e){
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username or password is incorrect"));
+            return ResponseEntity.ok(new MessageResponse("incorrect"));
         }
 
 
