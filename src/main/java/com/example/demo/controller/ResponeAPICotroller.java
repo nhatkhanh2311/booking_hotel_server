@@ -17,6 +17,6 @@ public class ResponeAPICotroller {
         messageResponses.add(new Message("sigup trùng email", "Error: Username is already taken!"));
         messageResponses.add(new Message("signup thành công", "User registered successfully!"));
 
-        return ResponseEntity.ok(messageResponses);
+        return ResponseEntity.ok().body(messageResponses);
     }
 }
