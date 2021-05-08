@@ -1,5 +1,16 @@
 package com.example.demo.entity;
+<<<<<<< HEAD
+import java.time.LocalDate;
 
+=======
+
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
+
+>>>>>>> 353048239e53eb6d379d45b9526152a5dbef6544
 import java.time.LocalDate;
 import javax.persistence.*;
 
@@ -12,8 +23,17 @@ public class BookingRoom {
 	
 	@ManyToOne
 	private Room room;
+<<<<<<< HEAD
+	
+//	@Column(columnDefinition = "DATE")
 
 	private LocalDate start;
+	
+//	@Column(columnDefinition = "DATE")
+=======
+
+	private LocalDate start;
+>>>>>>> origin/master
 
 	private LocalDate end;
 	

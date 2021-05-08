@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-    @RequestMapping("/user-management")
+@RequestMapping("/user-management")
 public class UserManageController {
 @Autowired
     UserService userService;
@@ -56,7 +56,12 @@ public class UserManageController {
 //
 //    /*
 //    * API thay doi mat khau
+<<<<<<< HEAD
+//    * */
+
+=======
 //    */
+>>>>>>> origin/master
 //    @PreAuthorize("hasAnyRole('ADMIN', 'DIRECTOR', 'USER')")
 //    @PutMapping("/authorized/user/change/{userId}")
 //    public ResponseEntity<Void> thayDoiMatKhau (@PathVariable Long userId, @RequestHeader("Authorization") String token, @RequestBody JSONObject jsonObject ){

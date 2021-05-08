@@ -33,6 +33,7 @@ public class ResponeAPICotroller {
     @GetMapping("/message")
     public ResponseEntity<?> message() {
         List<Message> messageResponses = new ArrayList<>();
+<<<<<<< HEAD
         messageResponses.add(new Message("signup trùng username", "username is taken"));
         messageResponses.add(new Message("sigup trùng email", "email is taken"));
         messageResponses.add(new Message("signup thành công", "successfull"));
@@ -80,5 +81,11 @@ public class ResponeAPICotroller {
             }
         }
         return ResponseEntity.ok(hotelList);
+=======
+        messageResponses.add(new Message("signup trùng username", "Error: Username is already taken!"));
+        messageResponses.add(new Message("sigup trùng email", "Error: Username is already taken!"));
+        messageResponses.add(new Message("signup thành công", "User registered successfully!"));
+        return ResponseEntity.ok(messageResponses);
+>>>>>>> 353048239e53eb6d379d45b9526152a5dbef6544
     }
 }

@@ -58,6 +58,10 @@ public class SignupController {
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found "));
+<<<<<<< HEAD
+=======
+
+>>>>>>> 353048239e53eb6d379d45b9526152a5dbef6544
             roles.add(userRole);
         } else {
 
