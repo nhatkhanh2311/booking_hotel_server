@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -93,6 +94,7 @@ public class DirectorController {
             room.setDescription(roomRequest.getDescription());
             room.setName(roomRequest.getName());
             room.setPrice(roomRequest.getPrice());
+            room.setAdded(LocalDate.now());
 
             roomService.saveRoom(room);
 
