@@ -41,12 +41,7 @@ public class RoomService {
     public List<Room> searchRoomByCapacity(Long hotelId, int capacity){
         return  roomRepository.searchRoomByCapacity(hotelId,capacity);
     }
-<<<<<<< HEAD
 
-=======
-/*
-* ========================================================================================================
-* */
     public  List<Room> findAllRoomByCityAndCapacity(String cityName, int capacity){
         List<Room> rooms = roomRepository.findAllRoomByCapacityAnCity(cityName, capacity);
         return rooms;
@@ -87,5 +82,5 @@ public class RoomService {
         }
         return listRoomFreeInPeriodtime;
     }
->>>>>>> 353048239e53eb6d379d45b9526152a5dbef6544
+
 }

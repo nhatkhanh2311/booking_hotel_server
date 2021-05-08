@@ -1,31 +1,14 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.BookingRoom;
-
 import com.example.demo.entity.User;
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 import com.example.demo.repository.DateRepository;
 import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-<<<<<<< HEAD
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.*;
-=======
->>>>>>> origin/master
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 
 @Service
 public class DateService  {
@@ -45,12 +28,7 @@ public class DateService  {
 
     public LocalDate startDate(String from) {
         DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
         LocalDate localDate = LocalDate.parse(from, formatter);
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
         return localDate;
     }
 
@@ -61,11 +39,8 @@ public class DateService  {
      * @return LocalDate of end date.
      */
     public LocalDate endDate(String to) {
-
         DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
         LocalDate localDate = LocalDate.parse(to, formatter);
-
         return localDate;
     }
     /**
@@ -97,8 +72,6 @@ public class DateService  {
         bookingRoom.setHost(user);
         dateRepository.save(bookingRoom);
     }
-<<<<<<< HEAD
-=======
 
     /** Gives Date for room where host is given by id/
      * @param room - id of the room.
@@ -108,12 +81,9 @@ public class DateService  {
     public BookingRoom findyByRoomAndHost(long room, long host) {
         return dateRepository.findByRoomIdAndHostId(room, host);
     }
-<<<<<<< HEAD
 
     public List<BookingRoom> getAllRoomByDateBooking(LocalDate start, LocalDate end) {
         return dateRepository.findRoomByDateBooking(start, end, start, end);
     }
-=======
->>>>>>> origin/master
->>>>>>> 353048239e53eb6d379d45b9526152a5dbef6544
+
 }

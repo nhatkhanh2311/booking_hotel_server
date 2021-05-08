@@ -12,16 +12,12 @@ public class SearchRequest {
     public SearchRequest() {
     }
 
-<<<<<<< HEAD
     public SearchRequest(String cityName, LocalDate start, LocalDate end, int capacity) {
         this.cityName = cityName;
         this.start = start;
         this.end = end;
         this.capacity = capacity;
     }
-
-=======
->>>>>>> 353048239e53eb6d379d45b9526152a5dbef6544
     public String getCityName() {
         return cityName;
     }
@@ -54,11 +50,5 @@ public class SearchRequest {
         this.capacity = capacity;
     }
 
-    public SearchRequest(String cityName, LocalDate start, LocalDate end, int capacity) {
-        this.cityName = cityName;
-        this.start = start;
-        this.end = end;
-        this.capacity = capacity;
-    }
 }
 

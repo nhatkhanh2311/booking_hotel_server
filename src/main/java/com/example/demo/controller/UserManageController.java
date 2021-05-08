@@ -53,15 +53,9 @@ public class UserManageController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-//
 //    /*
 //    * API thay doi mat khau
-<<<<<<< HEAD
-//    * */
 
-=======
-//    */
->>>>>>> origin/master
 //    @PreAuthorize("hasAnyRole('ADMIN', 'DIRECTOR', 'USER')")
 //    @PutMapping("/authorized/user/change/{userId}")
 //    public ResponseEntity<Void> thayDoiMatKhau (@PathVariable Long userId, @RequestHeader("Authorization") String token, @RequestBody JSONObject jsonObject ){

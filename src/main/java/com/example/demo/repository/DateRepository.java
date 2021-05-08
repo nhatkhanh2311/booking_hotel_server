@@ -40,24 +40,15 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
     @Query(value="select * from date where room_id= ? and host_id= ?", nativeQuery=true)
     BookingRoom findByRoomIdAndHostId(long room, long host);
 
-<<<<<<< HEAD
 
     @Query(value="select * from booking_room where" +
             "(DATE(end) BETWEEN ? AND ?) or " +
             "(DATE(start) between ? AND ?)", nativeQuery=true)
     List<BookingRoom> findRoomByDateBooking(LocalDate startDate, LocalDate endDate, LocalDate startDate1, LocalDate endDate1);
 
-=======
-<<<<<<< HEAD
-=======
     @Query(value="SELECT * FROM booking_room where id not in (select id from booking_room where" +
             "(DATE(end) BETWEEN ? AND ?) or " +
             "(DATE(start) between ? AND ?))", nativeQuery=true)
     List<BookingRoom> findRoomByDateBooking(Date startDate, Date endDate, Date startDate1, Date endDate1);
->>>>>>> origin/master
->>>>>>> 353048239e53eb6d379d45b9526152a5dbef6544
-
-
-
 
 }
