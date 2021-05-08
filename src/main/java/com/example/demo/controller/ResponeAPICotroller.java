@@ -37,13 +37,16 @@ public class ResponeAPICotroller {
         messageResponses.add(new Message("sigup trùng email", "email is taken"));
         messageResponses.add(new Message("signup thành công", "successfull"));
         messageResponses.add(new Message("signin thất bại", "incorrect"));
+        messageResponses.add(new Message("chưa chọn ảnh", "image is empty"));
+        messageResponses.add(new Message("thêm mới hotel thành công", "add hotel successfully"));
+        messageResponses.add(new Message("thêm mới room thành công", "add room successfully"));
 
         return ResponseEntity.ok().body(messageResponses);
     }
 
 
 
-    @PostMapping(value = "/search")
+    @PostMapping(value = "/search2")
     public ResponseEntity<?> search(@RequestBody SearchRequest searchRequest) {
 
         List<Hotel> hotels = hotelService.getAllHotelsByCityName(searchRequest.getCityName());

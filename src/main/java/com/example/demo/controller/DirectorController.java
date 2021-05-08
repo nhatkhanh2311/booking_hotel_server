@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.*;
 import com.example.demo.payload.reponse.JwtResponse;
+import com.example.demo.payload.reponse.MessageResponse;
 import com.example.demo.payload.request.HotelRequest;
 import com.example.demo.payload.request.RoomRequest;
 import com.example.demo.repository.HotelRepository;
@@ -37,20 +38,15 @@ public class DirectorController {
     @Autowired
     private RoomService roomService;
 
-    @PostMapping("/")
-    public String hello() {
-//        in helloworld
-        return "Hello world";
-    }
     @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
 
-    public ResponseEntity<String> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam("images") MultipartFile[] images, @RequestHeader("Authorization") String token){
+    public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam("images") MultipartFile[] images, @RequestHeader("Authorization") String token){
 
         try {
             String newToken = token.substring(7);
             User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
             if(images == null){
-                ResponseEntity.ok("Please choose the image");
+                ResponseEntity.ok(new MessageResponse("image is empty"));
             }
 
             List<Image> imageList = imageService.addListImage(images);
@@ -74,13 +70,18 @@ public class DirectorController {
             e.printStackTrace();
         }
 
-        return  ResponseEntity.ok("Done add hotel");
+        return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
     }
 
     @PostMapping("/hotel/{hotelId}/new-room")
-    public ResponseEntity<String> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam("images") MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
+    public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam("images") MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
         try {
             List<Image> imageRoomList = imageService.addListImage(images);
+
+            if(images == null){
+                ResponseEntity.ok(new MessageResponse("image is empty"));
+            }
+
             Hotel hotel = hotelService.findHotelById(hotelId);
             Gson gson = new Gson();
             RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class);
@@ -100,7 +101,7 @@ public class DirectorController {
             e.printStackTrace();
         }
 
-        return ResponseEntity.ok("Done add room");
+        return ResponseEntity.ok(new MessageResponse("add room successfully"));
     }
 
 }
