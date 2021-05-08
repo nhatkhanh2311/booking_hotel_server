@@ -52,6 +52,10 @@ public class Room {
 	
 	private int capacity;
 
+	public Room() {
+
+	}
+
 	// ------------------------------------------
 
 
@@ -129,6 +133,7 @@ public class Room {
 
 	public boolean isPromoted() {
 		return promoted;
+<<<<<<< HEAD
 	}
 
 	public void setPromoted(boolean promoted) {
@@ -173,9 +178,52 @@ public class Room {
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+=======
 	}
 
-	public Room() {
+	public void setPromoted(boolean promoted) {
+		this.promoted = promoted;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+
+	public LocalDate getAdded() {
+		return added;
+	}
+
+	public void setAdded(LocalDate added) {
+		this.added = added;
+	}
+
+	public double getRate() {
+		return rate;
+	}
+
+	public void setRate(double rate) {
+		this.rate = rate;
+	}
+
+	public int getCapacity() {
+		return capacity;
+>>>>>>> origin/master
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
 	}
 
 	public Room(long id, double area, double price, @NotBlank String type, String name, boolean availability, List<BookingRoom> bookingRoom, Hotel hotel, List<User> host, boolean promoted, String description, List<Image> images, LocalDate added, double rate, int capacity) {
