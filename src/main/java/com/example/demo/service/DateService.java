@@ -3,17 +3,29 @@ package com.example.demo.service;
 import com.example.demo.entity.BookingRoom;
 
 import com.example.demo.entity.User;
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
 import com.example.demo.repository.DateRepository;
 import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.*;
+=======
+>>>>>>> origin/master
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/master
 
 @Service
 public class DateService  {
@@ -35,7 +47,10 @@ public class DateService  {
         DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         LocalDate localDate = LocalDate.parse(from, formatter);
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/master
         return localDate;
     }
 
@@ -70,21 +85,20 @@ public class DateService  {
             return true;
         }
     }
-    /*
-       Find all dates by given room id
-     */
-    public BookingRoom[] findByRoomId(long id){
-        return dateRepository.findAllByRoomId(id);
+    public List<BookingRoom> findAllRoomById (Long id){
+        return  dateRepository.findAllByRoomId(id);
     }
 
     public void bookRoom(String from, String to, long id, User user) {
         BookingRoom bookingRoom = new BookingRoom();
         bookingRoom.setStart(startDate(from));
         bookingRoom.setEnd(endDate(to));
-        bookingRoom.setRoom(roomRepository.findById(id));
+        bookingRoom.setRoom(roomRepository.getOne(id));
         bookingRoom.setHost(user);
         dateRepository.save(bookingRoom);
     }
+<<<<<<< HEAD
+=======
 
     /** Gives Date for room where host is given by id/
      * @param room - id of the room.
@@ -94,4 +108,5 @@ public class DateService  {
     public BookingRoom findyByRoomAndHost(long room, long host) {
         return dateRepository.findByRoomIdAndHostId(room, host);
     }
+>>>>>>> origin/master
 }
