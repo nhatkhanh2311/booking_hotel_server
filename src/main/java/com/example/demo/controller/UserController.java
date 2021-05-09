@@ -73,7 +73,7 @@ public class UserController {
         Room room = roomService.findOne(idRoom);
         User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
         if (user != null) {
-                dateService.bookRoom(from, to, idRoom, user);
+                dateService.bookRoom(from, to, idRoom, user); // luu vao bang bôking room
             List<User> hosts = room.getHost();
             hosts.add(user);
             roomService.saveRoom(room);
@@ -82,5 +82,4 @@ public class UserController {
         }
         return ResponseEntity.ok("Done booking");
     }
-
 }
