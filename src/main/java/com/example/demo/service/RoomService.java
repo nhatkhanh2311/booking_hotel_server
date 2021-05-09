@@ -72,14 +72,11 @@ public class RoomService {
                 for (int i = 0; i < bookingRooms.size(); i++) {
                     if (dateService.startDate(from).isAfter(bookingRooms.get(i).getEnd()) && i == bookingRooms.size() - 1) {
                         listRoomFreeInPeriodtime.add(room);
-                        break;
                     } else if (dateService.startDate(from).isAfter(bookingRooms.get(i).getEnd()) && dateService.endDate(to).isBefore(bookingRooms.get(i+1).getStart())) {
                         listRoomFreeInPeriodtime.add(room);
-                        break;
                     }
                     else if (dateService.endDate(to).isBefore(bookingRooms.get(0).getStart())){
                         listRoomFreeInPeriodtime.add(room);
-                        break;
                     }
                 }
             }
