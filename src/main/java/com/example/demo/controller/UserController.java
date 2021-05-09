@@ -77,13 +77,10 @@ public class UserController {
             List<User> hosts = room.getHost();
             hosts.add(user);
             roomService.saveRoom(room);
-
         } else {
             return ResponseEntity.ok("Please Login");
-
         }
         return ResponseEntity.ok("Done booking");
     }
-
 
 }
