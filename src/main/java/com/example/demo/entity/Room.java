@@ -34,6 +34,7 @@ public class Room {
 	private Hotel hotel;
 
 	@ManyToMany
+	@JsonBackReference
 	private List<User> host;
 
 	private boolean promoted = false;
@@ -55,9 +56,6 @@ public class Room {
 	public Room() {
 
 	}
-
-	// ------------------------------------------
-
 
 	public long getId() {
 		return id;
@@ -133,7 +131,6 @@ public class Room {
 
 	public boolean isPromoted() {
 		return promoted;
-<<<<<<< HEAD
 	}
 
 	public void setPromoted(boolean promoted) {
@@ -174,52 +171,6 @@ public class Room {
 
 	public int getCapacity() {
 		return capacity;
-	}
-
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-=======
-	}
-
-	public void setPromoted(boolean promoted) {
-		this.promoted = promoted;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public List<Image> getImages() {
-		return images;
-	}
-
-	public void setImages(List<Image> images) {
-		this.images = images;
-	}
-
-	public LocalDate getAdded() {
-		return added;
-	}
-
-	public void setAdded(LocalDate added) {
-		this.added = added;
-	}
-
-	public double getRate() {
-		return rate;
-	}
-
-	public void setRate(double rate) {
-		this.rate = rate;
-	}
-
-	public int getCapacity() {
-		return capacity;
->>>>>>> origin/master
 	}
 
 	public void setCapacity(int capacity) {

@@ -68,7 +68,5 @@ public class AuthController {
                     .body(new MessageResponse("Error: Username or password is incorrect"));
         }
 
-
-
     }
 }

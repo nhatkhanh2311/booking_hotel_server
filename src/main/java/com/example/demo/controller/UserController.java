@@ -66,10 +66,24 @@ public class UserController {
         return ResponseEntity.ok(rooms);
     }
 
-//    @PostMapping("/book/{from}/{to}/{idRoom}")
-//    public ResponseEntity<?> booking(@PathVariable("idRoom") long idRoom, @PathVariable("from") String from, @PathVariable("to") String to,@RequestHeader("Authorization") String token) {
-//
-//    }
+
+    @PostMapping("/book/{idRoom}/{from}/{to}")
+    public ResponseEntity<?> booking(@PathVariable("idRoom") long idRoom, @PathVariable("from") String from, @PathVariable("to") String to,@RequestHeader("Authorization") String token) {
+
+        Room room = roomService.findOne(idRoom);
+        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+        if (user != null) {
+                dateService.bookRoom(from, to, idRoom, user);
+            List<User> hosts = room.getHost();
+            hosts.add(user);
+            roomService.saveRoom(room);
+
+        } else {
+            return ResponseEntity.ok("Please Login");
+
+        }
+        return ResponseEntity.ok("Done booking");
+    }
 
 
 }
