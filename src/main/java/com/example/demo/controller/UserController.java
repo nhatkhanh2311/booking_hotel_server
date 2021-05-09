@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.BookingRoom;
 import com.example.demo.entity.Hotel;
 import com.example.demo.entity.Room;
+import com.example.demo.entity.User;
+import com.example.demo.payload.request.BookingRequest;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.DateService;
 import com.example.demo.service.HotelService;
@@ -29,6 +32,7 @@ public class UserController {
 
     @Autowired
     DateService dateService;
+
     @Autowired
     GetUserFromToken getUserFromToken;
 
@@ -56,4 +60,25 @@ public class UserController {
         return ResponseEntity.ok(rooms);
     }
 
+    @PostMapping(value = "/booking")
+    public ResponseEntity<?> booking(@RequestBody BookingRequest bookingRequest, @RequestHeader("Authorization") String token) {
+        if(token.equals("")) {
+            return ResponseEntity.ok("error");
+        } else {
+            String newToken = token.substring(7);
+            User host = getUserFromToken.getUserByUserNameFromJwt(newToken);
+            Room room = roomService.getRoomById(bookingRequest.getIdRoom());
+
+            BookingRoom bookingRoom = new BookingRoom();
+            bookingRoom.setHost(host);
+            bookingRoom.setStart(bookingRequest.getStart());
+            bookingRoom.setEnd(bookingRequest.getEnd());
+            bookingRoom.setRoom(room);
+            dateService.saveBooking(bookingRoom);
+
+            return ResponseEntity.ok(host.getUsername() + "room: " + room);
+        }
+
+
+    }
 }

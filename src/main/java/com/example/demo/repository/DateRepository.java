@@ -51,4 +51,5 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
             "(DATE(start) between ? AND ?))", nativeQuery=true)
     List<BookingRoom> findRoomByDateBooking(Date startDate, Date endDate, Date startDate1, Date endDate1);
 
+
 }

@@ -86,4 +86,7 @@ public class DateService  {
         return dateRepository.findRoomByDateBooking(start, end, start, end);
     }
 
+    public void saveBooking(BookingRoom bookingRoom) {
+        dateRepository.save(bookingRoom);
+    }
 }
