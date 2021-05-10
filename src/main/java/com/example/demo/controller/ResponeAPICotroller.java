@@ -93,7 +93,7 @@ public class ResponeAPICotroller {
         return ResponseEntity.ok(hotelList);
     }
 
-    @RequestMapping(value="/forgot-password", method=RequestMethod.POST)
+    @GetMapping(value = "/forgot-password")
     public ResponseEntity<?> forgotUserPassword(@RequestBody EmailRequest emailRequest) {
         User existingUser = userRepository.findByEmail(emailRequest.getEmail());
         if (existingUser != null) {
@@ -116,11 +116,11 @@ public class ResponeAPICotroller {
 
 //            modelAndView.addObject("message", "Request to reset password received. Check your inbox for the reset link.");
 //            modelAndView.setViewName("successForgotPassword");
-            return ResponseEntity.ok(new MessageResponse("successForgotPassword"));
+            return ResponseEntity.ok().body(new MessageResponse("successForgotPassword"));
         } else {
 //            modelAndView.addObject("message", "This email address does not exist!");
 //            modelAndView.setViewName("error");
-            return ResponseEntity.ok("existingUser.getUsername()");
+            return ResponseEntity.ok().body("existingUser.getUsername()");
         }
 //        return modelAndView;
     }
