@@ -6,15 +6,11 @@ import com.example.demo.entity.Room;
 import com.example.demo.entity.User;
 import com.example.demo.payload.request.BookingRequest;
 import com.example.demo.security.jwt.GetUserFromToken;
-import com.example.demo.service.DateService;
-import com.example.demo.service.HotelService;
-import com.example.demo.service.LocalizationService;
-import com.example.demo.service.RoomService;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,6 +31,10 @@ public class UserController {
 
     @Autowired
     GetUserFromToken getUserFromToken;
+
+    @Autowired
+    UserService userService;
+
 
     @PostMapping(value = "/search/{cityName}")
     public ResponseEntity<?> search(@PathVariable("cityName") String cityName) {
@@ -75,10 +75,14 @@ public class UserController {
             bookingRoom.setEnd(bookingRequest.getEnd());
             bookingRoom.setRoom(room);
             dateService.saveBooking(bookingRoom);
+            roomService.saveRoom(room);
 
             return ResponseEntity.ok(host.getUsername() + "room: " + room);
         }
-
-
     }
+
+
+
+
+
 }

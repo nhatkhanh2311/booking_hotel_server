@@ -1,19 +1,17 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.BookingRoom;
-import com.example.demo.entity.Hotel;
-import com.example.demo.entity.Room;
+import com.example.demo.entity.*;
 import com.example.demo.payload.reponse.Message;
+import com.example.demo.payload.reponse.MessageResponse;
+import com.example.demo.payload.request.EmailRequest;
 import com.example.demo.payload.request.SearchRequest;
-import com.example.demo.service.DateService;
-import com.example.demo.service.HotelService;
-import com.example.demo.service.RoomService;
+import com.example.demo.repository.ConfirmationTokenRepository;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +27,18 @@ public class ResponeAPICotroller {
 
     @Autowired
     DateService dateService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    ConfirmationTokenRepository confirmationTokenRepository;
+
+    @Autowired
+    EmailSenderService emailSenderService;
 
     @GetMapping("/message")
     public ResponseEntity<?> message() {
@@ -81,5 +91,37 @@ public class ResponeAPICotroller {
             }
         }
         return ResponseEntity.ok(hotelList);
+    }
+
+    @RequestMapping(value="/forgot-password", method=RequestMethod.POST)
+    public ResponseEntity<?> forgotUserPassword(@RequestBody EmailRequest emailRequest) {
+        User existingUser = userRepository.findByEmail(emailRequest.getEmail());
+        if (existingUser != null) {
+            // Create token
+            ConfirmationToken confirmationToken = new ConfirmationToken(existingUser);
+
+            // Save it
+            confirmationTokenRepository.save(confirmationToken);
+
+            // Create the email
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(existingUser.getEmail());
+            mailMessage.setSubject("Complete Password Reset!");
+            mailMessage.setFrom(emailRequest.getEmail());
+            mailMessage.setText("To complete the password reset process, please click here: "
+                    + "http://localhost:8082/confirm-reset?token="+confirmationToken.getConfirmationToken());
+
+            // Send the email
+            emailSenderService.sendEmail(mailMessage);
+
+//            modelAndView.addObject("message", "Request to reset password received. Check your inbox for the reset link.");
+//            modelAndView.setViewName("successForgotPassword");
+            return ResponseEntity.ok(new MessageResponse("successForgotPassword"));
+        } else {
+//            modelAndView.addObject("message", "This email address does not exist!");
+//            modelAndView.setViewName("error");
+            return ResponseEntity.ok("existingUser.getUsername()");
+        }
+//        return modelAndView;
     }
 }
