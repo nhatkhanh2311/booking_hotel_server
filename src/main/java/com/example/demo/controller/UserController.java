@@ -2,23 +2,15 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.BookingRoom;
 import com.example.demo.entity.Hotel;
-<<<<<<< HEAD
-import com.example.demo.entity.Localization;
 import com.example.demo.entity.Room;
-import com.example.demo.repository.RoomRepository;
-=======
-import com.example.demo.entity.Room;
-import com.example.demo.payload.request.SearchRequest;
-import com.example.demo.service.DateService;
->>>>>>> origin/master
-import com.example.demo.service.HotelService;
-import com.example.demo.service.LocalizationService;
-import com.example.demo.service.RoomService;
+import com.example.demo.entity.User;
+import com.example.demo.payload.request.BookingRequest;
+import com.example.demo.security.jwt.GetUserFromToken;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,38 +26,24 @@ public class UserController {
     @Autowired
     LocalizationService localizationService;
 
-<<<<<<< HEAD
-    @PostMapping(value = "/search/{cityName}")
-    public ResponseEntity<?> search(@PathVariable("cityName") String cityName) {
-        List<Hotel> hotels = hotelService.getAllHotelsByCityName(cityName);
-        for(Hotel hotel : hotels) {
-            System.out.println(hotel.getRooms());
-=======
     @Autowired
     DateService dateService;
 
-    @PostMapping(value = "/search")
-    public ResponseEntity<?> search(@RequestBody SearchRequest searchRequest) {
+    @Autowired
+    GetUserFromToken getUserFromToken;
 
-        List<Hotel> hotels = hotelService.getAllHotelsByCityName(searchRequest.getHotelName());
-        List<Hotel> hotelList = new ArrayList<>();
-        List<BookingRoom> bookingRoomList = dateService.getAllRoomByDateBooking(searchRequest.getStart(), searchRequest.getEnd());
+    @Autowired
+    UserService userService;
 
-        for (Hotel hotel: hotels) {
-            List<Room> rooms = roomService.getAllRoomByHotelId(hotel.getId());
-            Boolean isEmpty = false;
-            for (Room room: rooms) {
-                if(room.isAvailability() == true) {
-                    isEmpty = true;
-                    break;
-                }
-            }
-            if (isEmpty)
-                hotelList.add(hotel);
->>>>>>> origin/master
+
+    @PostMapping(value = "/search/{cityName}")
+    public ResponseEntity<?> search(@PathVariable("cityName") String cityName) {
+        List<Hotel> hotels = hotelService.getAllHotelsByCityName(cityName);
+        for (Hotel hotel : hotels) {
+            System.out.println(hotel.getRooms());
         }
-
-<<<<<<< HEAD
+        return ResponseEntity.ok(hotels);
+    }
     /*
     * Bo loc cua user
     * */
@@ -82,12 +60,29 @@ public class UserController {
         return ResponseEntity.ok(rooms);
     }
 
-    /*
-    * BOOKING APIs
-    * */
+    @PostMapping(value = "/booking")
+    public ResponseEntity<?> booking(@RequestBody BookingRequest bookingRequest, @RequestHeader("Authorization") String token) {
+        if(token.equals("")) {
+            return ResponseEntity.ok("error");
+        } else {
+            String newToken = token.substring(7);
+            User host = getUserFromToken.getUserByUserNameFromJwt(newToken);
+            Room room = roomService.getRoomById(bookingRequest.getIdRoom());
 
-=======
-        return ResponseEntity.ok(hotelList);
+            BookingRoom bookingRoom = new BookingRoom();
+            bookingRoom.setHost(host);
+            bookingRoom.setStart(bookingRequest.getStart());
+            bookingRoom.setEnd(bookingRequest.getEnd());
+            bookingRoom.setRoom(room);
+            dateService.saveBooking(bookingRoom);
+            roomService.saveRoom(room);
+
+            return ResponseEntity.ok(host.getUsername() + "room: " + room);
+        }
     }
->>>>>>> origin/master
+
+
+
+
+
 }
