@@ -116,13 +116,8 @@ public class ResponeAPICotroller {
 
             // Send the email
             emailSenderService.sendEmail(mailMessage);
-
-//            modelAndView.addObject("message", "Request to reset password received. Check your inbox for the reset link.");
-//            modelAndView.setViewName("successForgotPassword");
             return ResponseEntity.ok().body(new MessageResponse("successForgotPassword"));
         } else {
-//            modelAndView.addObject("message", "This email address does not exist!");
-//            modelAndView.setViewName("error");
             return ResponseEntity.ok().body("email does not exist");
         }
 //        return modelAndView;
