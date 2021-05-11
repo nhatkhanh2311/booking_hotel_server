@@ -28,6 +28,7 @@ public class HotelService {
     public  Hotel  findHotelById (long id){
         return  hotelRepository.findById(id);
     }
+
     public void addHotell(Hotel hotel, List<Image> image, Localization localization, User user){
         hotel.sethOwner(user);
         hotel.setAddress(localization);
@@ -40,4 +41,5 @@ public class HotelService {
         return hotelRepository.findAllByCityName(cityName);
     }
     public List<Hotel> findRandomHotel(){return  hotelRepository.findRandomHotel();}
+
 }

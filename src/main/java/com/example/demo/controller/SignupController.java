@@ -33,15 +33,11 @@ public class SignupController {
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken"));
+            return ResponseEntity.ok(new MessageResponse("username is taken"));
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+            return ResponseEntity.ok(new MessageResponse("email is taken"));
         }
 
         // Create new user's account
@@ -62,7 +58,6 @@ public class SignupController {
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found "));
-
             roles.add(userRole);
         } else {
 
@@ -83,7 +78,6 @@ public class SignupController {
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                         roles.add(userRole);
-
                 }
             });
         }
@@ -91,6 +85,6 @@ public class SignupController {
         userDetail.setUser(user);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("successfull"));
     }
 }

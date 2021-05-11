@@ -1,4 +1,5 @@
 package com.example.demo.entity;
+<<<<<<< HEAD
 
 import java.time.LocalDate;
 
@@ -6,9 +7,11 @@ import java.time.LocalDate;
 
 import java.time.LocalDate;
 
+=======
+
+import java.time.LocalDate;
+>>>>>>> origin/master
 import javax.persistence.*;
-import java.time.LocalDate;
-
 
 @Entity
 public class BookingRoom {
@@ -19,6 +22,7 @@ public class BookingRoom {
 	
 	@ManyToOne
 	private Room room;
+<<<<<<< HEAD
 
 	
 //	@Column(columnDefinition = "DATE")
@@ -28,6 +32,10 @@ public class BookingRoom {
 //	@Column(columnDefinition = "DATE")
 
 
+=======
+
+	private LocalDate start;
+>>>>>>> origin/master
 
 	private LocalDate end;
 	

@@ -39,8 +39,6 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-
-
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     // nhận user pass rồi kiẻm tra để xác thực
@@ -63,9 +61,7 @@ public class AuthController {
                     userDetails.getEmail(),
                     roles));
         }catch (Exception e){
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username or password is incorrect"));
+            return ResponseEntity.ok(new MessageResponse("incorrect"));
         }
 
     }
