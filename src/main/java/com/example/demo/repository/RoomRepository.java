@@ -20,7 +20,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findAllHost(long id);
     Room findById(long id);
 
-
     @Query(value="SELECT * FROM room where availability = 1 and hotel_id = ? order by price desc", nativeQuery=true)
     List<Room> searchRoomPriceDESC (Long hotelId);
 

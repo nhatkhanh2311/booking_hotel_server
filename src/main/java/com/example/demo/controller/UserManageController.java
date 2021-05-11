@@ -53,7 +53,6 @@ public class UserManageController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-//
 //    /*
 //    * API thay doi mat khau
 
