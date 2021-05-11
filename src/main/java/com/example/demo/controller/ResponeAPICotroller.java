@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.entity.*;
 import com.example.demo.payload.reponse.Message;
 import com.example.demo.payload.reponse.MessageResponse;
-import com.example.demo.payload.request.EmailRequest;
 import com.example.demo.payload.request.SearchRequest;
 import com.example.demo.repository.ConfirmationTokenRepository;
 import com.example.demo.repository.UserRepository;
@@ -11,6 +10,7 @@ import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -39,6 +39,9 @@ public class ResponeAPICotroller {
 
     @Autowired
     EmailSenderService emailSenderService;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     @GetMapping("/message")
     public ResponseEntity<?> message() {
@@ -93,9 +96,9 @@ public class ResponeAPICotroller {
         return ResponseEntity.ok(hotelList);
     }
 
-    @GetMapping(value = "/forgot-password")
-    public ResponseEntity<?> forgotUserPassword(@RequestBody EmailRequest emailRequest) {
-        User existingUser = userRepository.findByEmail(emailRequest.getEmail());
+    @GetMapping(value = "/forgot-password/{email}")
+    public ResponseEntity<?> forgotUserPassword(@PathVariable("email") String email) {
+        User existingUser = userRepository.findByEmail(email);
         if (existingUser != null) {
             // Create token
             ConfirmationToken confirmationToken = new ConfirmationToken(existingUser);
@@ -107,9 +110,9 @@ public class ResponeAPICotroller {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(existingUser.getEmail());
             mailMessage.setSubject("Complete Password Reset!");
-            mailMessage.setFrom(emailRequest.getEmail());
+            mailMessage.setFrom(email);
             mailMessage.setText("To complete the password reset process, please click here: "
-                    + "http://localhost:8082/confirm-reset?token="+confirmationToken.getConfirmationToken());
+                    + "https://booking-hotel-server.herokuapp.com/confirm-reset/"+confirmationToken.getConfirmationToken());
 
             // Send the email
             emailSenderService.sendEmail(mailMessage);
@@ -120,8 +123,19 @@ public class ResponeAPICotroller {
         } else {
 //            modelAndView.addObject("message", "This email address does not exist!");
 //            modelAndView.setViewName("error");
-            return ResponseEntity.ok().body("existingUser.getUsername()");
+            return ResponseEntity.ok().body("email does not exist");
         }
 //        return modelAndView;
+    }
+
+    @PostMapping(value = "/confirm-reset/{token}")
+    public ResponseEntity<?> confirmPassword(@PathVariable("token") String token, @RequestParam("password") String passwordRequest) {
+        ConfirmationToken confirmationToken = confirmationTokenRepository.findByConfirmationToken(token);
+        User user = confirmationToken.getUser();
+        user.setPassword(encoder.encode(passwordRequest));
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok().body(new MessageResponse("change password successfully"));
     }
 }
