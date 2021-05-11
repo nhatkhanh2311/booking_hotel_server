@@ -102,10 +102,8 @@ public class ResponeAPICotroller {
         if (existingUser != null) {
             // Create token
             ConfirmationToken confirmationToken = new ConfirmationToken(existingUser);
-
             // Save it
             confirmationTokenRepository.save(confirmationToken);
-
             // Create the email
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(existingUser.getEmail());
