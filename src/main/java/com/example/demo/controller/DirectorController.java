@@ -63,7 +63,6 @@ public class DirectorController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
     }
 
@@ -75,7 +74,6 @@ public class DirectorController {
             if(images == null){
                 ResponseEntity.ok(new MessageResponse("image is empty"));
             }
-
             Hotel hotel = hotelService.findHotelById(hotelId);
             Gson gson = new Gson();
             RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class);
@@ -95,16 +93,15 @@ public class DirectorController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return ResponseEntity.ok(new MessageResponse("add room successfully"));
     }
 
-    @PostMapping(value = "/hotel")
+    @GetMapping(value = "/hotel")
     public ResponseEntity<?> getAllHotel(@RequestHeader("Authorization") String token) {
         String newToken = token.substring(7);
         User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
-
         List<Hotel> hotels = hotelService.findAllHotelByHotelOwnerId(hOwner.getId());
+
         return ResponseEntity.ok().body(hotels);
     }
 
