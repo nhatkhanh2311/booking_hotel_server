@@ -1,25 +1,23 @@
 package com.example.demo.entity;
 
+
+import java.time.LocalDate;
+import java.time.LocalDate;
 import java.time.LocalDate;
 import javax.persistence.*;
 
 @Entity
 public class BookingRoom {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
 	@ManyToOne
 	private Room room;
-
+//	@Column(columnDefinition = "DATE")
 	private LocalDate start;
-
 	private LocalDate end;
-	
 	@OneToOne
 	private User host;
-	
 	//======================
 
 	public long getId() {

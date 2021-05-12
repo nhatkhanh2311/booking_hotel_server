@@ -9,6 +9,7 @@ import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    EmailSenderService emailSenderService;
+
 
 
     @PostMapping(value = "/search/{cityName}")
@@ -84,5 +88,44 @@ public class UserController {
 
 
 
+    @PostMapping("/book/{idRoom}/{from}/{to}")
+    public ResponseEntity<?> booking(@PathVariable("idRoom") long idRoom, @PathVariable("from") String from, @PathVariable("to") String to,@RequestHeader("Authorization") String token) {
 
+        Room room = roomService.findOne(idRoom);
+        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+        if (user != null) {
+            dateService.bookRoom(from, to, idRoom, user); // luu vao bang bôking room
+            List<User> hosts = room.getHost();
+            hosts.add(user);
+            roomService.saveRoom(room);
+
+            // Create the email
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setSubject("Complete booking room ");
+            mailMessage.setText("Dear " + user.getUserDetails().getNameUserDetail() + ",\n" +
+                    "\n" +
+                    "This email is to confirm your booking on " + from +" for the room  at the "+ room.getHotel().getName() +". The check-in date shall be on " + from +" and the check-out date shall be on " + to +".\n" +
+                    "\n" +
+                    "Further details of your booking are listed below:\n" +
+                    "\n" +
+                    "Number of guests: " + room.getCapacity() + " peoples. "+
+                    "\n" +
+                    "Room type: " + room.getType() +
+                    "\n" +
+                    "Total: " + dateService.numberOfDay(to,from) * room.getPrice()+" VND" +
+                    "\n" +
+                    "If you have any inquiries, please do not hesitate to contact me or call the hotel directly.\n" +
+                    "\n" +
+                    "We are looking forward to your visit and hope that you enjoy your stay.\n" +
+                    "\n" +
+                    "Best Regards");
+
+            // Send the email
+            emailSenderService.sendEmail(mailMessage);
+        } else {
+            return ResponseEntity.ok("Please Login");
+        }
+        return ResponseEntity.ok("Done booking");
+    }
 }
