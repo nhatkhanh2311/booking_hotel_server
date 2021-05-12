@@ -127,11 +127,16 @@ public class UserController {
         return ResponseEntity.ok("Done booking");
     }
 
-    @GetMapping(value = "/history-booking")
-    public ResponseEntity<?> historyBooking(@RequestHeader("Authorization") String token) {
-        List<BookingRoom> historyBooking = dateService.getAllDateByHostId((getUserFromToken.getUserByUserNameFromJwt(token.substring(7))).getId());
+    @GetMapping(value = "/history-booking-before")
+    public ResponseEntity<?> historyBookingBefore(@RequestHeader("Authorization") String token) {
+        List<BookingRoom> historyBooking = dateService.getAllDateBeforeNow((getUserFromToken.getUserByUserNameFromJwt(token.substring(7))).getId());
         return ResponseEntity.ok().body(historyBooking);
     }
 
+    @GetMapping(value = "/history-booking-after")
+    public ResponseEntity<?> historyBookingAfter(@RequestHeader("Authorization") String token) {
+        List<BookingRoom> historyBooking = dateService.getAllDateAfterNow(((getUserFromToken.getUserByUserNameFromJwt(token.substring(7))).getId());
+        return ResponseEntity.ok().body(historyBooking);
+    }
 
 }

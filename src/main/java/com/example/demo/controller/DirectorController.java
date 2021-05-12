@@ -106,4 +106,6 @@ public class DirectorController {
         return ResponseEntity.ok().body(hotels);
     }
 
+
+
 }

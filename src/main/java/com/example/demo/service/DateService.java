@@ -100,4 +100,12 @@ public class DateService  {
     public List<BookingRoom> getAllDateByHostId(Long hostId) {
         return dateRepository.findAllByHost_Id(hostId);
     }
+
+    public List<BookingRoom> getAllDateBeforeNow(Long id) {
+        return dateRepository.findAllBookingRoomBeforeNow(id);
+    }
+
+    public List<BookingRoom> getAllDateAfterNow(Long id) {
+        return dateRepository.findAllBookingRoomAfterNow(id);
+    }
 }
