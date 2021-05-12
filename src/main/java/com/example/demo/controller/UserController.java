@@ -135,7 +135,7 @@ public class UserController {
 
     @GetMapping(value = "/history-booking-after")
     public ResponseEntity<?> historyBookingAfter(@RequestHeader("Authorization") String token) {
-        List<BookingRoom> historyBooking = dateService.getAllDateAfterNow(((getUserFromToken.getUserByUserNameFromJwt(token.substring(7))).getId());
+        List<BookingRoom> historyBooking = dateService.getAllDateAfterNow((getUserFromToken.getUserByUserNameFromJwt(token.substring(7))).getId());
         return ResponseEntity.ok().body(historyBooking);
     }
 
