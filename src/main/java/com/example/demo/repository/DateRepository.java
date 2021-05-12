@@ -55,4 +55,9 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
 
     @Query(value = "SELECT DATEDIFF(?1, ?2) from booking_room", nativeQuery = true)
     int numberOfDay(String end, String start);
+
+    @Query(value = "select * from booking_room where host_id= ?", nativeQuery = true)
+    List<BookingRoom> findAllByHost_Id();
+
+    List<BookingRoom> findAllByHost_Id(Long hostId);
 }

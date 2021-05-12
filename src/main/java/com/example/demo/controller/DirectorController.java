@@ -34,62 +34,63 @@ public class DirectorController {
     private RoomService roomService;
 
     @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
-    public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam("images") MultipartFile[] images, @RequestHeader("Authorization") String token){
+    public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam(required = false, name = "images") MultipartFile[] images, @RequestHeader("Authorization") String token){
 
         try {
             String newToken = token.substring(7);
             User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
             if(images == null){
-                ResponseEntity.ok(new MessageResponse("image is empty"));
+                return ResponseEntity.ok(new MessageResponse("image is empty"));
+            } else {
+                List<Image> imageList = imageService.addListImage(images);
+                Gson gson = new Gson();
+                HotelRequest hotelRequest = gson.fromJson(jsonHotel, HotelRequest.class) ;
+
+                Hotel hotel = new Hotel();
+                hotel.sethOwner(hOwner);
+                hotel.setImages(imageList);
+                hotel.setName(hotelRequest.getName());
+
+                Localization localization = new Localization();
+                localization.setCity(hotelRequest.getLocalization().getCity());
+                localization.setCountry(hotelRequest.getLocalization().getCountry());
+                localization.setStreet(hotelRequest.getLocalization().getStreet());
+                hotel.setAddress(localization);
+
+                localizationService.saveLoacation(localization);
+                hotelService.saveHotel(hotel);
+
             }
-
-            List<Image> imageList = imageService.addListImage(images);
-            Gson gson = new Gson();
-            HotelRequest hotelRequest = gson.fromJson(jsonHotel, HotelRequest.class) ;
-
-            Hotel hotel = new Hotel();
-            hotel.sethOwner(hOwner);
-            hotel.setImages(imageList);
-            hotel.setName(hotelRequest.getName());
-
-            Localization localization = new Localization();
-            localization.setCity(hotelRequest.getLocalization().getCity());
-            localization.setCountry(hotelRequest.getLocalization().getCountry());
-            localization.setStreet(hotelRequest.getLocalization().getStreet());
-            hotel.setAddress(localization);
-
-            localizationService.saveLoacation(localization);
-            hotelService.saveHotel(hotel);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
     }
 
     @PostMapping("/hotel/{hotelId}/new-room")
-    public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam("images") MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
+    public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam(name = "images", required = false) MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
         try {
-            List<Image> imageRoomList = imageService.addListImage(images);
-
             if(images == null){
                 ResponseEntity.ok(new MessageResponse("image is empty"));
+            } else {
+                List<Image> imageRoomList = imageService.addListImage(images);
+                Hotel hotel = hotelService.findHotelById(hotelId);
+                Gson gson = new Gson();
+                RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class);
+                Room room = new Room();
+                room.setHotel(hotel);
+                room.setImages(imageRoomList);
+                room.setType(roomRequest.getType());
+                room.setArea(roomRequest.getArea());
+                room.setCapacity(roomRequest.getCapacity());
+                room.setDescription(roomRequest.getDescription());
+                room.setName(roomRequest.getName());
+                room.setPrice(roomRequest.getPrice());
+                room.setAdded(LocalDate.now());
+
+                roomService.saveRoom(room);
             }
-            Hotel hotel = hotelService.findHotelById(hotelId);
-            Gson gson = new Gson();
-            RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class);
-            Room room = new Room();
-            room.setHotel(hotel);
-            room.setImages(imageRoomList);
-            room.setType(roomRequest.getType());
-            room.setArea(roomRequest.getArea());
-            room.setCapacity(roomRequest.getCapacity());
-            room.setDescription(roomRequest.getDescription());
-            room.setName(roomRequest.getName());
-            room.setPrice(roomRequest.getPrice());
-            room.setAdded(LocalDate.now());
-
-            roomService.saveRoom(room);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

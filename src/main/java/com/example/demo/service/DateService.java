@@ -2,22 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.entity.BookingRoom;
 import com.example.demo.entity.User;
-
 import com.example.demo.repository.DateRepository;
 import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.*;
-
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -107,5 +95,9 @@ public class DateService  {
 
     public int numberOfDay(String end, String start){
         return  dateRepository.numberOfDay(end, start);
+    }
+
+    public List<BookingRoom> getAllDateByHostId(Long hostId) {
+        return dateRepository.findAllByHost_Id(hostId);
     }
 }

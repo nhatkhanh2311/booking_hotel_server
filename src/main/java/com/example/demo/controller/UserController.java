@@ -35,6 +35,7 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
     @Autowired
     EmailSenderService emailSenderService;
 
@@ -85,9 +86,6 @@ public class UserController {
         }
     }
 
-
-
-
     @PostMapping("/book/{idRoom}/{from}/{to}")
     public ResponseEntity<?> booking(@PathVariable("idRoom") long idRoom, @PathVariable("from") String from, @PathVariable("to") String to,@RequestHeader("Authorization") String token) {
 
@@ -128,4 +126,12 @@ public class UserController {
         }
         return ResponseEntity.ok("Done booking");
     }
+
+    @GetMapping(value = "/history-booking")
+    public ResponseEntity<?> historyBooking(@RequestHeader("Authorization") String token) {
+        List<BookingRoom> historyBooking = dateService.getAllDateByHostId((getUserFromToken.getUserByUserNameFromJwt(token.substring(7))).getId());
+        return ResponseEntity.ok().body(historyBooking);
+    }
+
+
 }

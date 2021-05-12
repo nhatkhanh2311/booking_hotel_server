@@ -4,8 +4,10 @@ import com.example.demo.entity.*;
 import com.example.demo.payload.reponse.Message;
 import com.example.demo.payload.reponse.MessageResponse;
 import com.example.demo.payload.request.SearchRequest;
+import com.example.demo.payload.request.UpdateInformationRequest;
 import com.example.demo.repository.ConfirmationTokenRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +44,9 @@ public class ResponeAPICotroller {
 
     @Autowired
     PasswordEncoder encoder;
+
+    @Autowired
+    GetUserFromToken getUserFromToken;
 
     @GetMapping("/message")
     public ResponseEntity<?> message() {
@@ -129,5 +134,25 @@ public class ResponeAPICotroller {
         userRepository.save(user);
 
         return ResponseEntity.ok().body(new MessageResponse("change password successfully"));
+    }
+
+    @PostMapping(value = "/update-information")
+    public ResponseEntity<?> updateInformation(@RequestHeader("Authorization") String token) {
+        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+        return ResponseEntity.ok().body(user);
+    }
+
+    @PostMapping(value = "/update-information/save")
+    public ResponseEntity<?> updateInformation(@RequestHeader("Authorization") String token, @RequestBody UpdateInformationRequest userRequest) {
+        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+        user.setPassword(encoder.encode(userRequest.getPassword()));
+        UserDetail userDetail = user.getUserDetails();
+        userDetail.setBirth(userRequest.getBirth());
+        userDetail.setNameUserDetail(userRequest.getNameUserDetail());
+        userDetail.setPhoneNumber(userRequest.getPhoneNumber());
+        user.setUserDetail(userDetail);
+
+        userRepository.save(user);
+        return ResponseEntity.ok().body("Update successfully");
     }
 }

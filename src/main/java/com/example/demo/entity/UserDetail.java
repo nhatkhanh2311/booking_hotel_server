@@ -1,7 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -30,7 +30,7 @@ public class UserDetail {
     @Column(name = "Birth", nullable = true)
     private Date birth;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "userId", nullable = false)
