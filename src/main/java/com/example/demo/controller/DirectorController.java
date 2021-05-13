@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
+@CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "*")
 @RestController
 @RequestMapping("/director")
 public class DirectorController {
@@ -34,7 +34,7 @@ public class DirectorController {
     @Autowired
     private RoomService roomService;
 
-    @GetMapping(value = "/hotel/new-hotel")
+    @GetMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
     public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam(required = false, name = "images") MultipartFile[] images, @RequestHeader("Authorization") String token){
 
         try {
@@ -68,7 +68,7 @@ public class DirectorController {
         return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
     }
 
-    @GetMapping("/hotel/{hotelId}/new-room")
+    @PostMapping("/hotel/{hotelId}/new-room")
     public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam(name = "images", required = false) MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
         try {
             if(images == null){
