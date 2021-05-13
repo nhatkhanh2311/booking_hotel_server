@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.entity.BookingRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -65,5 +66,12 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
 
     @Query(value = "select * from booking_room where start > current_date() and host_id= ?", nativeQuery = true)
     List<BookingRoom> findAllBookingRoomAfterNow(Long id);
+
+    @Modifying
+    @Query(value = "delete from booking_room where id = ?", nativeQuery = true)
+    void huyBooking (Long boookingId);
+
+    @Query(value = "SELECT * FROM heroku_bd7e4e64ef299dd.booking_room where id = ?1", nativeQuery = true)
+    BookingRoom findBookingById (Long bookingId);
 
 }
