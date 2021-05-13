@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
 @RestController
 @RequestMapping("/director")
 public class DirectorController {
@@ -65,7 +65,6 @@ public class DirectorController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
     }
 

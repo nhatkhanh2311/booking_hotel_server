@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
 @RestController
 public class SignupController {
     @Autowired
