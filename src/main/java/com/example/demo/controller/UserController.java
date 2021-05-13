@@ -10,6 +10,7 @@ import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -101,7 +102,7 @@ public class UserController {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(user.getEmail());
             mailMessage.setSubject("Complete booking room ");
-            mailMessage.setText("Dear " + user.getUserDetails().getNameUserDetail() + ",\n" +
+            mailMessage.setText("Dear Mr/Ms " + user.getUserDetails().getNameUserDetail() + ",\n" +
                     "\n" +
                     "This email is to confirm your booking on " + from +" for the room  at the "+ room.getHotel().getName() +". The check-in date shall be on " + from +" and the check-out date shall be on " + to +".\n" +
                     "\n" +
@@ -139,4 +140,28 @@ public class UserController {
         return ResponseEntity.ok().body(historyBooking);
     }
 
+    @Transactional
+    @PostMapping(value = "/cancelBooing/{bookingId}")
+    public ResponseEntity<?> cancelBooking(@PathVariable("bookingId") Long bookingId, @RequestHeader("Authorization") String token){
+        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+        BookingRoom bookingRoom = dateService.findOneBooking(bookingId);
+        Room room = roomService.findOne(bookingRoom.getRoom().getId());
+        // Create the email
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Complete cancel booking room ");
+        mailMessage.setText(
+                "Dear Mr/Ms " + user.getUserDetails().getNameUserDetail() +",\n"
+                + "You complete cancel the room " + room.getName() + " at the " + room.getHotel().getName() + " from: " + bookingRoom.getStart() + " to: " + bookingRoom.getEnd() +"\n"
+                + "We hope you enjoy when you use my serviece, Thank you!"
+
+        );
+        // Send the email
+        emailSenderService.sendEmail(mailMessage);
+
+        dateService.huyBooking(bookingId);
+
+        return ResponseEntity.ok("complete Cancel");
+
+    }
 }
