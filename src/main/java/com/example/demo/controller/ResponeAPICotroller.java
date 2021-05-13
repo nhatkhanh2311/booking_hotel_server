@@ -61,9 +61,34 @@ public class ResponeAPICotroller {
         messageResponses.add(new Message("thêm mới hotel thành công", "add hotel successfully"));
         messageResponses.add(new Message("thêm mới room thành công", "add room successfully"));
 
-        return ResponseEntity.ok().body(messageResponses);
+        List<Message> apiList = new ArrayList<>();
+        apiList.add(new Message("signin", "https://booking-hotel-server.herokuapp.com/signin"));
+        apiList.add(new Message("signup", "https://booking-hotel-server.herokuapp.com/signup"));
+        apiList.add(new Message("director - list hotels", "https://booking-hotel-server.herokuapp.com/director/hotel"));
+        apiList.add(new Message("director - new hotel", "https://booking-hotel-server.herokuapp.com/director/hotel/new-hotel"));
+        apiList.add(new Message("director - new room", "https://booking-hotel-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
+        apiList.add(new Message("search", "https://booking-hotel-server.herokuapp.com/search"));
+        apiList.add(new Message("user - booking", "https://booking-hotel-server.herokuapp.com/user/booking"));
+        apiList.add(new Message("user - cancel booking", "https://booking-hotel-server.herokuapp.com/user/cancelBooing/{bookingId}"));
+
+        return ResponseEntity.ok().body(messageResponses + "\n" + "\n" + "\n" + apiList);
     }
 
+    @GetMapping("/apiList")
+    public ResponseEntity<?> apiList() {
+
+        List<Message> apiList = new ArrayList<>();
+        apiList.add(new Message("signin", "https://booking-hotel-server.herokuapp.com/signin"));
+        apiList.add(new Message("signup", "https://booking-hotel-server.herokuapp.com/signup"));
+        apiList.add(new Message("director - list hotels", "https://booking-hotel-server.herokuapp.com/director/hotel"));
+        apiList.add(new Message("director - new hotel", "https://booking-hotel-server.herokuapp.com/director/hotel/new-hotel"));
+        apiList.add(new Message("director - new room", "https://booking-hotel-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
+        apiList.add(new Message("search", "https://booking-hotel-server.herokuapp.com/search"));
+        apiList.add(new Message("user - booking", "https://booking-hotel-server.herokuapp.com/user/booking"));
+        apiList.add(new Message("user - cancel booking", "https://booking-hotel-server.herokuapp.com/user/cancelBooing/{bookingId}"));
+
+        return ResponseEntity.ok().body( apiList);
+    }
 
 
     @PostMapping(value = "/search2")

@@ -34,7 +34,7 @@ public class DirectorController {
     @Autowired
     private RoomService roomService;
 
-    @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
+    @GetMapping(value = "/hotel/new-hotel")
     public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam(required = false, name = "images") MultipartFile[] images, @RequestHeader("Authorization") String token){
 
         try {
@@ -68,7 +68,7 @@ public class DirectorController {
         return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
     }
 
-    @PostMapping("/hotel/{hotelId}/new-room")
+    @GetMapping("/hotel/{hotelId}/new-room")
     public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam(name = "images", required = false) MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
         try {
             if(images == null){
