@@ -34,7 +34,7 @@ public class DirectorController {
     @Autowired
     private RoomService roomService;
 
-    @GetMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
+    @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
     public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam(required = false, name = "images") MultipartFile[] images, @RequestHeader("Authorization") String token){
 
         try {
