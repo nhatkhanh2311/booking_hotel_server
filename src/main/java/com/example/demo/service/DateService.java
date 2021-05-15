@@ -6,9 +6,11 @@ import com.example.demo.repository.DateRepository;
 import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 
 @Service
 public class DateService  {
@@ -73,6 +75,7 @@ public class DateService  {
         dateRepository.save(bookingRoom);
     }
 
+
     /** Gives Date for room where host is given by id/
      * @param room - id of the room.
      * @param host - id of user who is a host in the room.
@@ -89,4 +92,24 @@ public class DateService  {
     public void saveBooking(BookingRoom bookingRoom) {
         dateRepository.save(bookingRoom);
     }
+
+    public int numberOfDay(String end, String start){
+        return  dateRepository.numberOfDay(end, start);
+    }
+
+    public List<BookingRoom> getAllDateByHostId(Long hostId) {
+        return dateRepository.findAllByHost_Id(hostId);
+    }
+
+    public List<BookingRoom> getAllDateBeforeNow(Long id) {
+        return dateRepository.findAllBookingRoomBeforeNow(id);
+    }
+
+    public List<BookingRoom> getAllDateAfterNow(Long id) {
+        return dateRepository.findAllBookingRoomAfterNow(id);
+    }
+
+    public void huyBooking(Long bookingId){dateRepository.huyBooking(bookingId);}
+
+    public  BookingRoom findOneBooking(Long bookingId){ return dateRepository.findBookingById(bookingId);}
 }

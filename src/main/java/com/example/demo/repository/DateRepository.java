@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.entity.BookingRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -41,15 +42,36 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
     BookingRoom findByRoomIdAndHostId(long room, long host);
 
 
+
     @Query(value="select * from booking_room where" +
             "(DATE(end) BETWEEN ? AND ?) or " +
             "(DATE(start) between ? AND ?)", nativeQuery=true)
     List<BookingRoom> findRoomByDateBooking(LocalDate startDate, LocalDate endDate, LocalDate startDate1, LocalDate endDate1);
+
 
     @Query(value="SELECT * FROM booking_room where id not in (select id from booking_room where" +
             "(DATE(end) BETWEEN ? AND ?) or " +
             "(DATE(start) between ? AND ?))", nativeQuery=true)
     List<BookingRoom> findRoomByDateBooking(Date startDate, Date endDate, Date startDate1, Date endDate1);
 
+    @Query(value = "SELECT DATEDIFF(?1, ?2) from booking_room", nativeQuery = true)
+    int numberOfDay(String end, String start);
+
+    @Query(value = "select * from booking_room where host_id= ?", nativeQuery = true)
+    List<BookingRoom> findAllByHost_Id(Long id);
+
+
+    @Query(value = "select * from booking_room where start < current_date() and host_id= ?", nativeQuery = true)
+    List<BookingRoom> findAllBookingRoomBeforeNow(Long id);
+
+    @Query(value = "select * from booking_room where start > current_date() and host_id= ?", nativeQuery = true)
+    List<BookingRoom> findAllBookingRoomAfterNow(Long id);
+
+    @Modifying
+    @Query(value = "delete from booking_room where id = ?", nativeQuery = true)
+    void huyBooking (Long boookingId);
+
+    @Query(value = "SELECT * FROM heroku_bd7e4e64ef299dd.booking_room where id = ?1", nativeQuery = true)
+    BookingRoom findBookingById (Long bookingId);
 
 }

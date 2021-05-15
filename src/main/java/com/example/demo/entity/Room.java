@@ -34,6 +34,7 @@ public class Room {
 	private Hotel hotel;
 
 	@ManyToMany
+	@JsonBackReference
 	private List<User> host;
 
 	private boolean promoted = false;
@@ -55,9 +56,6 @@ public class Room {
 	public Room() {
 
 	}
-
-	// ------------------------------------------
-
 
 	public long getId() {
 		return id;

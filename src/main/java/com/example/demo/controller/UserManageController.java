@@ -1,21 +1,17 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.User;
-import com.example.demo.exception.TaiKhoanNotFoundException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.service.UserService;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
 @RestController
 @RequestMapping("/user-management")
 public class UserManageController {

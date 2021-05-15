@@ -6,7 +6,6 @@ import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import java.util.List;
 public class RoomService {
     @Autowired
     private RoomRepository roomRepository;
+
     @Autowired
     private DateService dateService;
 
@@ -30,6 +30,7 @@ public class RoomService {
     public List<Room> getAllRoomByHotelId(Long id) {
        return roomRepository.findAllRoomByHotelId(id);
     }
+
     public Room findOne(Long idRoom){
         return roomRepository.getOne(idRoom);
     }
@@ -43,8 +44,8 @@ public class RoomService {
     }
 
     public  List<Room> findAllRoomByCityAndCapacity(String cityName, int capacity){
-        List<Room> rooms = roomRepository.findAllRoomByCapacityAnCity(cityName, capacity);
-        return rooms;
+        List<Room> roomResponses = roomRepository.findAllRoomByCapacityAnCity(cityName, capacity);
+        return roomResponses;
     }
 
     /** Gives list of rooms that are available in exact period of time, with given capacity and located in city.
@@ -60,8 +61,6 @@ public class RoomService {
         for (Room room : findAllRoomByCityAndCapacity(city, capacity)) {
 
             List<BookingRoom> bookingRooms = dateService.findAllRoomById(room.getId());
-            System.out.println(bookingRooms.get(0).getStart() + "_______________start________________ ");
-            System.out.println(bookingRooms.get(0).getEnd() + "______________end_________________ ");
             if (bookingRooms.size() == 0) {
                 listRoomFreeInPeriodtime.add(room);
 

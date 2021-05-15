@@ -4,8 +4,10 @@ import com.example.demo.entity.*;
 import com.example.demo.payload.reponse.Message;
 import com.example.demo.payload.reponse.MessageResponse;
 import com.example.demo.payload.request.SearchRequest;
+import com.example.demo.payload.request.UpdateInformationRequest;
 import com.example.demo.repository.ConfirmationTokenRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class ResponeAPICotroller {
 
@@ -43,6 +46,9 @@ public class ResponeAPICotroller {
     @Autowired
     PasswordEncoder encoder;
 
+    @Autowired
+    GetUserFromToken getUserFromToken;
+
     @GetMapping("/message")
     public ResponseEntity<?> message() {
         List<Message> messageResponses = new ArrayList<>();
@@ -58,6 +64,22 @@ public class ResponeAPICotroller {
         return ResponseEntity.ok().body(messageResponses);
     }
 
+    @GetMapping("/apiList")
+    public ResponseEntity<?> apiList() {
+
+        List<Message> apiList = new ArrayList<>();
+        apiList.add(new Message("signin", "https://hotels-booking-server.herokuapp.com/signin"));
+        apiList.add(new Message("signup", "https://hotels-booking-server.herokuapp.com/signup"));
+        apiList.add(new Message("director - list hotels", "https://hotels-booking-server.herokuapp.com/director/hotel"));
+        apiList.add(new Message("director - new hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/new-hotel"));
+        apiList.add(new Message("director - list room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}"));
+        apiList.add(new Message("director - new room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
+        apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search"));
+        apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/booking"));
+        apiList.add(new Message("user - cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooing/{bookingId}"));
+
+        return ResponseEntity.ok().body( apiList);
+    }
 
 
     @PostMapping(value = "/search2")
@@ -96,23 +118,20 @@ public class ResponeAPICotroller {
         return ResponseEntity.ok(hotelList);
     }
 
-    @GetMapping(value = "/forgot-password/{email}")
+    @PostMapping(value = "/forgot-password/{email}")
     public ResponseEntity<?> forgotUserPassword(@PathVariable("email") String email) {
         User existingUser = userRepository.findByEmail(email);
         if (existingUser != null) {
             // Create token
             ConfirmationToken confirmationToken = new ConfirmationToken(existingUser);
-
             // Save it
             confirmationTokenRepository.save(confirmationToken);
-
             // Create the email
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(existingUser.getEmail());
             mailMessage.setSubject("Complete Password Reset!");
-            mailMessage.setFrom(email);
             mailMessage.setText("To complete the password reset process, please click here: "
-                    + "https://booking-hotel-server.herokuapp.com/confirm-reset/"+confirmationToken.getConfirmationToken());
+                    + "https://hotels-booking-server.herokuapp.com/confirm-reset/"+confirmationToken.getConfirmationToken());
 
             // Send the email
             emailSenderService.sendEmail(mailMessage);
@@ -132,5 +151,25 @@ public class ResponeAPICotroller {
         userRepository.save(user);
 
         return ResponseEntity.ok().body(new MessageResponse("change password successfully"));
+    }
+
+    @GetMapping(value = "/update-information")
+    public ResponseEntity<?> updateInformation(@RequestHeader("Authorization") String token) {
+        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+        return ResponseEntity.ok().body(user);
+    }
+
+    @PostMapping(value = "/update-information/save")
+    public ResponseEntity<?> updateInformation(@RequestHeader("Authorization") String token, @RequestBody UpdateInformationRequest userRequest) {
+        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+        user.setPassword(encoder.encode(userRequest.getPassword()));
+        UserDetail userDetail = user.getUserDetails();
+        userDetail.setBirth(userRequest.getBirth());
+        userDetail.setNameUserDetail(userRequest.getNameUserDetail());
+        userDetail.setPhoneNumber(userRequest.getPhoneNumber());
+        user.setUserDetail(userDetail);
+
+        userRepository.save(user);
+        return ResponseEntity.ok().body("Update successfully");
     }
 }

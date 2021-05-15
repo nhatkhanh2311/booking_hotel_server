@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 public class SignupController {
     @Autowired
