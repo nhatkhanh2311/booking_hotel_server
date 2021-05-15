@@ -35,7 +35,7 @@ public class DirectorController {
     private RoomService roomService;
 
     @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
-    public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam(required = false, name = "images") MultipartFile[] images, @RequestHeader("Authorization") String token){
+    public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam(required = false, name = "images") MultipartFile[] images, @RequestParam("Authorization") String token){
 
         try {
             String newToken = token.substring(7);
