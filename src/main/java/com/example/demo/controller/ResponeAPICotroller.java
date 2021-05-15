@@ -72,6 +72,7 @@ public class ResponeAPICotroller {
         apiList.add(new Message("signup", "https://hotels-booking-server.herokuapp.com/signup"));
         apiList.add(new Message("director - list hotels", "https://hotels-booking-server.herokuapp.com/director/hotel"));
         apiList.add(new Message("director - new hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/new-hotel"));
+        apiList.add(new Message("director - list room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}"));
         apiList.add(new Message("director - new room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
         apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search"));
         apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/booking"));
