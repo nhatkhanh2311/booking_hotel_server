@@ -34,6 +34,15 @@ public class DirectorController {
     @Autowired
     private RoomService roomService;
 
+    @GetMapping(value = "/hotel")
+    public ResponseEntity<?> getAllHotel(@RequestHeader("Authorization") String token) {
+        String newToken = token.substring(7);
+        User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
+        List<Hotel> hotels = hotelService.findAllHotelByHotelOwnerId(hOwner.getId());
+
+        return ResponseEntity.ok().body(hotels);
+    }
+
     @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
     public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam(required = false, name = "images") MultipartFile[] images, @RequestParam("Authorization") String token){
 
@@ -51,6 +60,7 @@ public class DirectorController {
                 hotel.sethOwner(hOwner);
                 hotel.setImages(imageList);
                 hotel.setName(hotelRequest.getName());
+                hotel.setStandard(hotelRequest.getStandard());
 
                 Localization localization = new Localization();
                 localization.setCity(hotelRequest.getLocalization().getCity());
@@ -60,12 +70,16 @@ public class DirectorController {
 
                 localizationService.saveLoacation(localization);
                 hotelService.saveHotel(hotel);
-
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
+    }
+
+    @GetMapping(value = "/hotel/{hotelId}")
+    public ResponseEntity<?> getAllRoom(@PathVariable("hotelId") Long hotelId) {
+        return ResponseEntity.ok().body(roomService.getAllRoomByHotelId(hotelId));
     }
 
     @PostMapping("/hotel/{hotelId}/new-room")
@@ -97,14 +111,6 @@ public class DirectorController {
         return ResponseEntity.ok(new MessageResponse("add room successfully"));
     }
 
-    @GetMapping(value = "/hotel")
-    public ResponseEntity<?> getAllHotel(@RequestHeader("Authorization") String token) {
-        String newToken = token.substring(7);
-        User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
-        List<Hotel> hotels = hotelService.findAllHotelByHotelOwnerId(hOwner.getId());
-
-        return ResponseEntity.ok().body(hotels);
-    }
 
 
 
