@@ -60,16 +60,7 @@ public class DirectorController {
                 hotel.sethOwner(hOwner);
                 hotel.setImages(imageList);
                 hotel.setName(hotelRequest.getName());
-<<<<<<< HEAD
-<<<<<<< HEAD
-//                hotel.setStandard(hotelRequest.getStandard());
-=======
                 hotel.setStandard(hotelRequest.getStandard());
->>>>>>> master
-=======
-                hotel.setStandard(hotelRequest.getStandard());
-
->>>>>>> 492a98c2f8ca0fc5b8a123179f94ca5907890601
 
                 Localization localization = new Localization();
                 localization.setCity(hotelRequest.getLocalization().getCity());
@@ -86,33 +77,10 @@ public class DirectorController {
         return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    @GetMapping(value = "/hotel")
-    public ResponseEntity<?> getAllHotel(@RequestHeader("Authorization") String token) {
-        String newToken = token.substring(7);
-        User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
-        List<Hotel> hotels = hotelService.findAllHotelByHotelOwnerId(hOwner.getId());
-
-        return ResponseEntity.ok().body(hotels);
-    }
-//    @GetMapping(value = "/hotel/{hotelId}")
-//    public ResponseEntity<?> getAllRoomByHotelId(@PathVariable("hotelId") Long hotelId){
-//        List<Room> roomOfHotel = roomService.getAllRoomByHotelId(hotelId);
-//        return ResponseEntity.ok().body(roomOfHotel);
-//    }
-=======
-=======
-
->>>>>>> 492a98c2f8ca0fc5b8a123179f94ca5907890601
     @GetMapping(value = "/hotel/{hotelId}")
     public ResponseEntity<?> getAllRoom(@PathVariable("hotelId") Long hotelId) {
         return ResponseEntity.ok().body(roomService.getAllRoomByHotelId(hotelId));
     }
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> 492a98c2f8ca0fc5b8a123179f94ca5907890601
 
     @PostMapping("/hotel/{hotelId}/new-room")
     public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam(name = "images", required = false) MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
@@ -142,8 +110,4 @@ public class DirectorController {
         }
         return ResponseEntity.ok(new MessageResponse("add room successfully"));
     }
-
-
-
-
 }
