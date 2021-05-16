@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
+@CrossOrigin(origins = "*")
 @RestController
 public class ResponeAPICotroller {
 
@@ -61,31 +61,26 @@ public class ResponeAPICotroller {
         messageResponses.add(new Message("thêm mới hotel thành công", "add hotel successfully"));
         messageResponses.add(new Message("thêm mới room thành công", "add room successfully"));
 
-        List<Message> apiList = new ArrayList<>();
-        apiList.add(new Message("signin", "https://booking-hotel-server.herokuapp.com/signin"));
-        apiList.add(new Message("signup", "https://booking-hotel-server.herokuapp.com/signup"));
-        apiList.add(new Message("director - list hotels", "https://booking-hotel-server.herokuapp.com/director/hotel"));
-        apiList.add(new Message("director - new hotel", "https://booking-hotel-server.herokuapp.com/director/hotel/new-hotel"));
-        apiList.add(new Message("director - new room", "https://booking-hotel-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
-        apiList.add(new Message("search", "https://booking-hotel-server.herokuapp.com/search"));
-        apiList.add(new Message("user - booking", "https://booking-hotel-server.herokuapp.com/user/booking"));
-        apiList.add(new Message("user - cancel booking", "https://booking-hotel-server.herokuapp.com/user/cancelBooing/{bookingId}"));
-
-        return ResponseEntity.ok().body(messageResponses + "\n" + "\n" + "\n" + apiList);
+        return ResponseEntity.ok().body(messageResponses);
     }
 
     @GetMapping("/apiList")
     public ResponseEntity<?> apiList() {
 
         List<Message> apiList = new ArrayList<>();
-        apiList.add(new Message("signin", "https://booking-hotel-server.herokuapp.com/signin"));
-        apiList.add(new Message("signup", "https://booking-hotel-server.herokuapp.com/signup"));
-        apiList.add(new Message("director - list hotels", "https://booking-hotel-server.herokuapp.com/director/hotel"));
-        apiList.add(new Message("director - new hotel", "https://booking-hotel-server.herokuapp.com/director/hotel/new-hotel"));
-        apiList.add(new Message("director - new room", "https://booking-hotel-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
-        apiList.add(new Message("search", "https://booking-hotel-server.herokuapp.com/search"));
-        apiList.add(new Message("user - booking", "https://booking-hotel-server.herokuapp.com/user/booking"));
-        apiList.add(new Message("user - cancel booking", "https://booking-hotel-server.herokuapp.com/user/cancelBooing/{bookingId}"));
+        apiList.add(new Message("signin", "https://hotels-booking-server.herokuapp.com/signin"));
+        apiList.add(new Message("signup", "https://hotels-booking-server.herokuapp.com/signup"));
+        apiList.add(new Message("director - list hotels", "https://hotels-booking-server.herokuapp.com/director/hotel"));
+        apiList.add(new Message("director - new hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/new-hotel"));
+        apiList.add(new Message("director - list room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}"));
+        apiList.add(new Message("director - new room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
+        apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search"));
+        apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/booking"));
+        apiList.add(new Message("user - cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooing/{bookingId}"));
+        apiList.add(new Message("get information to update", "https://hotels-booking-server.herokuapp.com/update-information"));
+        apiList.add(new Message("save update-information", "https://hotels-booking-server.herokuapp.com/update-information/save"));
+        apiList.add(new Message("forgot password", "https://hotels-booking-server.herokuapp.com/forgot-password/{email}"));
+        apiList.add(new Message("reset password", "https://hotels-booking-server.herokuapp.com/confirm-reset/{token}"));
 
         return ResponseEntity.ok().body( apiList);
     }
@@ -127,7 +122,7 @@ public class ResponeAPICotroller {
         return ResponseEntity.ok(hotelList);
     }
 
-    @GetMapping(value = "/forgot-password/{email}")
+    @PostMapping(value = "/forgot-password/{email}")
     public ResponseEntity<?> forgotUserPassword(@PathVariable("email") String email) {
         User existingUser = userRepository.findByEmail(email);
         if (existingUser != null) {
@@ -140,7 +135,7 @@ public class ResponeAPICotroller {
             mailMessage.setTo(existingUser.getEmail());
             mailMessage.setSubject("Complete Password Reset!");
             mailMessage.setText("To complete the password reset process, please click here: "
-                    + "https://booking-hotel-server.herokuapp.com/confirm-reset/"+confirmationToken.getConfirmationToken());
+                    + "https://hotels-booking-server.herokuapp.com/confirm-reset/"+confirmationToken.getConfirmationToken());
 
             // Send the email
             emailSenderService.sendEmail(mailMessage);
@@ -162,7 +157,7 @@ public class ResponeAPICotroller {
         return ResponseEntity.ok().body(new MessageResponse("change password successfully"));
     }
 
-    @PostMapping(value = "/update-information")
+    @GetMapping(value = "/update-information")
     public ResponseEntity<?> updateInformation(@RequestHeader("Authorization") String token) {
         User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
         return ResponseEntity.ok().body(user);

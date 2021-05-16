@@ -2,12 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.entity.BookingRoom;
 import com.example.demo.entity.Room;
-import com.example.demo.payload.reponse.RoomResponse;
 import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +30,7 @@ public class RoomService {
     public List<Room> getAllRoomByHotelId(Long id) {
        return roomRepository.findAllRoomByHotelId(id);
     }
+
     public Room findOne(Long idRoom){
         return roomRepository.getOne(idRoom);
     }
