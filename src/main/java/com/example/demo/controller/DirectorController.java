@@ -61,10 +61,15 @@ public class DirectorController {
                 hotel.setImages(imageList);
                 hotel.setName(hotelRequest.getName());
 <<<<<<< HEAD
+<<<<<<< HEAD
 //                hotel.setStandard(hotelRequest.getStandard());
 =======
                 hotel.setStandard(hotelRequest.getStandard());
 >>>>>>> master
+=======
+                hotel.setStandard(hotelRequest.getStandard());
+
+>>>>>>> 492a98c2f8ca0fc5b8a123179f94ca5907890601
 
                 Localization localization = new Localization();
                 localization.setCity(hotelRequest.getLocalization().getCity());
@@ -82,6 +87,7 @@ public class DirectorController {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     @GetMapping(value = "/hotel")
     public ResponseEntity<?> getAllHotel(@RequestHeader("Authorization") String token) {
         String newToken = token.substring(7);
@@ -96,11 +102,17 @@ public class DirectorController {
 //        return ResponseEntity.ok().body(roomOfHotel);
 //    }
 =======
+=======
+
+>>>>>>> 492a98c2f8ca0fc5b8a123179f94ca5907890601
     @GetMapping(value = "/hotel/{hotelId}")
     public ResponseEntity<?> getAllRoom(@PathVariable("hotelId") Long hotelId) {
         return ResponseEntity.ok().body(roomService.getAllRoomByHotelId(hotelId));
     }
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> 492a98c2f8ca0fc5b8a123179f94ca5907890601
 
     @PostMapping("/hotel/{hotelId}/new-room")
     public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam(name = "images", required = false) MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
