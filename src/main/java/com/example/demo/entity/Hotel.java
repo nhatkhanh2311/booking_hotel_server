@@ -36,8 +36,7 @@ public class Hotel {
 	private User hOwner;
 
 	@JsonManagedReference
-	@OneToMany
-	@MapKeyColumn(name = "id")
+	@OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
 	private List<Room> rooms;
 
 	@JsonManagedReference

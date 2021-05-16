@@ -2,13 +2,11 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.*;
 import com.example.demo.payload.reponse.MessageResponse;
+import com.example.demo.payload.reponse.ThongKeDirector;
 import com.example.demo.payload.request.HotelRequest;
 import com.example.demo.payload.request.RoomRequest;
 import com.example.demo.security.jwt.GetUserFromToken;
-import com.example.demo.service.HotelService;
-import com.example.demo.service.ImageService;
-import com.example.demo.service.LocalizationService;
-import com.example.demo.service.RoomService;
+import com.example.demo.service.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +31,10 @@ public class DirectorController {
     private GetUserFromToken getUserFromToken;
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private DateService dateService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping(value = "/hotel")
     public ResponseEntity<?> getAllHotel(@RequestHeader("Authorization") String token) {
@@ -102,12 +104,17 @@ public class DirectorController {
                 room.setName(roomRequest.getName());
                 room.setPrice(roomRequest.getPrice());
                 room.setAdded(LocalDate.now());
-
                 roomService.saveRoom(room);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return ResponseEntity.ok(new MessageResponse("add room successfully"));
+    }
+
+    @GetMapping("/hotel/thongke/{hotelId}/{month}")
+    public ResponseEntity<?> thongKeDirector(@PathVariable("hotelId") Long hotelId, @PathVariable("month") int month){
+        List<ThongKeDirector> thongKeDirectors = dateService.thongKeDirectors(hotelId,month);
+       return  ResponseEntity.ok().body(thongKeDirectors);
     }
 }

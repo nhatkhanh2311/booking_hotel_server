@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.BookingRoom;
+import com.example.demo.payload.reponse.ThongKeDirector;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -73,5 +74,8 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
 
     @Query(value = "SELECT * FROM heroku_bd7e4e64ef299dd.booking_room where id = ?1", nativeQuery = true)
     BookingRoom findBookingById (Long bookingId);
+
+    @Query(value = "SELECT booking_room.end, booking_room.start, room.name, booking_room.host_id,  datediff(end,start)*room.price as totalPrice FROM room  join booking_room   on booking_room.room_id = room.id where room.hotel_id = ?1 and month(start) = ?2", nativeQuery = true)
+    List<ThongKeDirector> thongKeDirector (Long hotelId, int month);
 
 }

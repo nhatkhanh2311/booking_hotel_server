@@ -30,6 +30,7 @@ public class Room {
 	private List<BookingRoom> bookingRoom;
 
 	@ManyToOne
+	@JoinColumn(name = "hotelId")
 	@JsonBackReference
 	private Hotel hotel;
 
