@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.Hotel;
 import com.example.demo.entity.Localization;
 import com.example.demo.entity.Room;
+import com.example.demo.payload.reponse.ThongKeKhachSanResponse;
 import com.example.demo.repository.LocalizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,8 @@ public class LocalizationService {
 
     public void saveLoacation (Localization localization){
         localizationRepository.save(localization);
+    }
+    public List<ThongKeKhachSanResponse> thongKeKhachSan(){
+        return localizationRepository.thongKeKhachSan();
     }
 }
