@@ -1,8 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.User;
+import com.example.demo.entity.UserDetail;
 import com.example.demo.exception.UserNotFoundException;
+import com.example.demo.payload.reponse.ThongKeKhachSanResponse;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.security.jwt.JwtUtils;
+import com.example.demo.service.LocalizationService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,9 +15,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
 @RestController
-@RequestMapping("/user-management")
+@RequestMapping("/admin")
 public class UserManageController {
 @Autowired
     UserService userService;
@@ -21,25 +27,40 @@ public class UserManageController {
     JwtUtils jwtUtils;
 @Autowired
     GetUserFromToken getUserFromToken;
-/*
-* API lock tai khoan
-*/
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/authorized/user/lock/{userId}")
-    public ResponseEntity<Void> khoaTaiKhoan(@PathVariable long userId){
-        try {
-            userService.lockUser(userId);
-        }catch (UserNotFoundException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't find this account on database", e);
-        }
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
 
+@Autowired
+    LocalizationService localizationService;
+///*
+//* API lock tai khoan
+//*/
+//    @PreAuthorize("hasRole('ADMIN')")
+//    @PutMapping("/authorized/user/lock/{userId}")
+//    public ResponseEntity<Void> khoaTaiKhoan(@PathVariable long userId){
+//        try {
+//            userService.lockUser(userId);
+//        }catch (UserNotFoundException e){
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't find this account on database", e);
+//        }
+//        return new ResponseEntity<Void>(HttpStatus.OK);
+//    }
+
+    /*
+    * Tat ca cac director da dang ky nhung tai khoan chua dc mo
+    * */
+    @GetMapping("/getDirector")
+    public ResponseEntity<?> directorLookFalse(){
+        List<User> listDirector = userService.findDirectorLookFalse();
+        return ResponseEntity.ok().body(listDirector);
+    }
+    @GetMapping("/getDirector/view/{directorId}")
+    public ResponseEntity<?> viewDirector(@PathVariable("directorId") Long directorId){
+        UserDetail directorDetails = userService.findOne(directorId);
+        return ResponseEntity.ok().body(directorDetails);
+    }
     /*
     * API unlock tai khoan
     */
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/authorized/user/unlock/{userId}")
+    @PutMapping("/getDirector/unlock/{userId}")
     public ResponseEntity<Void> moKhoaTaiKhoan(@PathVariable long userId){
         try {
             userService.UnlockUser(userId);
@@ -49,37 +70,9 @@ public class UserManageController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-//    /*
-//    * API thay doi mat khau
-
-//    @PreAuthorize("hasAnyRole('ADMIN', 'DIRECTOR', 'USER')")
-//    @PutMapping("/authorized/user/change/{userId}")
-//    public ResponseEntity<Void> thayDoiMatKhau (@PathVariable Long userId, @RequestHeader("Authorization") String token, @RequestBody JSONObject jsonObject ){
-//        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
-//        System.out.println("Day la userName" + user.getUsername());
-//        boolean checkPermission = false;
-//        if(userId == user.getId()){
-//            checkPermission = true;
-//        }
-//        if(checkPermission){
-//            try{
-//                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//                String oldPass = jsonObject.getString("oldPass");
-//                String newPass = jsonObject.getString("newPass");
-//                if(!passwordEncoder.matches(oldPass, user.getPassword())){
-//                    new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
-//                }
-//                userService.changPassword(userId, passwordEncoder.encode(newPass));
-//                    return new ResponseEntity<Void>(HttpStatus.OK);
-//
-//                } catch (TaiKhoanNotFoundException e) {
-//                e.printStackTrace();
-//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Khong tim thay tai khoan trong CSDL", e);
-//            }
-//        }
-//        else {
-//            return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
-//        }
-//    }
-
+    @GetMapping("/adminthongke")
+    public ResponseEntity<?> thongKeAdmin(){
+        List<ThongKeKhachSanResponse> thongKeKhachSanResponses = localizationService.thongKeKhachSan();
+        return ResponseEntity.ok().body(thongKeKhachSanResponses);
+    };
 }
