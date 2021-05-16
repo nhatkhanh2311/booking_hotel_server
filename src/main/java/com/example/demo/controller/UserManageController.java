@@ -75,6 +75,4 @@ public class UserManageController {
         List<ThongKeKhachSanResponse> thongKeKhachSanResponses = localizationService.thongKeKhachSan();
         return ResponseEntity.ok().body(thongKeKhachSanResponses);
     };
-
-
 }
