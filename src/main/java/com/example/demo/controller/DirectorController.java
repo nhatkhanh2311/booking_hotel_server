@@ -51,6 +51,7 @@ public class DirectorController {
                 hotel.sethOwner(hOwner);
                 hotel.setImages(imageList);
                 hotel.setName(hotelRequest.getName());
+//                hotel.setStandard(hotelRequest.getStandard());
 
                 Localization localization = new Localization();
                 localization.setCity(hotelRequest.getLocalization().getCity());
@@ -67,6 +68,20 @@ public class DirectorController {
         }
         return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
     }
+
+    @GetMapping(value = "/hotel")
+    public ResponseEntity<?> getAllHotel(@RequestHeader("Authorization") String token) {
+        String newToken = token.substring(7);
+        User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
+        List<Hotel> hotels = hotelService.findAllHotelByHotelOwnerId(hOwner.getId());
+
+        return ResponseEntity.ok().body(hotels);
+    }
+//    @GetMapping(value = "/hotel/{hotelId}")
+//    public ResponseEntity<?> getAllRoomByHotelId(@PathVariable("hotelId") Long hotelId){
+//        List<Room> roomOfHotel = roomService.getAllRoomByHotelId(hotelId);
+//        return ResponseEntity.ok().body(roomOfHotel);
+//    }
 
     @PostMapping("/hotel/{hotelId}/new-room")
     public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam(name = "images", required = false) MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
@@ -97,14 +112,6 @@ public class DirectorController {
         return ResponseEntity.ok(new MessageResponse("add room successfully"));
     }
 
-    @GetMapping(value = "/hotel")
-    public ResponseEntity<?> getAllHotel(@RequestHeader("Authorization") String token) {
-        String newToken = token.substring(7);
-        User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
-        List<Hotel> hotels = hotelService.findAllHotelByHotelOwnerId(hOwner.getId());
-
-        return ResponseEntity.ok().body(hotels);
-    }
 
 
 
