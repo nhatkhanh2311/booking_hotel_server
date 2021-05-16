@@ -74,13 +74,14 @@ public class ResponeAPICotroller {
         apiList.add(new Message("director - new hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/new-hotel"));
         apiList.add(new Message("director - list room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}"));
         apiList.add(new Message("director - new room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
-        apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search"));
+        apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search2"));
         apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/booking"));
         apiList.add(new Message("user - cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooing/{bookingId}"));
         apiList.add(new Message("get information to update", "https://hotels-booking-server.herokuapp.com/update-information"));
         apiList.add(new Message("save update-information", "https://hotels-booking-server.herokuapp.com/update-information/save"));
         apiList.add(new Message("forgot password", "https://hotels-booking-server.herokuapp.com/forgot-password/{email}"));
         apiList.add(new Message("reset password", "https://hotels-booking-server.herokuapp.com/confirm-reset/{token}"));
+        apiList.add(new Message("admin - thống kê số lượng hotel ở mỗi thành phố", "https://hotels-booking-server.herokuapp.com/admin/thongke"));
 
         return ResponseEntity.ok().body( apiList);
     }
