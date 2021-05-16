@@ -69,7 +69,9 @@ public class UserManageController {
         }
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
-
+    /*
+    * admin thong ke
+    * */
     @GetMapping("/adminthongke")
     public ResponseEntity<?> thongKeAdmin(){
         List<ThongKeKhachSanResponse> thongKeKhachSanResponses = localizationService.thongKeKhachSan();
