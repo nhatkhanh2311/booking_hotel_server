@@ -60,7 +60,6 @@ public class ResponeAPICotroller {
         messageResponses.add(new Message("chưa chọn ảnh", "image is empty"));
         messageResponses.add(new Message("thêm mới hotel thành công", "add hotel successfully"));
         messageResponses.add(new Message("thêm mới room thành công", "add room successfully"));
-        messageResponses.add(new Message("user booking - chua login", "Please Login"));
         messageResponses.add(new Message("user bookingroom thành công", "Done booking"));
 
         return ResponseEntity.ok().body(messageResponses);
