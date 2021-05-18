@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Hotel;
 import com.example.demo.entity.Localization;
-import com.example.demo.entity.Room;
 import com.example.demo.payload.reponse.ThongKeKhachSanResponse;
 import com.example.demo.repository.LocalizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +41,11 @@ public class LocalizationService {
     public List<ThongKeKhachSanResponse> thongKeKhachSan(){
         return localizationRepository.thongKeKhachSan();
     }
+
+    public Localization getLocationById(Long id) {
+        return localizationRepository.getOne(id);
+    }
+
+
+
 }

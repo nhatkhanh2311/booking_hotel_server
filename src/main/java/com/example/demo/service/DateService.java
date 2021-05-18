@@ -66,7 +66,7 @@ public class DateService  {
         }
     }
     public List<BookingRoom> findAllRoomById (Long id){
-        return  dateRepository.findAllByRoomId(id);
+        return  dateRepository.findAllByRoomAfterNow(id);
     }
 
     public void bookRoom(String from, String to, long id, User user) {

@@ -68,6 +68,7 @@ public class DirectorController {
                 localization.setCity(hotelRequest.getLocalization().getCity());
                 localization.setCountry(hotelRequest.getLocalization().getCountry());
                 localization.setStreet(hotelRequest.getLocalization().getStreet());
+                localization.setHotel(hotel);
                 hotel.setAddress(localization);
 
                 localizationService.saveLoacation(localization);
@@ -83,6 +84,45 @@ public class DirectorController {
     public ResponseEntity<?> getAllRoom(@PathVariable("hotelId") Long hotelId) {
         return ResponseEntity.ok().body(roomService.getAllRoomByHotelId(hotelId));
     }
+
+    @GetMapping(value = "/hotel/{hotelId}/update")
+    public ResponseEntity<?> updateHotel(@PathVariable("hotelId") Long hotelId) {
+        return ResponseEntity.ok().body(hotelService.findHotelById(hotelId));
+    }
+
+    @PostMapping(value = "/hotel/{hotelId}/update/save")
+    public ResponseEntity<?> SaveUpdateHotel(@RequestParam("hotelRequest") String jsonHotel, @PathVariable("hotelId") Long hotelId,@RequestParam(required = false, name = "images") MultipartFile[] images ) {
+        Localization localization = null;
+        try {
+            Gson gson = new Gson();
+            HotelRequest hotelRequest = gson.fromJson(jsonHotel, HotelRequest.class) ;
+
+            Hotel hotel = hotelService.findHotelById(hotelId);
+            hotel.setStandard(hotelRequest.getStandard());
+            hotel.setName(hotelRequest.getName());
+
+            localization = localizationService.getLocationById(hotel.getAddress().getId());
+            localization.setCity(hotelRequest.getLocalization().getCity());
+            localization.setCountry(hotelRequest.getLocalization().getCountry());
+            localization.setStreet(hotelRequest.getLocalization().getStreet());
+            hotel.setAddress(localization);
+
+            localizationService.saveLoacation(localization);
+
+            hotel.setAddress(localization);
+            if(images != null) {
+                List<Image> imageList = imageService.addListImage(images);
+                hotel.setImages(imageList);
+            }
+            hotelService.saveHotel(hotel);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok().body(new MessageResponse("Save changes"));
+    }
+
+
 
     @PostMapping("/hotel/{hotelId}/new-room")
     public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam(name = "images", required = false) MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
@@ -110,6 +150,37 @@ public class DirectorController {
             e.printStackTrace();
         }
         return ResponseEntity.ok(new MessageResponse("add room successfully"));
+    }
+
+    @GetMapping(value = "/hotel/{hotelId}/{roomId}/update")
+    public ResponseEntity<?> updateRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("roomId") Long roomId) {
+        return ResponseEntity.ok().body(roomService.findOne(roomId));
+    }
+
+    @PostMapping(value = "/hotel/{hotelId}/{roomId}/update/save")
+    public ResponseEntity<?> SaveUpdateRoom(@RequestParam("roomRequest") String jsonRoom, @PathVariable("hotelId") Long hotelId,@PathVariable("roomId") Long roomId, @RequestParam(required = false, name = "images") MultipartFile[] images ) {
+        try {
+            Gson gson = new Gson();
+            RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class) ;
+
+            Room room = roomService.findOne(hotelId);
+            room.setName(roomRequest.getName());
+            room.setType(roomRequest.getType());
+            room.setPrice(roomRequest.getPrice());
+            room.setDescription(roomRequest.getDescription());
+            room.setCapacity(roomRequest.getCapacity());
+            room.setArea(roomRequest.getArea());
+
+            if(images != null) {
+                List<Image> imageList = imageService.addListImage(images);
+                room.setImages(imageList);
+            }
+            roomService.saveRoom(room);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok().body(new MessageResponse("Save changes"));
     }
 
     @GetMapping("/hotel/thongke/{hotelId}/{month}")

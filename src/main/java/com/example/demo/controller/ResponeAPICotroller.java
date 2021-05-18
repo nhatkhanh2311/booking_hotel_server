@@ -1,19 +1,23 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.*;
+import com.example.demo.payload.reponse.Anh_MatHangNotFoundException;
 import com.example.demo.payload.reponse.Message;
 import com.example.demo.payload.reponse.MessageResponse;
 import com.example.demo.payload.request.SearchRequest;
 import com.example.demo.payload.request.UpdateInformationRequest;
 import com.example.demo.repository.ConfirmationTokenRepository;
+import com.example.demo.repository.ImageRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +53,12 @@ public class ResponeAPICotroller {
     @Autowired
     GetUserFromToken getUserFromToken;
 
+    @Autowired
+    ImageRepository imageRepository;
+
+    @Autowired
+    ImageService imageService;
+
     @GetMapping("/message")
     public ResponseEntity<?> message() {
         List<Message> messageResponses = new ArrayList<>();
@@ -75,6 +85,8 @@ public class ResponeAPICotroller {
         apiList.add(new Message("director - new hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/new-hotel"));
         apiList.add(new Message("director - list room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}"));
         apiList.add(new Message("director - new room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
+        apiList.add(new Message("director - get hotel update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/update"));
+        apiList.add(new Message("director - save hotel update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
         apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search2"));
         apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/book/{idRoom}/{from}/{to}"));
         apiList.add(new Message("user - cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooing/{bookingId}"));
@@ -108,21 +120,8 @@ public class ResponeAPICotroller {
                 }
             }
         }
-        List<Hotel> hotelList = new ArrayList<>();
-        for (Room room: roomList) {
-            Hotel hotel = room.getHotel();
-            hotelList.add(hotel);
-            System.out.println();
-        }
 
-        for(int i = 0; i < hotelList.size(); i++) {
-            for (int j = i+1; j < hotelList.size(); j++) {
-                if (hotelList.get(i).getId() == hotelList.get(j).getId()) {
-                    hotelList.remove(hotelList.get(j));
-                }
-            }
-        }
-        return ResponseEntity.ok(hotelList);
+        return ResponseEntity.ok(roomList);
     }
 
     @PostMapping(value = "/forgot-password/{email}")
@@ -178,5 +177,32 @@ public class ResponeAPICotroller {
 
         userRepository.save(user);
         return ResponseEntity.ok().body("Update successfully");
+    }
+
+    @PostMapping(value = "/saveImg")
+    public ResponseEntity<?> upload(@RequestParam("img") MultipartFile multipartFile ) {
+        try {
+            imageService.save(new Image(multipartFile.getBytes()));
+        } catch (Exception e) {
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return ResponseEntity.ok().body("ok");
+    }
+
+    @GetMapping("/mat-hang/anh-mat-hang/{maAnh}")
+    public ResponseEntity<?> getAnh(@PathVariable("maAnh") long maAnh) throws Anh_MatHangNotFoundException {
+        Image anh_MatHang = null;
+//        try {
+            anh_MatHang = imageService.findOne(maAnh);
+//			jsonObject.put("", value)
+//        } catch (Anh_MatHangNotFoundException e) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Anh khong ton tai trong CSDL", e);
+//        }
+        return ResponseEntity.ok(anh_MatHang.getImg());
+    }
+
+    @GetMapping(value = "/img/{id}")
+    public ResponseEntity<?> getImage(@PathVariable("id") Long id) {
+        return ResponseEntity.ok().body(imageRepository.getOne(id).getImg());
     }
 }

@@ -32,7 +32,8 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
      * @param id - id of the room for which array of dates will be returned.
      * @return
      */
-    List<BookingRoom> findAllByRoomId(long id);
+    @Query(value = "select * from booking_room where start > current_date() and room_id= ?", nativeQuery = true)
+    List<BookingRoom> findAllByRoomAfterNow(long id);
 
     /** Gives Date for room where host is given by id/
      * @param room - id of the room.

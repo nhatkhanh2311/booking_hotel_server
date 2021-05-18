@@ -10,7 +10,11 @@ public class Image {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
+	@Lob
+	@Column(name = "img")
+	private byte[] img;
+
 	private String path;
 	
 	@OneToOne
@@ -33,14 +37,6 @@ public class Image {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
 	}
 
 	public User getUser() {
@@ -67,8 +63,34 @@ public class Image {
 		this.hotel = hotel;
 	}
 
-	@Override
-	public String toString() {
-		return "Image [id=" + id + ", path=" + path + ", user=" + user + ", room=" + room + ", hotel=" + hotel + "]";
+	public byte[] getImg() {
+		return img;
+	}
+
+	public void setImg(byte[] img) {
+		this.img = img;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public Image() {
+	}
+
+	public Image(long id, byte[] img, User user, Room room, Hotel hotel) {
+		this.id = id;
+		this.img = img;
+		this.user = user;
+		this.room = room;
+		this.hotel = hotel;
+	}
+
+	public Image(byte[] img) {
+		this.img = img;
 	}
 }
