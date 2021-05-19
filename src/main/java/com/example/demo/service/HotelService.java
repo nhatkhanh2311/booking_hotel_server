@@ -41,5 +41,8 @@ public class HotelService {
         return hotelRepository.findAllByCityName(cityName);
     }
     public List<Hotel> findRandomHotel(){return  hotelRepository.findRandomHotel();}
+    public void deleteHotel(Long id) {
+        hotelRepository.deleteHotel(id);
+    }
 
 }

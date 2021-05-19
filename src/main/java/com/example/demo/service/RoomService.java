@@ -19,12 +19,7 @@ public class RoomService {
 
     public void saveRoom(Room room){roomRepository.save(room);}
     public Room getRoomById(Long id) {
-        return roomRepository.getOne(id);
-    }
-
-    public Room updateRoom(Long id) {
-        Room room = roomRepository.getOne(id);
-        return room;
+        return roomRepository.findOneById(id);
     }
 
     public List<Room> getAllRoomByHotelId(Long id) {
@@ -82,4 +77,10 @@ public class RoomService {
         return listRoomFreeInPeriodtime;
     }
 
+    public void deleteRoom(Long id) {
+        roomRepository.deleteRoom(id);
+    }
+    public void deleteHotelInRoom(Long id) {
+        roomRepository.deleteHotelInRoom(id);
+    }
 }

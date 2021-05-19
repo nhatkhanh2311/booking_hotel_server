@@ -21,7 +21,7 @@ public class Image {
 	@JsonBackReference
 	private User user;
 	
-	@ManyToOne
+	@ManyToOne(fetch =  FetchType.LAZY)
 	@JsonBackReference
 	private Room room;
 	

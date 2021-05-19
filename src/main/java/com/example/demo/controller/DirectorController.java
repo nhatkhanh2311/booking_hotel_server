@@ -5,11 +5,13 @@ import com.example.demo.payload.reponse.MessageResponse;
 import com.example.demo.payload.reponse.ThongKeDirector;
 import com.example.demo.payload.request.HotelRequest;
 import com.example.demo.payload.request.RoomRequest;
+import com.example.demo.repository.RoomRepository;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +37,8 @@ public class DirectorController {
     private DateService dateService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoomRepository roomRepository;
 
     @GetMapping(value = "/hotel")
     public ResponseEntity<?> getAllHotel(@RequestHeader("Authorization") String token) {
@@ -122,6 +126,14 @@ public class DirectorController {
         return ResponseEntity.ok().body(new MessageResponse("Save changes"));
     }
 
+    @Transactional
+    @PostMapping(value = "/hotel/{hotelId}/delete")
+    public ResponseEntity<?> deleteHotel(@PathVariable("hotelId") Long hotelId) {
+        roomService.deleteHotelInRoom(hotelId);
+        imageService.deleteHotelInImg(hotelId);
+        hotelService.deleteHotel(hotelId);
+        return ResponseEntity.ok().body(new MessageResponse("Delete hotel successful"));
+    }
 
 
     @PostMapping("/hotel/{hotelId}/new-room")
@@ -149,21 +161,30 @@ public class DirectorController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ResponseEntity.ok(new MessageResponse("add room successfully"));
+        return ResponseEntity.ok().body(new MessageResponse("add room successfully"));
     }
+//-----------------------
+
+    @GetMapping(value = "/hotel/{roomId}/updateRoom")
+    public ResponseEntity<?> update(@PathVariable("roomId") Long id) {
+        System.out.println("co le do return ----------------------------------------------");
+        return ResponseEntity.ok().body(roomRepository.getOne(id));
+    }
+
 
     @GetMapping(value = "/hotel/{hotelId}/{roomId}/update")
-    public ResponseEntity<?> updateRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("roomId") Long roomId) {
-        return ResponseEntity.ok().body(roomService.findOne(roomId));
+    public ResponseEntity<?> updateRoom(@PathVariable("roomId") Long roomId, @PathVariable("hotelId") Long hotelId) {
+        return ResponseEntity.ok().body(roomService.getRoomById(roomId));
     }
 
+//    -------------------------
     @PostMapping(value = "/hotel/{hotelId}/{roomId}/update/save")
     public ResponseEntity<?> SaveUpdateRoom(@RequestParam("roomRequest") String jsonRoom, @PathVariable("hotelId") Long hotelId,@PathVariable("roomId") Long roomId, @RequestParam(required = false, name = "images") MultipartFile[] images ) {
         try {
             Gson gson = new Gson();
             RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class) ;
 
-            Room room = roomService.findOne(hotelId);
+            Room room = roomService.getRoomById(roomId);
             room.setName(roomRequest.getName());
             room.setType(roomRequest.getType());
             room.setPrice(roomRequest.getPrice());
@@ -181,6 +202,14 @@ public class DirectorController {
             e.printStackTrace();
         }
         return ResponseEntity.ok().body(new MessageResponse("Save changes"));
+    }
+
+    @Transactional
+    @PostMapping(value = "/hotel/{hotelId}/{idRoom}/delete")
+    public ResponseEntity<?> deleteRoom(@PathVariable("roomId") Long roomId, @PathVariable("hotelId") Long hotelId) {
+        imageService.deleteRoomInImg(roomId);
+        roomService.deleteRoom(roomId);
+        return ResponseEntity.ok().body(new MessageResponse("Delete room successful"));
     }
 
     @GetMapping("/hotel/thongke/{hotelId}/{month}")

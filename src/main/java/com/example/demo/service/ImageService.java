@@ -61,4 +61,12 @@ public class ImageService {
         }
         return optional.get();
     }
+
+    public void deleteHotelInImg(Long id) {
+        imageRepository.deleteHotelInImg(id);
+    }
+
+    public void deleteRoomInImg(Long id) {
+        imageRepository.deleteRoomInImg(id);
+    }
 }

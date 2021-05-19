@@ -69,6 +69,13 @@ public class ResponeAPICotroller {
         messageResponses.add(new Message("signin thất bại", "incorrect"));
         messageResponses.add(new Message("chưa chọn ảnh", "image is empty"));
         messageResponses.add(new Message("thêm mới hotel thành công", "add hotel successfully"));
+
+        messageResponses.add(new Message("update hotel thành công", "Save changes"));
+        messageResponses.add(new Message("update room thành công", "Save changes"));
+
+//        messageResponses.add(new Message("xóa hotel thành công", "Delete hotel successful"));
+
+
         messageResponses.add(new Message("thêm mới room thành công", "add room successfully"));
         messageResponses.add(new Message("user bookingroom thành công", "Done booking"));
 
@@ -81,12 +88,16 @@ public class ResponeAPICotroller {
         List<Message> apiList = new ArrayList<>();
         apiList.add(new Message("signin", "https://hotels-booking-server.herokuapp.com/signin"));
         apiList.add(new Message("signup", "https://hotels-booking-server.herokuapp.com/signup"));
+
         apiList.add(new Message("director - list hotels", "https://hotels-booking-server.herokuapp.com/director/hotel"));
         apiList.add(new Message("director - new hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/new-hotel"));
         apiList.add(new Message("director - list room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}"));
         apiList.add(new Message("director - new room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
         apiList.add(new Message("director - get hotel update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/update"));
-        apiList.add(new Message("director - save hotel update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
+        apiList.add(new Message("director - save hotel update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/update/save"));
+        apiList.add(new Message("director - get room update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/update"));
+        apiList.add(new Message("director - save room update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/update/save"));
+
         apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search2"));
         apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/book/{idRoom}/{from}/{to}"));
         apiList.add(new Message("user - cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooing/{bookingId}"));
