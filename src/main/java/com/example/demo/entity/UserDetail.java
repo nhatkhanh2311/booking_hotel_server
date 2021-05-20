@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "userDetail")
@@ -28,7 +28,7 @@ public class UserDetail {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "Birth", nullable = true)
-    private Date birth;
+    private LocalDate birth;
 
     @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
@@ -71,11 +71,11 @@ public class UserDetail {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 
-    public void setBirth(Date birth) {
+    public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
 
