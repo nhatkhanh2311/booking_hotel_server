@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@CrossOrigin
 @RequestMapping("/director")
 public class DirectorController {
     @Autowired

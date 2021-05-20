@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
 
@@ -41,7 +41,12 @@ public class UserController {
     @Autowired
     EmailSenderService emailSenderService;
 
-
+    @GetMapping(value = "/")
+    public ResponseEntity<?> getUser(@RequestHeader(name ="Authorization") String token) {
+        String newToken = token.substring(7);
+        User user = getUserFromToken.getUserByUserNameFromJwt(newToken);
+        return ResponseEntity.ok().body(user);
+    }
 
     @PostMapping(value = "/search/{cityName}")
     public ResponseEntity<?> search(@PathVariable("cityName") String cityName) {

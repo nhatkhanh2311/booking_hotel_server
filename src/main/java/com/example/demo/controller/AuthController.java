@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@CrossOrigin(origins = "*")
 @RestController
+@CrossOrigin(origins = "*")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;

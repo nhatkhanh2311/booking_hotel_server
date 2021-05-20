@@ -16,8 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
 @RestController
+@CrossOrigin
 @RequestMapping("/admin")
 public class UserManageController {
 @Autowired
