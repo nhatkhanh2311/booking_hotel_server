@@ -18,10 +18,8 @@ public class UserDetail {
     @Column(name = "avatar", nullable = true)
     private byte[] avatar;
 
-
     @Column(name = "nameUserDetail", nullable = true)
     private String nameUserDetail;
-
 
     @Column(name = "phoneNumber", nullable = true)
     private String phoneNumber;

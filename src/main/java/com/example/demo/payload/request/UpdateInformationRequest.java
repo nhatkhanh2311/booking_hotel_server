@@ -1,17 +1,17 @@
 package com.example.demo.payload.request;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class UpdateInformationRequest {
     private String password;
     private String nameUserDetail;
-    private Date birth;
+    private LocalDate birth;
     private String phoneNumber;
 
     public UpdateInformationRequest() {
     }
 
-    public UpdateInformationRequest(String password, String nameUserDetail, Date birth, String phoneNumber) {
+    public UpdateInformationRequest(String password, String nameUserDetail, LocalDate birth, String phoneNumber) {
         this.password = password;
         this.nameUserDetail = nameUserDetail;
         this.birth = birth;
@@ -34,11 +34,11 @@ public class UpdateInformationRequest {
         this.nameUserDetail = nameUserDetail;
     }
 
-    public Date getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 
-    public void setBirth(Date birth) {
+    public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
 
