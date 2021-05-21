@@ -201,18 +201,13 @@ public class DirectorController {
 
 
     @PostMapping("/hotel/{hotelId}/new-room")
-    public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestParam(name = "images", required = false) MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom){
-        try {
-            if(images == null){
-                ResponseEntity.ok(new MessageResponse("image is empty"));
-            } else {
-                List<Image> imageRoomList = imageService.addListImage(images);
+    public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestBody RoomRequest roomRequest){
+
                 Hotel hotel = hotelService.findHotelById(hotelId);
-                Gson gson = new Gson();
-                RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class);
+//                Gson gson = new Gson();
+//                RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class);
                 Room room = new Room();
                 room.setHotel(hotel);
-                room.setImages(imageRoomList);
                 room.setType(roomRequest.getType());
                 room.setArea(roomRequest.getArea());
                 room.setCapacity(roomRequest.getCapacity());
@@ -221,10 +216,6 @@ public class DirectorController {
                 room.setPrice(roomRequest.getPrice());
                 room.setAdded(LocalDate.now());
                 roomService.saveRoom(room);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return ResponseEntity.ok().body(new MessageResponse("add room successfully"));
     }
 //-----------------------

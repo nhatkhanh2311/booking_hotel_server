@@ -1,15 +1,10 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 public class Hotel {
@@ -32,14 +27,14 @@ public class Hotel {
 	private Localization address;
 
 	@ManyToOne
-	@JsonBackReference
+//	@JsonBackReference
 	private User hOwner;
 
-	@JsonManagedReference
+//	@JsonManagedReference
 	@OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
 	private List<Room> rooms;
 
-	@JsonManagedReference
+//	@JsonManagedReference
 	@OneToMany
 	@MapKeyColumn(name = "id")
 	private List<Image> images;
