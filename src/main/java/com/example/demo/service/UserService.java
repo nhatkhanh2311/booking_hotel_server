@@ -49,8 +49,8 @@ public class UserService {
         return userRepository.findByEmail(userEmail);
     }
     public List<User> findDirectorLookFalse() { return userRepository.findDirectorLookedFalse();}
+
     public UserDetail findOne (Long userId){
         return userDetailRepository.findOne(userId);
     }
-
 }

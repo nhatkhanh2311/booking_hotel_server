@@ -1,10 +1,8 @@
 package com.example.demo.entity;
 
 
-import java.time.LocalDate;
-import java.time.LocalDate;
-import java.time.LocalDate;
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class BookingRoom {
@@ -59,4 +57,5 @@ public class BookingRoom {
 	public void setEnd(LocalDate end) {
 		this.end = end;
 	}
+
 }

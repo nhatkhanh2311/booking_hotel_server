@@ -18,13 +18,14 @@ public class UserDetail {
     @Column(name = "avatar", nullable = true)
     private byte[] avatar;
 
+
     @Column(name = "nameUserDetail", nullable = true)
     private String nameUserDetail;
+
 
     @Column(name = "phoneNumber", nullable = true)
     private String phoneNumber;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "Birth", nullable = true)
     private LocalDate birth;
 
@@ -34,11 +35,20 @@ public class UserDetail {
     @JoinColumn(name = "userId", nullable = false)
     private User user;
 
-    public long getId() {
-        return id;
+    public UserDetail() {
     }
 
-    public UserDetail() {
+    public UserDetail(long id, byte[] avatar, String nameUserDetail, String phoneNumber, LocalDate birth, User user) {
+        this.id = id;
+        this.avatar = avatar;
+        this.nameUserDetail = nameUserDetail;
+        this.phoneNumber = phoneNumber;
+        this.birth = birth;
+        this.user = user;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public void setId(long id) {

@@ -107,7 +107,7 @@ public class UserController {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(user.getEmail());
             mailMessage.setSubject("Complete booking room ");
-            mailMessage.setText("Dear Mr/Ms " + user.getUserDetails().getNameUserDetail() + ",\n" +
+            mailMessage.setText("Dear Mr/Ms " + user.getUserDetail().getNameUserDetail() + ",\n" +
                     "\n" +
                     "This email is to confirm your booking on " + from +" for the room  at the "+ room.getHotel().getName() +". The check-in date shall be on " + from +" and the check-out date shall be on " + to +".\n" +
                     "\n" +
@@ -153,7 +153,7 @@ public class UserController {
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Complete cancel booking room ");
         mailMessage.setText(
-                "Dear Mr/Ms " + user.getUserDetails().getNameUserDetail() +",\n"
+                "Dear Mr/Ms " + user.getUserDetail().getNameUserDetail() +",\n"
                 + "You complete cancel the room " + room.getName() + " at the " + room.getHotel().getName() + " from: " + bookingRoom.getStart() + " to: " + bookingRoom.getEnd() +"\n"
                 + "We hope you enjoy when you use my serviece, Thank you!"
 

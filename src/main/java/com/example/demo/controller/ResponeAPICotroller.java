@@ -181,7 +181,8 @@ public class ResponeAPICotroller {
     public ResponseEntity<?> updateInformation(@RequestHeader("Authorization") String token, @RequestBody UpdateInformationRequest userRequest) {
         User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
         user.setPassword(encoder.encode(userRequest.getPassword()));
-        UserDetail userDetail = user.getUserDetails();
+
+        UserDetail userDetail = user.getUserDetail();
         userDetail.setBirth(userRequest.getBirth());
         userDetail.setNameUserDetail(userRequest.getNameUserDetail());
         userDetail.setPhoneNumber(userRequest.getPhoneNumber());
