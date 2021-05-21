@@ -193,38 +193,4 @@ public class ResponeAPICotroller {
         userRepository.save(user);
         return ResponseEntity.ok().body("Update successfully");
     }
-
-//    @PostMapping(value = "/saveImg")
-//    public ResponseEntity<?> upload(@RequestParam("img") MultipartFile multipartFile ) {
-//        try {
-//            imageService.save(new Image(multipartFile.getBytes()));
-//        } catch (Exception e) {
-//            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//        return ResponseEntity.ok().body("ok");
-//    }
-
-//    @GetMapping("/mat-hang/anh-mat-hang/{maAnh}")
-//    public ResponseEntity<?> getAnh(@PathVariable("maAnh") long maAnh) throws Anh_MatHangNotFoundException {
-//        Image anh_MatHang = null;
-////        try {
-//            anh_MatHang = imageService.findOne(maAnh);
-////			jsonObject.put("", value)
-////        } catch (Anh_MatHangNotFoundException e) {
-////            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Anh khong ton tai trong CSDL", e);
-////        }
-//        return ResponseEntity.ok(anh_MatHang.getImg());
-//    }
-
-//    @PostMapping("/img")
-//    public ResponseEntity<?> upImg(@RequestParam(name = "image") MultipartFile image) {
-//        imageService.save(image);
-//
-//        return ResponseEntity.ok().body("ok");
-//    }
-
-//    @GetMapping(value = "/img/{id}")
-//    public ResponseEntity<?> getImage(@PathVariable("id") Long id) {
-//        return ResponseEntity.ok().body(imageRepository.getOne(id).getImg());
-//    }
 }
