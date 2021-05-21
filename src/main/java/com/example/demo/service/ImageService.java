@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Image;
-import com.example.demo.payload.reponse.Anh_MatHangNotFoundException;
 import com.example.demo.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ImageService {
@@ -49,17 +47,16 @@ public class ImageService {
         }
         return images;
     }
-
-    public void save(Image anh) {
-        imageRepository.save(anh);
+    public List<Image> getImgByHotelId(Long hotelId) {
+        return imageRepository.findAllByHotel_Id(hotelId);
     }
 
-    public Image findOne(long id) throws Anh_MatHangNotFoundException {
-        Optional<Image> optional = imageRepository.findById(id);
-        if (!optional.isPresent()) {
-            throw new Anh_MatHangNotFoundException("Anh khong ton tai");
-        }
-        return optional.get();
+    public List<Image> getImgByRoomId(Long roomId) {
+        return imageRepository.findAllByRoom_Id(roomId);
+    }
+
+    public void save(Image img) {
+        imageRepository.save(img);
     }
 
     public void deleteHotelInImg(Long id) {

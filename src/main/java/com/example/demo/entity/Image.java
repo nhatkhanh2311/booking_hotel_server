@@ -90,7 +90,13 @@ public class Image {
 		this.hotel = hotel;
 	}
 
-	public Image(byte[] img) {
+	public Image(byte[] img, Room room) {
 		this.img = img;
+		this.room = room;
+	}
+
+	public Image(byte[] img, Hotel hotel) {
+		this.img = img;
+		this.hotel = hotel;
 	}
 }

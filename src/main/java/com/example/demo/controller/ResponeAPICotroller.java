@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.*;
-import com.example.demo.payload.reponse.Anh_MatHangNotFoundException;
 import com.example.demo.payload.reponse.Message;
 import com.example.demo.payload.reponse.MessageResponse;
 import com.example.demo.payload.request.SearchRequest;
@@ -12,12 +11,10 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,17 +65,16 @@ public class ResponeAPICotroller {
         messageResponses.add(new Message("sigup trùng email", "email is taken"));
         messageResponses.add(new Message("signup thành công", "successfull"));
         messageResponses.add(new Message("signin thất bại", "incorrect"));
-        messageResponses.add(new Message("chưa chọn ảnh", "image is empty"));
         messageResponses.add(new Message("thêm mới hotel thành công", "add hotel successfully"));
+        messageResponses.add(new Message("thêm image hotel, room thành công", "add img successfully"));
 
-        messageResponses.add(new Message("update hotel thành công", "Save changes"));
-        messageResponses.add(new Message("update room thành công", "Save changes"));
 
+        messageResponses.add(new Message("update hotel, room thành công", "Save changes"));
 //        messageResponses.add(new Message("xóa hotel thành công", "Delete hotel successful"));
-
 
         messageResponses.add(new Message("thêm mới room thành công", "add room successfully"));
         messageResponses.add(new Message("user bookingroom thành công", "Done booking"));
+
 
         return ResponseEntity.ok().body(messageResponses);
     }
@@ -92,8 +88,14 @@ public class ResponeAPICotroller {
 
         apiList.add(new Message("director - list hotels", "https://hotels-booking-server.herokuapp.com/director/hotel"));
         apiList.add(new Message("director - new hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/new-hotel"));
+        apiList.add(new Message("director - new img for hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/uploadImg"));
+        apiList.add(new Message("director - get img of hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/getImg"));
+
         apiList.add(new Message("director - list room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}"));
         apiList.add(new Message("director - new room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
+        apiList.add(new Message("director - new img for room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/uploadImg"));
+        apiList.add(new Message("director - get img of room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/getImg"));
+
         apiList.add(new Message("director - get hotel update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/update"));
         apiList.add(new Message("director - save hotel update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/update/save"));
         apiList.add(new Message("director - get room update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/update"));
@@ -192,30 +194,37 @@ public class ResponeAPICotroller {
         return ResponseEntity.ok().body("Update successfully");
     }
 
-    @PostMapping(value = "/saveImg")
-    public ResponseEntity<?> upload(@RequestParam("img") MultipartFile multipartFile ) {
-        try {
-            imageService.save(new Image(multipartFile.getBytes()));
-        } catch (Exception e) {
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return ResponseEntity.ok().body("ok");
-    }
-
-    @GetMapping("/mat-hang/anh-mat-hang/{maAnh}")
-    public ResponseEntity<?> getAnh(@PathVariable("maAnh") long maAnh) throws Anh_MatHangNotFoundException {
-        Image anh_MatHang = null;
+//    @PostMapping(value = "/saveImg")
+//    public ResponseEntity<?> upload(@RequestParam("img") MultipartFile multipartFile ) {
 //        try {
-            anh_MatHang = imageService.findOne(maAnh);
-//			jsonObject.put("", value)
-//        } catch (Anh_MatHangNotFoundException e) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Anh khong ton tai trong CSDL", e);
+//            imageService.save(new Image(multipartFile.getBytes()));
+//        } catch (Exception e) {
+//            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
-        return ResponseEntity.ok(anh_MatHang.getImg());
-    }
+//        return ResponseEntity.ok().body("ok");
+//    }
 
-    @GetMapping(value = "/img/{id}")
-    public ResponseEntity<?> getImage(@PathVariable("id") Long id) {
-        return ResponseEntity.ok().body(imageRepository.getOne(id).getImg());
-    }
+//    @GetMapping("/mat-hang/anh-mat-hang/{maAnh}")
+//    public ResponseEntity<?> getAnh(@PathVariable("maAnh") long maAnh) throws Anh_MatHangNotFoundException {
+//        Image anh_MatHang = null;
+////        try {
+//            anh_MatHang = imageService.findOne(maAnh);
+////			jsonObject.put("", value)
+////        } catch (Anh_MatHangNotFoundException e) {
+////            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Anh khong ton tai trong CSDL", e);
+////        }
+//        return ResponseEntity.ok(anh_MatHang.getImg());
+//    }
+
+//    @PostMapping("/img")
+//    public ResponseEntity<?> upImg(@RequestParam(name = "image") MultipartFile image) {
+//        imageService.save(image);
+//
+//        return ResponseEntity.ok().body("ok");
+//    }
+
+//    @GetMapping(value = "/img/{id}")
+//    public ResponseEntity<?> getImage(@PathVariable("id") Long id) {
+//        return ResponseEntity.ok().body(imageRepository.getOne(id).getImg());
+//    }
 }

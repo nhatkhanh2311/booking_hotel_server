@@ -49,40 +49,104 @@ public class DirectorController {
         return ResponseEntity.ok().body(hotels);
     }
 
-    @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
-    public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam(required = false, name = "images") MultipartFile[] images, @RequestHeader("Authorization") String token){
+    @PostMapping(value = "/hotel/new-hotel")
+    public ResponseEntity<?> addHotell(@RequestBody HotelRequest hotelRequest, @RequestHeader("Authorization") String token){
 
-        try {
             String newToken = token.substring(7);
             User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
-            if(images == null){
-                return ResponseEntity.ok(new MessageResponse("image is empty"));
-            } else {
-                List<Image> imageList = imageService.addListImage(images);
-                Gson gson = new Gson();
-                HotelRequest hotelRequest = gson.fromJson(jsonHotel, HotelRequest.class) ;
 
-                Hotel hotel = new Hotel();
-                hotel.sethOwner(hOwner);
-                hotel.setImages(imageList);
-                hotel.setName(hotelRequest.getName());
-                hotel.setStandard(hotelRequest.getStandard());
+            Hotel hotel = new Hotel();
+            hotel.sethOwner(hOwner);
+            hotel.setName(hotelRequest.getName());
+            hotel.setStandard(hotelRequest.getStandard());
 
-                Localization localization = new Localization();
-                localization.setCity(hotelRequest.getLocalization().getCity());
-                localization.setCountry(hotelRequest.getLocalization().getCountry());
-                localization.setStreet(hotelRequest.getLocalization().getStreet());
-                localization.setHotel(hotel);
-                hotel.setAddress(localization);
+            Localization localization = new Localization();
+            localization.setCity(hotelRequest.getLocalization().getCity());
+            localization.setCountry(hotelRequest.getLocalization().getCountry());
+            localization.setStreet(hotelRequest.getLocalization().getStreet());
+            localization.setHotel(hotel);
+            hotel.setAddress(localization);
 
-                localizationService.saveLoacation(localization);
-                hotelService.saveHotel(hotel);
+            localizationService.saveLoacation(localization);
+            hotelService.saveHotel(hotel);
+        return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
+    }
+
+    @PostMapping(value = "/hotel/{hotelId}/uploadImg")
+    public ResponseEntity<?> addImgHotell(@RequestParam(name = "images") MultipartFile[] images, @PathVariable("hotelId") Long hotelId){
+        Hotel hotel = hotelService.findHotelById(hotelId);
+        try {
+            for(int i = 0; i < images.length; i++) {
+                imageService.save(new Image(images[i].getBytes(), hotel));
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
+        return ResponseEntity.ok().body(new MessageResponse("add img successfully"));
     }
+
+    @GetMapping(value = "/hotel/{hotelId}/getImg")
+    public ResponseEntity<?> getImageHotel(@PathVariable("hotelId") Long hotelId) {
+        List<Image> images = imageService.getImgByHotelId(hotelId);
+        return ResponseEntity.ok().body(images);
+    }
+
+    @PostMapping(value = "/hotel/{hotelId}/{roomId}/uploadImg")
+    public ResponseEntity<?> addImgRoom(@RequestParam(name = "images") MultipartFile[] images, @PathVariable("roomId") Long roomId){
+        Room room = roomService.getRoomById(roomId);
+        try {
+            for(int i = 0; i < images.length; i++) {
+                imageService.save(new Image(images[i].getBytes(), room));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok().body(new MessageResponse("add img successfully"));
+    }
+
+    @GetMapping(value = "/hotel/{hotelId}/{roomId}/getImg")
+    public ResponseEntity<?> getImageRoom(@PathVariable("roomId") Long roomId) {
+        List<Image> images = imageService.getImgByRoomId(roomId);
+        return ResponseEntity.ok().body(images);
+    }
+
+
+//    @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
+//    public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam(required = false, name = "images") MultipartFile[] images, @RequestHeader("Authorization") String token){
+//
+//        try {
+//            String newToken = token.substring(7);
+//            User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
+//            if(images == null){
+//                return ResponseEntity.ok(new MessageResponse("image is empty"));
+//            } else {
+//                List<Image> imageList = imageService.addListImage(images);
+//                Gson gson = new Gson();
+//                HotelRequest hotelRequest = gson.fromJson(jsonHotel, HotelRequest.class) ;
+//
+//                Hotel hotel = new Hotel();
+//                hotel.sethOwner(hOwner);
+//                hotel.setImages(imageList);
+//                hotel.setName(hotelRequest.getName());
+//                hotel.setStandard(hotelRequest.getStandard());
+//
+//                Localization localization = new Localization();
+//                localization.setCity(hotelRequest.getLocalization().getCity());
+//                localization.setCountry(hotelRequest.getLocalization().getCountry());
+//                localization.setStreet(hotelRequest.getLocalization().getStreet());
+//                localization.setHotel(hotel);
+//                hotel.setAddress(localization);
+//
+//                localizationService.saveLoacation(localization);
+//                hotelService.saveHotel(hotel);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
+//    }
 
     @GetMapping(value = "/hotel/{hotelId}")
     public ResponseEntity<?> getAllRoom(@PathVariable("hotelId") Long hotelId) {
