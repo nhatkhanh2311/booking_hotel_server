@@ -32,7 +32,7 @@ public class HomeController {
         return ResponseEntity.ok().body(hotels);
     }
 
-    @PostMapping(value = "/search")
+    @PostMapping(value = "/search1")
     public ResponseEntity<?> serchRoomAvaiable (@RequestBody SearchRequest searchRequest){
         List<Room> roomsAvaiableInPeriodTime = roomService.availableSearchedRooms(searchRequest.getCityName(), searchRequest.getCapacity(), searchRequest.getStart().toString(), searchRequest.getEnd().toString());
         return  ResponseEntity.ok(roomsAvaiableInPeriodTime);
