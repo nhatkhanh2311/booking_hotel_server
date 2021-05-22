@@ -74,8 +74,9 @@ public class ResponeAPICotroller {
 //        messageResponses.add(new Message("xóa hotel thành công", "Delete hotel successful"));
 
         messageResponses.add(new Message("thêm mới room thành công", "add room successfully"));
-        messageResponses.add(new Message("user bookingroom thành công", "Done booking"));
+        messageResponses.add(new Message("user bookingroom thành công", "done booking"));
 
+        messageResponses.add(new Message("Cập nhật thông tin thành công", "update successfully"));
         messageResponses.add(new Message("đổi mật khẩu thành công", "change password successfully"));
         messageResponses.add(new Message("Sai mật khẩu khi đổi mật khẩu", "current password incorrect"));
 
