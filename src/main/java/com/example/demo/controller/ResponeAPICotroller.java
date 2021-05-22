@@ -124,7 +124,7 @@ public class ResponeAPICotroller {
 
     List<HotelSearchResponse> hotelSearchResponseList = new ArrayList<>();
 
-    @PostMapping(value = "/search2")
+    @PostMapping(value = "/search")
     public ResponseEntity<?> search(@RequestBody SearchRequest searchRequest) {
 
         List<Hotel> hotels = hotelService.getAllHotelsByCityName(searchRequest.getCityName());
