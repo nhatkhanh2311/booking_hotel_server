@@ -38,6 +38,12 @@ public class UserDetail {
     public UserDetail() {
     }
 
+    public UserDetail(String nameUserDetail, String phoneNumber, LocalDate birth) {
+        this.nameUserDetail = nameUserDetail;
+        this.phoneNumber = phoneNumber;
+        this.birth = birth;
+    }
+
     public UserDetail(long id, byte[] avatar, String nameUserDetail, String phoneNumber, LocalDate birth, User user) {
         this.id = id;
         this.avatar = avatar;

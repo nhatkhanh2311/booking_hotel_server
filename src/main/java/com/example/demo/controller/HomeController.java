@@ -21,7 +21,7 @@ public class HomeController {
     private RoomService roomService;
 
     @GetMapping("")
-    public ResponseEntity<List<Hotel>> randomHotel(){
+    public ResponseEntity<?> randomHotel(){
         List<Hotel> hotels = hotelService.findRandomHotel();
         return ResponseEntity.ok().body(hotels);
     }

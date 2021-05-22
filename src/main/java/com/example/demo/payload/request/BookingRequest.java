@@ -1,8 +1,5 @@
 package com.example.demo.payload.request;
 
-import com.example.demo.entity.Hotel;
-import com.example.demo.entity.User;
-
 import java.time.LocalDate;
 
 public class BookingRequest {

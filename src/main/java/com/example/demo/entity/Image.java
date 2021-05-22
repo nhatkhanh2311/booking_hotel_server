@@ -20,13 +20,13 @@ public class Image {
 	@OneToOne
 	@JsonBackReference
 	private User user;
-	
+
+	@JsonBackReference
 	@ManyToOne(fetch =  FetchType.LAZY)
-	@JsonBackReference
 	private Room room;
-	
+
+	@JsonBackReference(value = "image")
 	@ManyToOne
-	@JsonBackReference
 	private Hotel hotel;
 	
 	//-----------------

@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.*;
+import com.example.demo.payload.reponse.HotelSearchResponse;
 import com.example.demo.payload.reponse.Message;
 import com.example.demo.payload.reponse.MessageResponse;
+import com.example.demo.payload.request.PasswordRequest;
 import com.example.demo.payload.request.SearchRequest;
 import com.example.demo.payload.request.UpdateInformationRequest;
 import com.example.demo.repository.ConfirmationTokenRepository;
@@ -114,6 +116,7 @@ public class ResponeAPICotroller {
         return ResponseEntity.ok().body( apiList);
     }
 
+    List<HotelSearchResponse> hotelSearchResponseList = new ArrayList<>();
 
     @PostMapping(value = "/search2")
     public ResponseEntity<?> search(@RequestBody SearchRequest searchRequest) {
@@ -123,7 +126,7 @@ public class ResponeAPICotroller {
         List<BookingRoom> bookingRoomList = dateService.getAllRoomByDateBooking(searchRequest.getStart(), searchRequest.getEnd());
 
         for (Hotel hotel: hotels) {
-            List<Room> rooms = roomService.getAllRoomByHotelId(hotel.getId());
+            List<Room> rooms = roomService.searchRoomByCapacity(hotel.getId(), searchRequest.getCapacity());
             for (Room room: rooms) {
                 roomList.add(room);
                 for (BookingRoom bk: bookingRoomList) {
@@ -134,8 +137,40 @@ public class ResponeAPICotroller {
                 }
             }
         }
+        List<Hotel> hotelList = new ArrayList<>();
+        for(Room room : roomList) {
+            Hotel hotel = room.getHotel();
+            hotelList.add(hotel);
+        }
 
-        return ResponseEntity.ok(roomList);
+        for (int i = 0; i < hotelList.size(); i++ ) {
+            for (int j = i+1; j < hotelList.size(); j++) {
+                if (hotelList.get(i).getId() == hotelList.get(j).getId()) {
+                    hotelList.remove(hotelList.get(j));
+                    j--;
+                }
+            }
+        }
+//        for(int i = 0; i < hotelSearchResponseList.size(); i++) {
+//            hotelSearchResponseList.remove(i);
+//        }
+        hotelSearchResponseList.clear();
+        for (Hotel hotel: hotelList) {
+            HotelSearchResponse hotelSearchResponse = new HotelSearchResponse();
+            Hotel hotel1 = hotel;
+
+            List<Room> rooms = new ArrayList<>();
+            for(Room room: roomList) {
+                if (hotel.getId() == room.getHotel().getId()) {
+                    rooms.add(room);
+                }
+            }
+            hotel1.setRooms(rooms);
+            hotelSearchResponse.setHotel(hotel1);
+            hotelSearchResponseList.add(hotelSearchResponse);
+        }
+
+        return ResponseEntity.ok(hotelSearchResponseList);
     }
 
     @PostMapping(value = "/forgot-password/{email}")
@@ -182,15 +217,29 @@ public class ResponeAPICotroller {
     @PostMapping(value = "/update-information/save")
     public ResponseEntity<?> updateInformation(@RequestHeader("Authorization") String token, @RequestBody UpdateInformationRequest userRequest) {
         User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
-        user.setPassword(encoder.encode(userRequest.getPassword()));
-
+//        user.setPassword(encoder.encode(userRequest.getPassword()));
         UserDetail userDetail = user.getUserDetail();
+        userDetail.setPhoneNumber(userRequest.getPhoneNumber());
         userDetail.setBirth(userRequest.getBirth());
         userDetail.setNameUserDetail(userRequest.getNameUserDetail());
-        userDetail.setPhoneNumber(userRequest.getPhoneNumber());
         user.setUserDetail(userDetail);
 
         userRepository.save(user);
         return ResponseEntity.ok().body("Update successfully");
+//        return ResponseEntity.ok().body(user.getUserDetail());
+
     }
+
+    @PostMapping(value = "/update-information/save-password")
+    public ResponseEntity<?> updatePassword(@RequestHeader("Authorization") String token, @RequestBody PasswordRequest passwordRequest) {
+        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+        if(encoder.matches(passwordRequest.getOldPassword(), user.getPassword() )) {
+            user.setPassword(encoder.encode(passwordRequest.getNewPassword()));
+            userRepository.save(user);
+            return ResponseEntity.ok().body(new MessageResponse("change password successfully"));
+        } else {
+            return ResponseEntity.ok().body(new MessageResponse("current password incorrect"));
+        }
+    }
+
 }

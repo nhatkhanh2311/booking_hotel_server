@@ -28,9 +28,9 @@ public class Room {
 	@OneToMany
 	private List<BookingRoom> bookingRoom;
 
+	@JsonBackReference(value = "room")
 	@ManyToOne
 	@JoinColumn(name = "hotelId")
-	@JsonBackReference
 	private Hotel hotel;
 
 	@ManyToMany

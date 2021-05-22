@@ -49,8 +49,8 @@ public class DirectorController {
         return ResponseEntity.ok().body(hotels);
     }
 
-    @PostMapping(value = "/hotel/new-hotel")
-    public ResponseEntity<?> addHotell(@RequestBody HotelRequest hotelRequest, @RequestHeader("Authorization") String token){
+    @PostMapping(value = "/hotel/new-hotel1")
+    public ResponseEntity<?> addNewHotell(HotelRequest hotelRequest, @RequestHeader("Authorization") String token){
 
             String newToken = token.substring(7);
             User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
@@ -113,40 +113,40 @@ public class DirectorController {
     }
 
 
-//    @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
-//    public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestParam(required = false, name = "images") MultipartFile[] images, @RequestHeader("Authorization") String token){
-//
+    @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
+    public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel, @RequestHeader("Authorization") String token){
+
 //        try {
-//            String newToken = token.substring(7);
-//            User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
+            String newToken = token.substring(7);
+            User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
 //            if(images == null){
 //                return ResponseEntity.ok(new MessageResponse("image is empty"));
 //            } else {
 //                List<Image> imageList = imageService.addListImage(images);
-//                Gson gson = new Gson();
-//                HotelRequest hotelRequest = gson.fromJson(jsonHotel, HotelRequest.class) ;
-//
-//                Hotel hotel = new Hotel();
-//                hotel.sethOwner(hOwner);
+                Gson gson = new Gson();
+                HotelRequest hotelRequest = gson.fromJson(jsonHotel, HotelRequest.class) ;
+
+                Hotel hotel = new Hotel();
+                hotel.sethOwner(hOwner);
 //                hotel.setImages(imageList);
-//                hotel.setName(hotelRequest.getName());
-//                hotel.setStandard(hotelRequest.getStandard());
-//
-//                Localization localization = new Localization();
-//                localization.setCity(hotelRequest.getLocalization().getCity());
-//                localization.setCountry(hotelRequest.getLocalization().getCountry());
-//                localization.setStreet(hotelRequest.getLocalization().getStreet());
-//                localization.setHotel(hotel);
-//                hotel.setAddress(localization);
-//
-//                localizationService.saveLoacation(localization);
-//                hotelService.saveHotel(hotel);
+                hotel.setName(hotelRequest.getName());
+                hotel.setStandard(hotelRequest.getStandard());
+
+                Localization localization = new Localization();
+                localization.setCity(hotelRequest.getLocalization().getCity());
+                localization.setCountry(hotelRequest.getLocalization().getCountry());
+                localization.setStreet(hotelRequest.getLocalization().getStreet());
+                localization.setHotel(hotel);
+                hotel.setAddress(localization);
+
+                localizationService.saveLoacation(localization);
+                hotelService.saveHotel(hotel);
 //            }
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-//        return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
-//    }
+        return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
+    }
 
     @GetMapping(value = "/hotel/{hotelId}")
     public ResponseEntity<?> getAllRoom(@PathVariable("hotelId") Long hotelId) {

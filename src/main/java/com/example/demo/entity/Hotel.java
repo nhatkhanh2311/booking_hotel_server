@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -9,106 +11,112 @@ import java.util.List;
 @Entity
 public class Hotel {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-	@NotBlank
-	private String name;
+    @NotBlank
+    private String name;
 
-	private double rating;
-	
-	@Max(5)
-	@Min(0)
-	private int standard;
+    private double rating;
 
-	@OneToOne
-	@JoinColumn(name = "localizationId")
-	private Localization address;
+    @Max(5)
+    @Min(0)
+    private int standard;
 
-	@ManyToOne
-//	@JsonBackReference
-	private User hOwner;
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "localizationId")
+    private Localization address;
 
-//	@JsonManagedReference
-	@OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
-	private List<Room> rooms;
+    @JsonManagedReference(value = "hotel")
+    @ManyToOne
+    private User hOwner;
 
-//	@JsonManagedReference
-	@OneToMany
-	@MapKeyColumn(name = "id")
-	private List<Image> images;
-	
-	//----------------------------------------
+    @JsonManagedReference(value = "room")
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    private List<Room> rooms;
 
-	public long getId() {
-		return id;
-	}
+    @JsonManagedReference(value = "image")
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+//    @OneToMany
+//    @MapKeyColumn(name = "id")
+    private List<Image> images;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public Hotel() {
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Hotel(long id, @NotBlank String name, double rating, @Max(5) @Min(0) int standard, Localization address, User hOwner, List<Room> rooms, List<Image> images) {
+        this.id = id;
+        this.name = name;
+        this.rating = rating;
+        this.standard = standard;
+        this.address = address;
+        this.hOwner = hOwner;
+        this.rooms = rooms;
+        this.images = images;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public double getRating() {
-		return rating;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setRating(double rating) {
-		this.rating = rating;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getStandard() {
-		return standard;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setStandard(int standard) {
-		this.standard = standard;
-	}
+    public double getRating() {
+        return rating;
+    }
 
-	public Localization getAddress() {
-		return address;
-	}
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
 
-	public void setAddress(Localization address) {
-		this.address = address;
-	}
+    public int getStandard() {
+        return standard;
+    }
 
-	public User gethOwner() {
-		return hOwner;
-	}
+    public void setStandard(int standard) {
+        this.standard = standard;
+    }
 
-	public void sethOwner(User hOwner) {
-		this.hOwner = hOwner;
-	}
+    public Localization getAddress() {
+        return address;
+    }
 
-	public List<Room> getRooms() {
-		return rooms;
-	}
+    public void setAddress(Localization address) {
+        this.address = address;
+    }
 
-	public void setRooms(List<Room> rooms) {
-		this.rooms = rooms;
-	}
+    public User gethOwner() {
+        return hOwner;
+    }
 
-	public List<Image> getImages() {
-		return images;
-	}
+    public void sethOwner(User hOwner) {
+        this.hOwner = hOwner;
+    }
 
-	public void setImages(List<Image> images) {
-		this.images = images;
-	}
+    public List<Room> getRooms() {
+        return rooms;
+    }
 
-	@Override
-	public String toString() {
-		return "Hotel [id=" + id + ", name=" + name + ", rating=" + rating + ", standard=" + standard + ", address="
-				+ address + ", hOwner=" + hOwner + ", rooms=" + rooms +  ", images=" + images
-				+ "]";
-	}
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
 }
