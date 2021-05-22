@@ -25,6 +25,13 @@ public class HomeController {
         List<Hotel> hotels = hotelService.findRandomHotel();
         return ResponseEntity.ok().body(hotels);
     }
+
+    @GetMapping("/list-hotel")
+    public ResponseEntity<?> randomListHotel(){
+        List<Hotel> hotels = hotelService.findRandomHotel();
+        return ResponseEntity.ok().body(hotels);
+    }
+
     @PostMapping(value = "/search")
     public ResponseEntity<?> serchRoomAvaiable (@RequestBody SearchRequest searchRequest){
         List<Room> roomsAvaiableInPeriodTime = roomService.availableSearchedRooms(searchRequest.getCityName(), searchRequest.getCapacity(), searchRequest.getStart().toString(), searchRequest.getEnd().toString());
