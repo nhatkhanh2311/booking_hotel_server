@@ -70,12 +70,14 @@ public class ResponeAPICotroller {
         messageResponses.add(new Message("thêm mới hotel thành công", "add hotel successfully"));
         messageResponses.add(new Message("thêm image hotel, room thành công", "add img successfully"));
 
-
         messageResponses.add(new Message("update hotel, room thành công", "Save changes"));
 //        messageResponses.add(new Message("xóa hotel thành công", "Delete hotel successful"));
 
         messageResponses.add(new Message("thêm mới room thành công", "add room successfully"));
         messageResponses.add(new Message("user bookingroom thành công", "Done booking"));
+
+        messageResponses.add(new Message("đổi mật khẩu thành công", "change password successfully"));
+        messageResponses.add(new Message("Sai mật khẩu khi đổi mật khẩu", "current password incorrect"));
 
 
         return ResponseEntity.ok().body(messageResponses);
@@ -103,15 +105,18 @@ public class ResponeAPICotroller {
         apiList.add(new Message("director - get room update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/update"));
         apiList.add(new Message("director - save room update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/update/save"));
 
-        apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search2"));
+        apiList.add(new Message("admin - thống kê số lượng hotel ở mỗi thành phố", "https://hotels-booking-server.herokuapp.com/admin/thongke"));
+        apiList.add(new Message("admin - mở khoá tài khoản director", "https://hotels-booking-server.herokuapp.com/admin/getDirector/unlock/{directorId}"));
+
         apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/book/{idRoom}/{from}/{to}"));
         apiList.add(new Message("user - cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooing/{bookingId}"));
+
+        apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search2"));
         apiList.add(new Message("get information to update", "https://hotels-booking-server.herokuapp.com/update-information"));
         apiList.add(new Message("save update-information", "https://hotels-booking-server.herokuapp.com/update-information/save"));
         apiList.add(new Message("forgot password", "https://hotels-booking-server.herokuapp.com/forgot-password/{email}"));
         apiList.add(new Message("reset password", "https://hotels-booking-server.herokuapp.com/confirm-reset/{token}"));
-        apiList.add(new Message("admin - thống kê số lượng hotel ở mỗi thành phố", "https://hotels-booking-server.herokuapp.com/admin/thongke"));
-        apiList.add(new Message("admin - mở khoá tài khoản director", "https://hotels-booking-server.herokuapp.com/admin/getDirector/unlock/{directorId}"));
+        apiList.add(new Message("change password", "https://hotels-booking-server.herokuapp.com/update-information/save-password"));
 
         return ResponseEntity.ok().body( apiList);
     }
@@ -151,9 +156,6 @@ public class ResponeAPICotroller {
                 }
             }
         }
-//        for(int i = 0; i < hotelSearchResponseList.size(); i++) {
-//            hotelSearchResponseList.remove(i);
-//        }
         hotelSearchResponseList.clear();
         for (Hotel hotel: hotelList) {
             HotelSearchResponse hotelSearchResponse = new HotelSearchResponse();
