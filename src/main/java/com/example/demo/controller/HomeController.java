@@ -26,9 +26,9 @@ public class HomeController {
         return ResponseEntity.ok().body(hotels);
     }
 
-    @GetMapping("/list-hotel")
-    public ResponseEntity<?> randomListHotel(){
-        List<Hotel> hotels = hotelService.findRandomHotel();
+    @GetMapping("/list-hotel/{hotelId}")
+    public ResponseEntity<?> randomListHotel(@PathVariable("hotelId") Long hotelId){
+        Hotel hotels = hotelService.findHotelById(hotelId);
         return ResponseEntity.ok().body(hotels);
     }
 

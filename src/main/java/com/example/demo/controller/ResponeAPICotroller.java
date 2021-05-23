@@ -59,6 +59,9 @@ public class ResponeAPICotroller {
     @Autowired
     ImageService imageService;
 
+    @Autowired
+    LocalizationService localizationService;
+
     @GetMapping("/message")
     public ResponseEntity<?> message() {
         List<Message> messageResponses = new ArrayList<>();
@@ -245,4 +248,8 @@ public class ResponeAPICotroller {
         }
     }
 
+    @GetMapping(value = "/all-cities")
+    public ResponseEntity<?> getAllCities() {
+        return ResponseEntity.ok().body(localizationService.findAllCities());
+    }
 }
