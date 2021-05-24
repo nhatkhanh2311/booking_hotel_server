@@ -11,14 +11,13 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
 @RestController
+@CrossOrigin
 @RequestMapping("/admin")
 public class UserManageController {
 @Autowired
@@ -60,19 +59,24 @@ public class UserManageController {
     /*
     * API unlock tai khoan
     */
-    @PutMapping("/getDirector/unlock/{userId}")
-    public ResponseEntity<Void> moKhoaTaiKhoan(@PathVariable long userId){
+    @PutMapping("/getDirector/unlock/{directorId}")
+    public ResponseEntity<?> moKhoaTaiKhoan(@PathVariable("directorId") long directorId){
         try {
-            userService.UnlockUser(userId);
+            userService.UnlockUser(directorId);
         }catch (UserNotFoundException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't find this account on database", e);
         }
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return  ResponseEntity.ok().body("Done unlock");
     }
-
-    @GetMapping("/adminthongke")
+    /*
+    * admin thong ke
+    * */
+    @GetMapping("/thongke")
     public ResponseEntity<?> thongKeAdmin(){
         List<ThongKeKhachSanResponse> thongKeKhachSanResponses = localizationService.thongKeKhachSan();
         return ResponseEntity.ok().body(thongKeKhachSanResponses);
     };
+    /*
+    * -----------------------------------------------------------------------------------------------
+    * */
 }

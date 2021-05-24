@@ -1,11 +1,14 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.*;
+import com.example.demo.payload.reponse.HotelSearchResponse;
 import com.example.demo.payload.reponse.Message;
 import com.example.demo.payload.reponse.MessageResponse;
+import com.example.demo.payload.request.PasswordRequest;
 import com.example.demo.payload.request.SearchRequest;
 import com.example.demo.payload.request.UpdateInformationRequest;
 import com.example.demo.repository.ConfirmationTokenRepository;
+import com.example.demo.repository.ImageRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.*;
@@ -18,8 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+
 @RestController
+@CrossOrigin
 public class ResponeAPICotroller {
 
     @Autowired
@@ -49,6 +53,15 @@ public class ResponeAPICotroller {
     @Autowired
     GetUserFromToken getUserFromToken;
 
+    @Autowired
+    ImageRepository imageRepository;
+
+    @Autowired
+    ImageService imageService;
+
+    @Autowired
+    LocalizationService localizationService;
+
     @GetMapping("/message")
     public ResponseEntity<?> message() {
         List<Message> messageResponses = new ArrayList<>();
@@ -57,9 +70,19 @@ public class ResponeAPICotroller {
         messageResponses.add(new Message("sigup trùng email", "email is taken"));
         messageResponses.add(new Message("signup thành công", "successfull"));
         messageResponses.add(new Message("signin thất bại", "incorrect"));
-        messageResponses.add(new Message("chưa chọn ảnh", "image is empty"));
         messageResponses.add(new Message("thêm mới hotel thành công", "add hotel successfully"));
+        messageResponses.add(new Message("thêm image hotel, room thành công", "add img successfully"));
+
+        messageResponses.add(new Message("update hotel, room thành công", "Save changes"));
+//        messageResponses.add(new Message("xóa hotel thành công", "Delete hotel successful"));
+
         messageResponses.add(new Message("thêm mới room thành công", "add room successfully"));
+        messageResponses.add(new Message("user bookingroom thành công", "done booking"));
+
+        messageResponses.add(new Message("Cập nhật thông tin thành công", "update successfully"));
+        messageResponses.add(new Message("đổi mật khẩu thành công", "change password successfully"));
+        messageResponses.add(new Message("Sai mật khẩu khi đổi mật khẩu", "current password incorrect"));
+
 
         return ResponseEntity.ok().body(messageResponses);
     }
@@ -70,23 +93,41 @@ public class ResponeAPICotroller {
         List<Message> apiList = new ArrayList<>();
         apiList.add(new Message("signin", "https://hotels-booking-server.herokuapp.com/signin"));
         apiList.add(new Message("signup", "https://hotels-booking-server.herokuapp.com/signup"));
+
         apiList.add(new Message("director - list hotels", "https://hotels-booking-server.herokuapp.com/director/hotel"));
         apiList.add(new Message("director - new hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/new-hotel"));
+        apiList.add(new Message("director - new img for hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/uploadImg"));
+        apiList.add(new Message("director - get img of hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/getImg"));
+
         apiList.add(new Message("director - list room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}"));
         apiList.add(new Message("director - new room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/new-room"));
-        apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search"));
-        apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/booking"));
+        apiList.add(new Message("director - new img for room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/uploadImg"));
+        apiList.add(new Message("director - get img of room", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/getImg"));
+
+        apiList.add(new Message("director - get hotel update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/update"));
+        apiList.add(new Message("director - save hotel update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/update/save"));
+        apiList.add(new Message("director - get room update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/update"));
+        apiList.add(new Message("director - save room update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/update/save"));
+
+        apiList.add(new Message("admin - thống kê số lượng hotel ở mỗi thành phố", "https://hotels-booking-server.herokuapp.com/admin/thongke"));
+        apiList.add(new Message("admin - mở khoá tài khoản director", "https://hotels-booking-server.herokuapp.com/admin/getDirector/unlock/{directorId}"));
+
+        apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/book/{idRoom}/{from}/{to}"));
         apiList.add(new Message("user - cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooing/{bookingId}"));
+
+        apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search"));
         apiList.add(new Message("get information to update", "https://hotels-booking-server.herokuapp.com/update-information"));
         apiList.add(new Message("save update-information", "https://hotels-booking-server.herokuapp.com/update-information/save"));
         apiList.add(new Message("forgot password", "https://hotels-booking-server.herokuapp.com/forgot-password/{email}"));
         apiList.add(new Message("reset password", "https://hotels-booking-server.herokuapp.com/confirm-reset/{token}"));
+        apiList.add(new Message("change password", "https://hotels-booking-server.herokuapp.com/update-information/save-password"));
 
         return ResponseEntity.ok().body( apiList);
     }
 
+    List<HotelSearchResponse> hotelSearchResponseList = new ArrayList<>();
 
-    @PostMapping(value = "/search2")
+    @PostMapping(value = "/search")
     public ResponseEntity<?> search(@RequestBody SearchRequest searchRequest) {
 
         List<Hotel> hotels = hotelService.getAllHotelsByCityName(searchRequest.getCityName());
@@ -94,7 +135,7 @@ public class ResponeAPICotroller {
         List<BookingRoom> bookingRoomList = dateService.getAllRoomByDateBooking(searchRequest.getStart(), searchRequest.getEnd());
 
         for (Hotel hotel: hotels) {
-            List<Room> rooms = roomService.getAllRoomByHotelId(hotel.getId());
+            List<Room> rooms = roomService.searchRoomByCapacity(hotel.getId(), searchRequest.getCapacity());
             for (Room room: rooms) {
                 roomList.add(room);
                 for (BookingRoom bk: bookingRoomList) {
@@ -106,20 +147,36 @@ public class ResponeAPICotroller {
             }
         }
         List<Hotel> hotelList = new ArrayList<>();
-        for (Room room: roomList) {
+        for(Room room : roomList) {
             Hotel hotel = room.getHotel();
             hotelList.add(hotel);
-            System.out.println();
         }
 
-        for(int i = 0; i < hotelList.size(); i++) {
+        for (int i = 0; i < hotelList.size(); i++ ) {
             for (int j = i+1; j < hotelList.size(); j++) {
                 if (hotelList.get(i).getId() == hotelList.get(j).getId()) {
                     hotelList.remove(hotelList.get(j));
+                    j--;
                 }
             }
         }
-        return ResponseEntity.ok(hotelList);
+        hotelSearchResponseList.clear();
+        for (Hotel hotel: hotelList) {
+            HotelSearchResponse hotelSearchResponse = new HotelSearchResponse();
+            Hotel hotel1 = hotel;
+
+            List<Room> rooms = new ArrayList<>();
+            for(Room room: roomList) {
+                if (hotel.getId() == room.getHotel().getId()) {
+                    rooms.add(room);
+                }
+            }
+            hotel1.setRooms(rooms);
+            hotelSearchResponse.setHotel(hotel1);
+            hotelSearchResponseList.add(hotelSearchResponse);
+        }
+
+        return ResponseEntity.ok(hotelSearchResponseList);
     }
 
     @PostMapping(value = "/forgot-password/{email}")
@@ -166,14 +223,33 @@ public class ResponeAPICotroller {
     @PostMapping(value = "/update-information/save")
     public ResponseEntity<?> updateInformation(@RequestHeader("Authorization") String token, @RequestBody UpdateInformationRequest userRequest) {
         User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
-        user.setPassword(encoder.encode(userRequest.getPassword()));
-        UserDetail userDetail = user.getUserDetails();
+//        user.setPassword(encoder.encode(userRequest.getPassword()));
+        UserDetail userDetail = user.getUserDetail();
+        userDetail.setPhoneNumber(userRequest.getPhoneNumber());
         userDetail.setBirth(userRequest.getBirth());
         userDetail.setNameUserDetail(userRequest.getNameUserDetail());
-        userDetail.setPhoneNumber(userRequest.getPhoneNumber());
         user.setUserDetail(userDetail);
 
         userRepository.save(user);
         return ResponseEntity.ok().body("Update successfully");
+//        return ResponseEntity.ok().body(user.getUserDetail());
+
+    }
+
+    @PostMapping(value = "/update-information/save-password")
+    public ResponseEntity<?> updatePassword(@RequestHeader("Authorization") String token, @RequestBody PasswordRequest passwordRequest) {
+        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+        if(encoder.matches(passwordRequest.getOldPassword(), user.getPassword() )) {
+            user.setPassword(encoder.encode(passwordRequest.getNewPassword()));
+            userRepository.save(user);
+            return ResponseEntity.ok().body(new MessageResponse("change password successfully"));
+        } else {
+            return ResponseEntity.ok().body(new MessageResponse("current password incorrect"));
+        }
+    }
+
+    @GetMapping(value = "/all-cities")
+    public ResponseEntity<?> getAllCities() {
+        return ResponseEntity.ok().body(localizationService.findAllCities());
     }
 }

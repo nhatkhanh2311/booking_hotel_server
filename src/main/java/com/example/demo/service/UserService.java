@@ -40,7 +40,7 @@ public class UserService {
             throw new UserNotFoundException("Khong ton tai tai khoan");
         }
         User user = userRepository.getOne(userId);
-        user.setLocked(false);
+        user.setLocked(true);
         userRepository.save(user);
         return true;
     }
@@ -49,8 +49,8 @@ public class UserService {
         return userRepository.findByEmail(userEmail);
     }
     public List<User> findDirectorLookFalse() { return userRepository.findDirectorLookedFalse();}
+
     public UserDetail findOne (Long userId){
         return userDetailRepository.findOne(userId);
     }
-
 }

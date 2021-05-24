@@ -1,7 +1,5 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -63,13 +61,7 @@ public class User {
         this.locked = locked;
     }
 
-    public UserDetail getUserDetails() {
-        return userDetail;
-    }
-
-    public void setUserDetail(UserDetail userDetail) {
-        this.userDetail = userDetail;
-    }
+//    public UserDetail getUserDetails()
 
     public Long getId() {
         return id;
@@ -103,12 +95,24 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRole() {
-        return roles;
-    }
+//    public Set<Role> getRole() {
+//        return roles;
+//    }
+
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public UserDetail getUserDetail() {
+        return userDetail;
+    }
+
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
+    }
 }

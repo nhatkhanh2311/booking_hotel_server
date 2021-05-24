@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -29,8 +28,9 @@ public class Room {
 	@OneToMany
 	private List<BookingRoom> bookingRoom;
 
+	@JsonBackReference(value = "room")
 	@ManyToOne
-	@JsonBackReference
+	@JoinColumn(name = "hotelId")
 	private Hotel hotel;
 
 	@ManyToMany
@@ -42,7 +42,7 @@ public class Room {
 	private String description;
 
 	@OneToMany(cascade = CascadeType.REMOVE)
-	@JsonManagedReference
+//	@JsonManagedReference
 	@MapKeyColumn(name = "id")
 	private List<Image> images;
 

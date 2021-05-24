@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
 
@@ -41,7 +41,12 @@ public class UserController {
     @Autowired
     EmailSenderService emailSenderService;
 
-
+    @GetMapping(value = "/")
+    public ResponseEntity<?> getUser(@RequestHeader(name ="Authorization") String token) {
+        String newToken = token.substring(7);
+        User user = getUserFromToken.getUserByUserNameFromJwt(newToken);
+        return ResponseEntity.ok().body(user);
+    }
 
     @PostMapping(value = "/search/{cityName}")
     public ResponseEntity<?> search(@PathVariable("cityName") String cityName) {
@@ -68,8 +73,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/booking")
-    public ResponseEntity<?> booking(@RequestBody BookingRequest bookingRequest, @RequestHeader("Authorization") String token) {
-        if(token.equals("")) {
+    public ResponseEntity<?> booking(@RequestBody BookingRequest bookingRequest, @RequestHeader(required = false, name ="Authorization") String token) {
+        if(token == null) {
             return ResponseEntity.ok("error");
         } else {
             String newToken = token.substring(7);
@@ -89,11 +94,10 @@ public class UserController {
     }
 
     @PostMapping("/book/{idRoom}/{from}/{to}")
-    public ResponseEntity<?> booking(@PathVariable("idRoom") long idRoom, @PathVariable("from") String from, @PathVariable("to") String to,@RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> booking(@PathVariable("idRoom") long idRoom, @PathVariable("from") String from, @PathVariable("to") String to,@RequestHeader(name ="Authorization") String token) {
 
         Room room = roomService.findOne(idRoom);
         User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
-        if (user != null) {
             dateService.bookRoom(from, to, idRoom, user); // luu vao bang bôking room
             List<User> hosts = room.getHost();
             hosts.add(user);
@@ -103,7 +107,7 @@ public class UserController {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(user.getEmail());
             mailMessage.setSubject("Complete booking room ");
-            mailMessage.setText("Dear Mr/Ms " + user.getUserDetails().getNameUserDetail() + ",\n" +
+            mailMessage.setText("Dear Mr/Ms " + user.getUserDetail().getNameUserDetail() + ",\n" +
                     "\n" +
                     "This email is to confirm your booking on " + from +" for the room  at the "+ room.getHotel().getName() +". The check-in date shall be on " + from +" and the check-out date shall be on " + to +".\n" +
                     "\n" +
@@ -123,9 +127,6 @@ public class UserController {
 
             // Send the email
             emailSenderService.sendEmail(mailMessage);
-        } else {
-            return ResponseEntity.ok("Please Login");
-        }
         return ResponseEntity.ok("Done booking");
     }
 
@@ -152,7 +153,7 @@ public class UserController {
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Complete cancel booking room ");
         mailMessage.setText(
-                "Dear Mr/Ms " + user.getUserDetails().getNameUserDetail() +",\n"
+                "Dear Mr/Ms " + user.getUserDetail().getNameUserDetail() +",\n"
                 + "You complete cancel the room " + room.getName() + " at the " + room.getHotel().getName() + " from: " + bookingRoom.getStart() + " to: " + bookingRoom.getEnd() +"\n"
                 + "We hope you enjoy when you use my serviece, Thank you!"
 
@@ -163,6 +164,6 @@ public class UserController {
         dateService.huyBooking(bookingId);
 
         return ResponseEntity.ok("complete Cancel");
-
     }
+
 }

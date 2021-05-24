@@ -15,35 +15,55 @@ import java.util.List;
 
 @Service
 public class ImageService {
-    private static Path currentPath = Paths.get(System.getProperty("user.dir"));
-    private static Path filePath = Paths.get(currentPath.toString(), "src", "main", "resources", "image");
-
-    private static String UPLOADED_FOLDER = filePath.toString()+ "\\";
+    private static String UPLOADED_FOLDER = "D:/[2021]Project/[2]HotelBooking/booking_hotel_server/src/main/resources/image/";
+    //    private static Path currentPath = Paths.get(System.getProperty("user.dir"));
+//    private static Path filePath = Paths.get(currentPath.toString(), "src", "main", "resources", "image");
+//
+//    private static String UPLOADED_FOLDER = filePath.toString()+ "\\";
     @Autowired
     private ImageRepository imageRepository;
 
-    public Image addNewImage (MultipartFile file) throws IOException{
+    public Image addNewImage(MultipartFile file) throws IOException {
 
         byte[] bytes = file.getBytes();
         Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename().replaceAll(" ", ""));
         Files.write(path, bytes);
         Image image = new Image();
-        image.setPath("..\\image\\" + file.getOriginalFilename().replaceAll(" ", ""));
+        image.setPath("../image/" + file.getOriginalFilename().replaceAll(" ", ""));
         imageRepository.save(image);
         return image;
     }
 
-   public List<Image> addListImage (MultipartFile[] files) throws IOException {
-      List<Image> images = new ArrayList<>();
-        for(int i= 0; i< files.length; i++){
+    public List<Image> addListImage(MultipartFile[] files) throws IOException {
+        List<Image> images = new ArrayList<>();
+        for (int i = 0; i < files.length; i++) {
             byte[] bytes = files[i].getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + files[i].getOriginalFilename().replaceAll(" ", ""));
             Files.write(path, bytes);
             Image image = new Image();
-            image.setPath("..\\image\\" + files[i].getOriginalFilename().replaceAll(" ", ""));
+            image.setPath("../image/" + files[i].getOriginalFilename().replaceAll(" ", ""));
             imageRepository.save(image);
             images.add(image);
         }
         return images;
-   }
+    }
+    public List<Image> getImgByHotelId(Long hotelId) {
+        return imageRepository.findAllByHotel_Id(hotelId);
+    }
+
+    public List<Image> getImgByRoomId(Long roomId) {
+        return imageRepository.findAllByRoom_Id(roomId);
+    }
+
+    public void save(Image img) {
+        imageRepository.save(img);
+    }
+
+    public void deleteHotelInImg(Long id) {
+        imageRepository.deleteHotelInImg(id);
+    }
+
+    public void deleteRoomInImg(Long id) {
+        imageRepository.deleteRoomInImg(id);
+    }
 }

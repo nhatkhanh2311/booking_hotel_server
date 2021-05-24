@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
+
 @RestController
+@CrossOrigin
 public class HomeController {
     @Autowired
     private HotelService hotelService;
@@ -20,11 +21,18 @@ public class HomeController {
     private RoomService roomService;
 
     @GetMapping("")
-    public ResponseEntity<List<Hotel>> randomHotel(){
+    public ResponseEntity<?> randomHotel(){
         List<Hotel> hotels = hotelService.findRandomHotel();
         return ResponseEntity.ok().body(hotels);
     }
-    @PostMapping(value = "/search")
+
+    @GetMapping("/list-hotel/{hotelId}")
+    public ResponseEntity<?> randomListHotel(@PathVariable("hotelId") Long hotelId){
+        Hotel hotels = hotelService.findHotelById(hotelId);
+        return ResponseEntity.ok().body(hotels);
+    }
+
+    @PostMapping(value = "/search1")
     public ResponseEntity<?> serchRoomAvaiable (@RequestBody SearchRequest searchRequest){
         List<Room> roomsAvaiableInPeriodTime = roomService.availableSearchedRooms(searchRequest.getCityName(), searchRequest.getCapacity(), searchRequest.getStart().toString(), searchRequest.getEnd().toString());
         return  ResponseEntity.ok(roomsAvaiableInPeriodTime);

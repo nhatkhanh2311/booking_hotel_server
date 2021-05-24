@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.BookingRoom;
 import com.example.demo.entity.User;
+import com.example.demo.payload.reponse.ThongKeDirector;
 import com.example.demo.repository.DateRepository;
 import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class DateService  {
     private RoomRepository roomRepository;
     @Autowired
     private DateRepository dateRepository;
+    @Autowired
+    private UserService userService;
 
     /**
      * Gives start date by String from thymeleaf form
@@ -63,7 +66,7 @@ public class DateService  {
         }
     }
     public List<BookingRoom> findAllRoomById (Long id){
-        return  dateRepository.findAllByRoomId(id);
+        return  dateRepository.findAllByRoomAfterNow(id);
     }
 
     public void bookRoom(String from, String to, long id, User user) {
@@ -112,4 +115,13 @@ public class DateService  {
     public void huyBooking(Long bookingId){dateRepository.huyBooking(bookingId);}
 
     public  BookingRoom findOneBooking(Long bookingId){ return dateRepository.findBookingById(bookingId);}
+    public List<ThongKeDirector> thongKeDirectors(Long hotelId, int month){
+        List<ThongKeDirector> thongKeDirectors = dateRepository.thongKeDirector(hotelId, month);
+        for(int i = 0; i < thongKeDirectors.size(); i++){
+            User host = userService.getUserById(thongKeDirectors.get(i).getHost_id());
+            thongKeDirectors.get(i).setUser(host);
+
+        }
+        return thongKeDirectors;
+    }
 }

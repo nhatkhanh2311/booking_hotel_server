@@ -1,14 +1,8 @@
 package com.example.demo.payload.reponse;
 
-import com.example.demo.entity.BookingRoom;
 import com.example.demo.entity.Hotel;
 import com.example.demo.entity.Image;
-import com.example.demo.entity.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
 

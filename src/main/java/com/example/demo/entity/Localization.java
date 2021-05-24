@@ -17,7 +17,7 @@ public class Localization {
 	
 	private String street;
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JsonBackReference
 	private Hotel hotel;
 

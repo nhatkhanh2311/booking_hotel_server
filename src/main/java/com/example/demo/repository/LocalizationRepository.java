@@ -18,4 +18,6 @@ public interface LocalizationRepository extends JpaRepository<Localization, Long
 
     @Query (value = "SELECT city, count(city) as numberOfHotel FROM localization group by city", nativeQuery = true)
     List<ThongKeKhachSanResponse> thongKeKhachSan();
+
+    Localization findAllByHotelId(Long id);
 }
