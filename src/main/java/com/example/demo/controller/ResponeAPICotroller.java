@@ -82,6 +82,7 @@ public class ResponeAPICotroller {
         messageResponses.add(new Message("Cập nhật thông tin thành công", "update successfully"));
         messageResponses.add(new Message("đổi mật khẩu thành công", "change password successfully"));
         messageResponses.add(new Message("Sai mật khẩu khi đổi mật khẩu", "current password incorrect"));
+        messageResponses.add(new Message("unlook thành công" , "Done unlock"));
 
 
         return ResponseEntity.ok().body(messageResponses);
@@ -111,6 +112,8 @@ public class ResponeAPICotroller {
 
         apiList.add(new Message("admin - thống kê số lượng hotel ở mỗi thành phố", "https://hotels-booking-server.herokuapp.com/admin/thongke"));
         apiList.add(new Message("admin - mở khoá tài khoản director", "https://hotels-booking-server.herokuapp.com/admin/getDirector/unlock/{directorId}"));
+        apiList.add(new Message("admin - get tất cả các director đã đăng ký nhưng chưa đc xác nhận tài khoản", "https://hotels-booking-server.herokuapp.com/admin/getDirector"));
+        apiList.add(new Message("admin - view details director đã đăng ký nhưng chưa đc xác nhận tài khoản", "https://hotels-booking-server.herokuapp.com/admin/getDirector/view/{directorId}"));
 
         apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/book/{idRoom}/{from}/{to}"));
         apiList.add(new Message("user - cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooing/{bookingId}"));

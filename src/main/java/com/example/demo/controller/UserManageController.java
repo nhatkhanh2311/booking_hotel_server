@@ -64,7 +64,7 @@ public class UserManageController {
         try {
             userService.UnlockUser(directorId);
         }catch (UserNotFoundException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't find this account on database", e);
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't find this account on database", e);
         }
         return  ResponseEntity.ok().body("Done unlock");
     }

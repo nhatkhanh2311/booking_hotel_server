@@ -117,11 +117,6 @@ public class DateService  {
     public  BookingRoom findOneBooking(Long bookingId){ return dateRepository.findBookingById(bookingId);}
     public List<ThongKeDirector> thongKeDirectors(Long hotelId, int month){
         List<ThongKeDirector> thongKeDirectors = dateRepository.thongKeDirector(hotelId, month);
-        for(int i = 0; i < thongKeDirectors.size(); i++){
-            User host = userService.getUserById(thongKeDirectors.get(i).getHost_id());
-            thongKeDirectors.get(i).setUser(host);
-
-        }
         return thongKeDirectors;
     }
 }
