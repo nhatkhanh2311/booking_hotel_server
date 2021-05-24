@@ -11,5 +11,8 @@ public interface ThongKeDirector{
      String getName();
      Long getHost_id();
      Long getTotalPrice();
-     User setUser(User user);
+     String getName_user_detail();
+     String getEmail();
+
+
 }

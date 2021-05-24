@@ -76,7 +76,10 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
     @Query(value = "SELECT * FROM heroku_bd7e4e64ef299dd.booking_room where id = ?1", nativeQuery = true)
     BookingRoom findBookingById (Long bookingId);
 
-    @Query(value = "SELECT booking_room.end, booking_room.start, room.name, booking_room.host_id,  datediff(end,start)*room.price as totalPrice FROM room  join booking_room   on booking_room.room_id = room.id where room.hotel_id = ?1 and month(start) = ?2", nativeQuery = true)
+    @Query(value = "SELECT  user_detail.name_user_detail, user.email, booking_room.end, booking_room.start, room.name,  datediff(end,start)*room.price as totalPrice \n" +
+            " FROM room  join booking_room   on booking_room.room_id = room.id \n" +
+            " join user on booking_room.host_id = user.id \n" +
+            " join user_detail on user_detail.user_id = user.id    where room.hotel_id = ?1 and month(start) = ?2", nativeQuery = true)
     List<ThongKeDirector> thongKeDirector (Long hotelId, int month);
 
 }
