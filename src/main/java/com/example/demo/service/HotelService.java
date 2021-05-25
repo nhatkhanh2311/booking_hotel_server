@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Hotel;
+import com.example.demo.payload.reponse.ThongKeKhachSanAdminResponse;
 import com.example.demo.repository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,9 @@ public class HotelService {
     public List<Hotel> findRandomHotel(){return  hotelRepository.findRandomHotel();}
     public void deleteHotel(Long id) {
         hotelRepository.deleteHotel(id);
+    }
+    public List<ThongKeKhachSanAdminResponse> thongKeAdmin (String city){
+        return hotelRepository.thongKeAdmin(city);
     }
 
 }

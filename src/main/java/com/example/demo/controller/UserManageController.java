@@ -3,9 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserDetail;
 import com.example.demo.exception.UserNotFoundException;
+import com.example.demo.payload.reponse.ThongKeKhachSanAdminResponse;
 import com.example.demo.payload.reponse.ThongKeKhachSanResponse;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.security.jwt.JwtUtils;
+import com.example.demo.service.HotelService;
 import com.example.demo.service.LocalizationService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class UserManageController {
 
 @Autowired
     LocalizationService localizationService;
+@Autowired
+    HotelService hotelService;
 ///*
 //* API lock tai khoan
 //*/
@@ -79,4 +83,9 @@ public class UserManageController {
     /*
     * -----------------------------------------------------------------------------------------------
     * */
+    @GetMapping("thongke/{cityName}")
+    public ResponseEntity<?> thongkeAdminTheoCity(@PathVariable("cityName") String cityName){
+        List<ThongKeKhachSanAdminResponse> thongKeKhachSanAdminResponses = hotelService.thongKeAdmin(cityName);
+        return  ResponseEntity.ok().body(thongKeKhachSanAdminResponses);
+    }
 }
