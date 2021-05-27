@@ -1,6 +1,7 @@
 package com.example.demo.security.services;
 
 import com.example.demo.entity.User;
+import com.example.demo.entity.UserDetail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,18 +21,21 @@ public class UserDetailsImpl implements UserDetails {
 
     private String email;
 
+    private UserDetail userDetail;
+
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Long id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Collection<? extends GrantedAuthority> authorities, UserDetail userDetail) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.userDetail = userDetail;
     }
 
     public static UserDetailsImpl build(User user) {
@@ -44,7 +48,11 @@ public class UserDetailsImpl implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities);
+                authorities, user.getUserDetail());
+    }
+
+    public UserDetail getUserDetail() {
+        return userDetail;
     }
 
     @Override
