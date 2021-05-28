@@ -41,7 +41,7 @@ public class Room {
 
 	private String description;
 
-	@OneToMany(cascade = CascadeType.REMOVE)
+	@OneToMany(cascade = CascadeType.ALL)
 //	@JsonManagedReference
 	@MapKeyColumn(name = "id")
 	private List<Image> images;

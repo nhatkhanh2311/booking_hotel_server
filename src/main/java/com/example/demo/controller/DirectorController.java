@@ -195,21 +195,29 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
 
 
     @PostMapping("/hotel/{hotelId}/new-room")
-    public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId, @RequestBody RoomRequest roomRequest){
+    public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId,@RequestParam(name = "images") MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom) throws IOException {
+try {
 
-                Hotel hotel = hotelService.findHotelById(hotelId);
-//                Gson gson = new Gson();
-//                RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class);
-                Room room = new Room();
-                room.setHotel(hotel);
-                room.setType(roomRequest.getType());
-                room.setArea(roomRequest.getArea());
-                room.setCapacity(roomRequest.getCapacity());
-                room.setDescription(roomRequest.getDescription());
-                room.setName(roomRequest.getName());
-                room.setPrice(roomRequest.getPrice());
-                room.setAdded(LocalDate.now());
-                roomService.saveRoom(room);
+
+    Hotel hotel = hotelService.findHotelById(hotelId);
+                Gson gson = new Gson();
+                RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class);
+    Room room = new Room();
+    for (int i = 0; i < images.length; i++) {
+        imageService.save(new Image(images[i].getBytes(), room));
+    }
+    room.setHotel(hotel);
+    room.setType(roomRequest.getType());
+    room.setArea(roomRequest.getArea());
+    room.setCapacity(roomRequest.getCapacity());
+    room.setDescription(roomRequest.getDescription());
+    room.setName(roomRequest.getName());
+    room.setPrice(roomRequest.getPrice());
+    room.setAdded(LocalDate.now());
+    roomService.saveRoom(room);
+}catch (IOException e){
+    e.printStackTrace();
+}
         return ResponseEntity.ok().body(new MessageResponse("add room successfully"));
     }
 //-----------------------

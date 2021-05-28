@@ -22,7 +22,7 @@ public class Image {
 	private User user;
 
 	@JsonBackReference
-	@ManyToOne(fetch =  FetchType.LAZY)
+	@ManyToOne(fetch =  FetchType.LAZY,cascade = {CascadeType.ALL})
 	private Room room;
 
 	@JsonBackReference(value = "image")
