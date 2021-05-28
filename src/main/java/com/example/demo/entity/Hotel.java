@@ -37,7 +37,7 @@ public class Hotel {
     private List<Room> rooms;
 
     @JsonManagedReference(value = "image")
-    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 //    @OneToMany
 //    @MapKeyColumn(name = "id")
     private List<Image> images;

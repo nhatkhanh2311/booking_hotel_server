@@ -26,7 +26,7 @@ public class Image {
 	private Room room;
 
 	@JsonBackReference(value = "image")
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	private Hotel hotel;
 	
 	//-----------------
