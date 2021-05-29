@@ -72,7 +72,7 @@ public class DirectorController {
 //        return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
 //    }
 @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
-public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel,@RequestParam(name = "images") MultipartFile[] images, @RequestHeader("Authorization") String token){
+public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel,@RequestParam(name = "images", required = false) MultipartFile[] images, @RequestHeader("Authorization") String token){
 
     try {
         String newToken = token.substring(7);
