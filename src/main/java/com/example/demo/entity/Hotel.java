@@ -22,7 +22,7 @@ public class Hotel {
 
     @Max(5)
     @Min(0)
-    private int standard;
+    private float standard;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "localizationId")
@@ -45,7 +45,7 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Hotel(long id, @NotBlank String name, double rating, @Max(5) @Min(0) int standard, Localization address, User hOwner, List<Room> rooms, List<Image> images) {
+    public Hotel(long id, @NotBlank String name, double rating, @Max(5) @Min(0) float standard, Localization address, User hOwner, List<Room> rooms, List<Image> images) {
         this.id = id;
         this.name = name;
         this.rating = rating;
@@ -80,11 +80,11 @@ public class Hotel {
         this.rating = rating;
     }
 
-    public int getStandard() {
+    public float getStandard() {
         return standard;
     }
 
-    public void setStandard(int standard) {
+    public void setStandard(float standard) {
         this.standard = standard;
     }
 

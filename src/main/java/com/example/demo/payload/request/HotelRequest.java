@@ -4,16 +4,16 @@ import com.example.demo.entity.Localization;
 
 public class HotelRequest {
     public String name;
-    public int standard;
+    public float standard;
     public Localization localization;
 
-    public HotelRequest(String name, int standard, Localization localization) {
+    public HotelRequest(String name, float standard, Localization localization) {
         this.name = name;
         this.standard = standard;
         this.localization = localization;
     }
 
-    public int getStandard() {
+    public float getStandard() {
         return standard;
     }
 
