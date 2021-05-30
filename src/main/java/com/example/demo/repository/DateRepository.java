@@ -70,10 +70,10 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
     List<BookingRoom> findAllBookingRoomAfterNow(Long id);
 
     @Modifying
-    @Query(value = "delete from booking_room where id = ?", nativeQuery = true)
+    @Query(value = "delete from booking_room where id= ?;", nativeQuery = true)
     void huyBooking (Long boookingId);
 
-    @Query(value = "SELECT * FROM heroku_bd7e4e64ef299dd.booking_room where id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM booking_room where id = ?1", nativeQuery = true)
     BookingRoom findBookingById (Long bookingId);
 
     @Query(value = "SELECT  user_detail.name_user_detail, user.email, booking_room.end, booking_room.start, room.name,  datediff(end,start)*room.price as totalPrice \n" +
