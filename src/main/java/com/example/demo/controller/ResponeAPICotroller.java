@@ -194,11 +194,11 @@ public class ResponeAPICotroller {
             mailMessage.setTo(existingUser.getEmail());
             mailMessage.setSubject("Complete Password Reset!");
             mailMessage.setText("To complete the password reset process, please click here: "
-                    + "https://hotels-booking-server.herokuapp.com/confirm-reset/"+confirmationToken.getConfirmationToken());
+                    + "http://localhost:8080/forgot-password/reset-password/"+confirmationToken.getConfirmationToken());
 
             // Send the email
             emailSenderService.sendEmail(mailMessage);
-            return ResponseEntity.ok().body("successForgotPassword");
+            return ResponseEntity.ok().body(confirmationToken.getConfirmationToken());
         } else {
             return ResponseEntity.ok().body("email does not exist");
         }
