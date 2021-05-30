@@ -141,7 +141,7 @@ public class UserController {
     }
 
     @Transactional
-    @PostMapping(value = "/cancelBooing/{bookingId}")
+    @DeleteMapping(value = "/cancelBooing/{bookingId}")
     public ResponseEntity<?> cancelBooking(@PathVariable("bookingId") Long bookingId, @RequestHeader("Authorization") String token){
         User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
         BookingRoom bookingRoom = dateService.findOneBooking(bookingId);
