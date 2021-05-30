@@ -73,11 +73,9 @@ public class UserController {
     }
 
     @PostMapping(value = "/booking")
-    public ResponseEntity<?> booking(@RequestBody BookingRequest bookingRequest, @RequestHeader(required = false, name ="Authorization") String token) {
-        if(token == null) {
-            return ResponseEntity.ok("error");
-        } else {
-            String newToken = token.substring(7);
+    public ResponseEntity<?> booking(@RequestBody BookingRequest bookingRequest, @RequestHeader(name ="Authorization") String token) {
+
+        String newToken = token.substring(7);
             User host = getUserFromToken.getUserByUserNameFromJwt(newToken);
             Room room = roomService.getRoomById(bookingRequest.getIdRoom());
 
@@ -90,7 +88,7 @@ public class UserController {
             roomService.saveRoom(room);
 
             return ResponseEntity.ok(host.getUsername() + "room: " + room);
-        }
+
     }
 
     @PostMapping("/book/{idRoom}/{from}/{to}")
