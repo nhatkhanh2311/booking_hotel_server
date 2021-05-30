@@ -155,7 +155,6 @@ public class ResponeAPICotroller {
             Hotel hotel = room.getHotel();
             hotelList.add(hotel);
         }
-
         for (int i = 0; i < hotelList.size(); i++ ) {
             for (int j = i+1; j < hotelList.size(); j++) {
                 if (hotelList.get(i).getId() == hotelList.get(j).getId()) {
@@ -179,7 +178,6 @@ public class ResponeAPICotroller {
             hotelSearchResponse.setHotel(hotel1);
             hotelSearchResponseList.add(hotelSearchResponse);
         }
-
         return ResponseEntity.ok(hotelSearchResponseList);
     }
 
@@ -200,7 +198,7 @@ public class ResponeAPICotroller {
 
             // Send the email
             emailSenderService.sendEmail(mailMessage);
-            return ResponseEntity.ok().body(new MessageResponse("successForgotPassword"));
+            return ResponseEntity.ok().body("successForgotPassword");
         } else {
             return ResponseEntity.ok().body("email does not exist");
         }
