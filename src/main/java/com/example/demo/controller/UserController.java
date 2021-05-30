@@ -13,6 +13,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -73,15 +75,12 @@ public class UserController {
     }
 
    
-    @PostMapping("/book")
+    @PostMapping("/booking")
     public ResponseEntity<?> bookingRoom(@RequestBody BookingRequest bookingRequest,@RequestHeader(name ="Authorization") String token) {
 
         long idRoom = bookingRequest.getIdRoom();
-        System.out.println(idRoom + "  id Room");
         String from = bookingRequest.getStart().toString();
-        System.out.println(from + " from");
         String to = bookingRequest.getEnd().toString();
-        System.out.println(to + " to");
         Room room = roomService.findOne(idRoom);
         User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
         dateService.bookRoom(from, to, idRoom, user); // luu vao bang bôking room
@@ -89,13 +88,16 @@ public class UserController {
         hosts.add(user);
         roomService.saveRoom(room);
 
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
+
         // Create the email
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Complete booking room ");
         mailMessage.setText("Dear Mr/Ms " + user.getUserDetail().getNameUserDetail() + ",\n" +
                 "\n" +
-                "This email is to confirm your booking on " + from + " for the room  at the " + room.getHotel().getName() + ". The check-in date shall be on " + from + " and the check-out date shall be on " + to + ".\n" +
+                "This email is to confirm your booking on " + formatter.format(date) + " for the room  at the " + room.getHotel().getName() + ". The check-in date shall be on " + from + " and the check-out date shall be on " + to + ".\n" +
                 "\n" +
                 "Further details of your booking are listed below:\n" +
                 "\n" +
