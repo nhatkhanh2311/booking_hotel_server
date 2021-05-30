@@ -184,14 +184,14 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
         return ResponseEntity.ok().body(new MessageResponse("Save changes"));
     }
 
-    @Transactional
-    @PostMapping(value = "/hotel/{hotelId}/delete")
-    public ResponseEntity<?> deleteHotel(@PathVariable("hotelId") Long hotelId) {
-        roomService.deleteHotelInRoom(hotelId);
-        imageService.deleteHotelInImg(hotelId);
-        hotelService.deleteHotel(hotelId);
-        return ResponseEntity.ok().body(new MessageResponse("Delete hotel successful"));
-    }
+//    @Transactional
+//    @PostMapping(value = "/hotel/{hotelId}/delete")
+//    public ResponseEntity<?> deleteHotel(@PathVariable("hotelId") Long hotelId) {
+//        roomService.deleteHotelInRoom(hotelId);
+//        imageService.deleteHotelInImg(hotelId);
+//        hotelService.deleteHotel(hotelId);
+//        return ResponseEntity.ok().body(new MessageResponse("Delete hotel successful"));
+//    }
 
 
     @PostMapping("/hotel/{hotelId}/new-room")
@@ -260,17 +260,19 @@ try {
         return ResponseEntity.ok().body(new MessageResponse("Save changes"));
     }
 
-    @Transactional
-    @PostMapping(value = "/hotel/{hotelId}/{idRoom}/delete")
-    public ResponseEntity<?> deleteRoom(@PathVariable("roomId") Long roomId, @PathVariable("hotelId") Long hotelId) {
-        imageService.deleteRoomInImg(roomId);
-        roomService.deleteRoom(roomId);
-        return ResponseEntity.ok().body(new MessageResponse("Delete room successful"));
-    }
+
 
     @GetMapping("/hotel/thongke/{hotelId}/{month}")
     public ResponseEntity<?> thongKeDirector(@PathVariable("hotelId") Long hotelId, @PathVariable("month") int month){
         List<ThongKeDirector> thongKeDirectors = dateService.thongKeDirectors(hotelId,month);
        return  ResponseEntity.ok().body(thongKeDirectors);
     }
+
+    @Transactional
+    @PostMapping("/hotel/delete_room/{roomId}")
+    public ResponseEntity<?> deleteRoom(@PathVariable("roomId") Long roomId){
+        roomService.deleteRoom(roomId);
+        return  ResponseEntity.ok().body("Done delete room");
+    }
+
 }

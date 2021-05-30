@@ -25,7 +25,7 @@ public class Room {
 
 	private boolean availability = true;
 
-	@OneToMany
+	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
 	private List<BookingRoom> bookingRoom;
 
 	@JsonBackReference(value = "room")

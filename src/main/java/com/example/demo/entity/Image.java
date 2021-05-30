@@ -15,7 +15,7 @@ public class Image {
 	@Column(name = "img")
 	private byte[] img;
 
-	private String path;
+
 	
 	@OneToOne
 	@JsonBackReference
@@ -69,14 +69,6 @@ public class Image {
 
 	public void setImg(byte[] img) {
 		this.img = img;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
 	}
 
 	public Image() {

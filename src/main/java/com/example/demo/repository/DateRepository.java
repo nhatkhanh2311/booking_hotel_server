@@ -57,7 +57,9 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
     List<BookingRoom> findRoomByDateBooking(Date startDate, Date endDate, Date startDate1, Date endDate1);
 
     @Query(value = "SELECT DATEDIFF(?1, ?2) from booking_room", nativeQuery = true)
-    int numberOfDay(String end, String start);
+    int numberOfDay(LocalDate end, LocalDate start);
+    @Query(value = "SELECT DATEDIFF(?1, ?2) from booking_room", nativeQuery = true)
+    int numberOfDay1(String  end, String start);
 
     @Query(value = "select * from booking_room where host_id= ?", nativeQuery = true)
     List<BookingRoom> findAllByHost_Id(Long id);
@@ -82,4 +84,7 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
             " join user_detail on user_detail.user_id = user.id    where room.hotel_id = ?1 and month(start) = ?2", nativeQuery = true)
     List<ThongKeDirector> thongKeDirector (Long hotelId, int month);
 
+    @Modifying
+    @Query(value = "delete from booking_room where room_id = ?", nativeQuery = true)
+    void deleteRoomInBookingRoom(Long roomId);
 }

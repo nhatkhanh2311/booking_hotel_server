@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -79,8 +80,8 @@ public class UserController {
     public ResponseEntity<?> bookingRoom(@RequestBody BookingRequest bookingRequest,@RequestHeader(name ="Authorization") String token) {
 
         long idRoom = bookingRequest.getIdRoom();
-        String from = bookingRequest.getStart().toString();
-        String to = bookingRequest.getEnd().toString();
+        LocalDate from = bookingRequest.getStart();
+        LocalDate to = bookingRequest.getEnd();
         Room room = roomService.findOne(idRoom);
         User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
         dateService.bookRoom(from, to, idRoom, user); // luu vao bang bôking room
@@ -118,12 +119,13 @@ public class UserController {
         return ResponseEntity.ok("Done booking");
     }
 
+    /////////////////////////////////////////////////////////////////////////
     @PostMapping("/book/{idRoom}/{from}/{to}")
     public ResponseEntity<?> booking(@PathVariable("idRoom") long idRoom, @PathVariable("from") String from, @PathVariable("to") String to,@RequestHeader(name ="Authorization") String token) {
 
         Room room = roomService.findOne(idRoom);
         User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
-            dateService.bookRoom(from, to, idRoom, user); // luu vao bang bôking room
+            dateService.bookRoom1(from, to, idRoom, user); // luu vao bang bôking room
             List<User> hosts = room.getHost();
             hosts.add(user);
             roomService.saveRoom(room);
@@ -142,7 +144,7 @@ public class UserController {
                     "\n" +
                     "Room type: " + room.getType() +
                     "\n" +
-                    "Total: " + dateService.numberOfDay(to,from) * room.getPrice()+" VND" +
+                    "Total: " + dateService.numberOfDay1(to,from) * room.getPrice()+" VND" +
                     "\n" +
                     "If you have any inquiries, please do not hesitate to contact me or call the hotel directly.\n" +
                     "\n" +

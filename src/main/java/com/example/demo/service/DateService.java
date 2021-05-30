@@ -69,10 +69,18 @@ public class DateService  {
         return  dateRepository.findAllByRoomAfterNow(id);
     }
 
-    public void bookRoom(String from, String to, long id, User user) {
+    public void bookRoom1(String from, String to, long id, User user) {
         BookingRoom bookingRoom = new BookingRoom();
         bookingRoom.setStart(startDate(from));
         bookingRoom.setEnd(endDate(to));
+        bookingRoom.setRoom(roomRepository.getOne(id));
+        bookingRoom.setHost(user);
+        dateRepository.save(bookingRoom);
+    }
+    public void bookRoom(LocalDate from, LocalDate to, long id, User user) {
+        BookingRoom bookingRoom = new BookingRoom();
+        bookingRoom.setStart(from);
+        bookingRoom.setEnd(to);
         bookingRoom.setRoom(roomRepository.getOne(id));
         bookingRoom.setHost(user);
         dateRepository.save(bookingRoom);
@@ -96,8 +104,11 @@ public class DateService  {
         dateRepository.save(bookingRoom);
     }
 
-    public int numberOfDay(String end, String start){
+    public int numberOfDay(LocalDate end, LocalDate start){
         return  dateRepository.numberOfDay(end, start);
+    }
+    public int numberOfDay1(String end, String start){
+        return  dateRepository.numberOfDay1(end, start);
     }
 
     public List<BookingRoom> getAllDateByHostId(Long hostId) {
