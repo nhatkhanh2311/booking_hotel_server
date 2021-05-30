@@ -76,44 +76,44 @@ public class UserController {
     @PostMapping("/book")
     public ResponseEntity<?> bookingRoom(@RequestBody BookingRequest bookingRequest,@RequestHeader(name ="Authorization") String token) {
 
-            long idRoom = bookingRequest.getIdRoom();
+        long idRoom = bookingRequest.getIdRoom();
         System.out.println(idRoom + "  id Room");
-            String from = bookingRequest.getStart().toString();
+        String from = bookingRequest.getStart().toString();
         System.out.println(from + " from");
-            String to = bookingRequest.getEnd().toString();
+        String to = bookingRequest.getEnd().toString();
         System.out.println(to + " to");
-            Room room = roomService.findOne(idRoom);
-            User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
-            dateService.bookRoom(from, to, idRoom, user); // luu vao bang bôking room
-            List<User> hosts = room.getHost();
-            hosts.add(user);
-            roomService.saveRoom(room);
+        Room room = roomService.findOne(idRoom);
+        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+        dateService.bookRoom(from, to, idRoom, user); // luu vao bang bôking room
+        List<User> hosts = room.getHost();
+        hosts.add(user);
+        roomService.saveRoom(room);
 
-            // Create the email
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(user.getEmail());
-            mailMessage.setSubject("Complete booking room ");
-            mailMessage.setText("Dear Mr/Ms " + user.getUserDetail().getNameUserDetail() + ",\n" +
-                    "\n" +
-                    "This email is to confirm your booking on " + from + " for the room  at the " + room.getHotel().getName() + ". The check-in date shall be on " + from + " and the check-out date shall be on " + to + ".\n" +
-                    "\n" +
-                    "Further details of your booking are listed below:\n" +
-                    "\n" +
-                    "Number of guests: " + room.getCapacity() + " peoples. " +
-                    "\n" +
-                    "Room type: " + room.getType() +
-                    "\n" +
-                    "Total: " + dateService.numberOfDay(to, from) * room.getPrice() + " VND" +
-                    "\n" +
-                    "If you have any inquiries, please do not hesitate to contact me or call the hotel directly.\n" +
-                    "\n" +
-                    "We are looking forward to your visit and hope that you enjoy your stay.\n" +
-                    "\n" +
-                    "Best Regards");
+        // Create the email
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Complete booking room ");
+        mailMessage.setText("Dear Mr/Ms " + user.getUserDetail().getNameUserDetail() + ",\n" +
+                "\n" +
+                "This email is to confirm your booking on " + from + " for the room  at the " + room.getHotel().getName() + ". The check-in date shall be on " + from + " and the check-out date shall be on " + to + ".\n" +
+                "\n" +
+                "Further details of your booking are listed below:\n" +
+                "\n" +
+                "Number of guests: " + room.getCapacity() + " peoples. " +
+                "\n" +
+                "Room type: " + room.getType() +
+                "\n" +
+                "Total: " + dateService.numberOfDay(to, from) * room.getPrice() + " VND" +
+                "\n" +
+                "If you have any inquiries, please do not hesitate to contact me or call the hotel directly.\n" +
+                "\n" +
+                "We are looking forward to your visit and hope that you enjoy your stay.\n" +
+                "\n" +
+                "Best Regards");
 
-            // Send the email
-            emailSenderService.sendEmail(mailMessage);
-            return ResponseEntity.ok("Done booking");
+        // Send the email
+        emailSenderService.sendEmail(mailMessage);
+        return ResponseEntity.ok("Done booking");
     }
 
     @PostMapping("/book/{idRoom}/{from}/{to}")

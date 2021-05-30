@@ -63,7 +63,7 @@ public interface DateRepository extends JpaRepository<BookingRoom, Long> {
     List<BookingRoom> findAllByHost_Id(Long id);
 
 
-    @Query(value = "select * from booking_room where start < current_date() and host_id= ?", nativeQuery = true)
+    @Query(value = "select * from booking_room where start <= current_date() and host_id= ?", nativeQuery = true)
     List<BookingRoom> findAllBookingRoomBeforeNow(Long id);
 
     @Query(value = "select * from booking_room where start > current_date() and host_id= ?", nativeQuery = true)
