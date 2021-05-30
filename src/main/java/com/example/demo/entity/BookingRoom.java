@@ -10,6 +10,7 @@ public class BookingRoom {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	@ManyToOne
+	@JoinColumn(name = "roomId")
 	private Room room;
 //	@Column(columnDefinition = "DATE")
 	private LocalDate start;

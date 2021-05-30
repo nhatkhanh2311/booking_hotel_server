@@ -37,8 +37,8 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findAllRoomByCapacityAnCity(String cityName, int capacity);
 
     @Modifying
-    @Query(value ="delete from room where room.id = ?", nativeQuery=true)
-    void deleteRoom(Long id);
+    @Query(value ="delete from room where id = ?", nativeQuery=true)
+    void deleteRoom(Long roomId);
 
     @Modifying
     @Query(value ="delete from room where hotel_id = ?", nativeQuery=true)

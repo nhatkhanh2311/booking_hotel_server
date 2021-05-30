@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.entity.BookingRoom;
 import com.example.demo.entity.Room;
+import com.example.demo.repository.DateRepository;
+import com.example.demo.repository.ImageRepository;
 import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,10 @@ public class RoomService {
 
     @Autowired
     private DateService dateService;
+    @Autowired
+    private DateRepository dateRepository;
+    @Autowired
+    private ImageRepository imageRepository;
 
     public void saveRoom(Room room){roomRepository.save(room);}
     public Room getRoomById(Long id) {
@@ -77,10 +83,12 @@ public class RoomService {
         return listRoomFreeInPeriodtime;
     }
 
-    public void deleteRoom(Long id) {
-        roomRepository.deleteRoom(id);
-    }
-    public void deleteHotelInRoom(Long id) {
-        roomRepository.deleteHotelInRoom(id);
+
+
+    public void deleteRoom(Long roomId){
+        dateRepository.deleteRoomInBookingRoom(roomId);
+        imageRepository.deleteRoomInImg(roomId);
+        roomRepository.deleteRoom(roomId);
+
     }
 }
