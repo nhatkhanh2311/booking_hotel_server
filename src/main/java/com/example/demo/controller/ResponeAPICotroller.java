@@ -194,7 +194,7 @@ public class ResponeAPICotroller {
             mailMessage.setTo(existingUser.getEmail());
             mailMessage.setSubject("Complete Password Reset!");
             mailMessage.setText("To complete the password reset process, please click here: "
-                    + "http://localhost:8080/forgot-password/reset-password/"+confirmationToken.getConfirmationToken());
+                    + "http://localhost:8080/reset-password/"+confirmationToken.getConfirmationToken());
 
             // Send the email
             emailSenderService.sendEmail(mailMessage);
