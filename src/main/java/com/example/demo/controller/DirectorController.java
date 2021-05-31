@@ -49,28 +49,6 @@ public class DirectorController {
         return ResponseEntity.ok().body(hotels);
     }
 
-//    @PostMapping(value = "/hotel/new-hotel1")
-//    public ResponseEntity<?> addNewHotell(HotelRequest hotelRequest, @RequestHeader("Authorization") String token){
-//
-//            String newToken = token.substring(7);
-//            User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
-//
-//            Hotel hotel = new Hotel();
-//            hotel.sethOwner(hOwner);
-//            hotel.setName(hotelRequest.getName());
-//            hotel.setStandard(hotelRequest.getStandard());
-//
-//            Localization localization = new Localization();
-//            localization.setCity(hotelRequest.getLocalization().getCity());
-//            localization.setCountry(hotelRequest.getLocalization().getCountry());
-//            localization.setStreet(hotelRequest.getLocalization().getStreet());
-//            localization.setHotel(hotel);
-//            hotel.setAddress(localization);
-//
-//            localizationService.saveLoacation(localization);
-//            hotelService.saveHotel(hotel);
-//        return  ResponseEntity.ok(new MessageResponse("add hotel successfully"));
-//    }
 @PostMapping(value = "/hotel/new-hotel", consumes = {"multipart/form-data"})
 public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHotel,@RequestParam(name = "images") MultipartFile[] images, @RequestHeader("Authorization") String token){
 
@@ -111,7 +89,6 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
             for(int i = 0; i < images.length; i++) {
                 imageService.save(new Image(images[i].getBytes(), hotel));
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -154,8 +131,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
     }
 
     @PostMapping(value = "/hotel/{hotelId}/update/save")
-    public ResponseEntity<?> SaveUpdateHotel(@RequestParam("hotelRequest") String jsonHotel, @PathVariable("hotelId") Long hotelId,@RequestParam(required = false, name = "images") MultipartFile[] images ) {
-        Localization localization = null;
+    public ResponseEntity<?> SaveUpdateHotel(@RequestParam("hotelRequest") String jsonHotel, @PathVariable("hotelId") Long hotelId,@RequestParam(name = "images") MultipartFile[] images ) {
         try {
             Gson gson = new Gson();
             HotelRequest hotelRequest = gson.fromJson(jsonHotel, HotelRequest.class) ;
@@ -164,7 +140,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
             hotel.setStandard(hotelRequest.getStandard());
             hotel.setName(hotelRequest.getName());
 
-            localization = localizationService.getLocationById(hotel.getAddress().getId());
+            Localization localization = localizationService.getLocationById(hotel.getAddress().getId());
             localization.setCity(hotelRequest.getLocalization().getCity());
             localization.setCountry(hotelRequest.getLocalization().getCountry());
             localization.setStreet(hotelRequest.getLocalization().getStreet());

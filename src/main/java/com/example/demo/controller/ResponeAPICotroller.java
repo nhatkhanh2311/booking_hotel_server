@@ -95,7 +95,7 @@ public class ResponeAPICotroller {
         apiList.add(new Message("signin", "https://hotels-booking-server.herokuapp.com/signin"));
         apiList.add(new Message("signup", "https://hotels-booking-server.herokuapp.com/signup"));
 
-        apiList.add(new Message("director - list hotels", "https://hotels-booking-server.herokuapp.com/director/hotel"));
+        apiList.add(new Message("director - get list hotels", "https://hotels-booking-server.herokuapp.com/director/hotel"));
         apiList.add(new Message("director - new hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/new-hotel"));
         apiList.add(new Message("director - new img for hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/uploadImg"));
         apiList.add(new Message("director - get img of hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/getImg"));
@@ -118,7 +118,10 @@ public class ResponeAPICotroller {
 
         apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/book/{idRoom}/{from}/{to}"));
         apiList.add(new Message("user - cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooing/{bookingId}"));
+        apiList.add(new Message("user - get list booking before now", "https://hotels-booking-server.herokuapp.com/user/history-booking-before"));
+        apiList.add(new Message("user - get list booking after now", "https://hotels-booking-server.herokuapp.com/user/history-booking-after"));
 
+        apiList.add(new Message("get all cities having hotel", "https://hotels-booking-server.herokuapp.com/all-cities"));
         apiList.add(new Message("search", "https://hotels-booking-server.herokuapp.com/search"));
         apiList.add(new Message("get information to update", "https://hotels-booking-server.herokuapp.com/update-information"));
         apiList.add(new Message("save update-information", "https://hotels-booking-server.herokuapp.com/update-information/save"));

@@ -25,22 +25,16 @@ public class UserController {
 
     @Autowired
     HotelService hotelService;
-
     @Autowired
     RoomService roomService;
-
     @Autowired
     LocalizationService localizationService;
-
     @Autowired
     DateService dateService;
-
     @Autowired
     GetUserFromToken getUserFromToken;
-
     @Autowired
     UserService userService;
-
     @Autowired
     EmailSenderService emailSenderService;
 

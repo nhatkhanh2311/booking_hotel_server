@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -9,6 +11,8 @@ public class BookingRoom {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "roomId")
 	private Room room;
