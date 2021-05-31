@@ -117,7 +117,8 @@ public class ResponeAPICotroller {
         apiList.add(new Message("admin - view details director đã đăng ký nhưng chưa đc xác nhận tài khoản", "https://hotels-booking-server.herokuapp.com/admin/getDirector/view/{directorId}"));
 
         apiList.add(new Message("user - booking", "https://hotels-booking-server.herokuapp.com/user/book/{idRoom}/{from}/{to}"));
-        apiList.add(new Message("user - cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooing/{bookingId}"));
+        apiList.add(new Message("user - cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooking/{bookingId}"));
+        apiList.add(new Message("user - get cancel booking", "https://hotels-booking-server.herokuapp.com/user/cancelBooking"));
         apiList.add(new Message("user - get list booking before now", "https://hotels-booking-server.herokuapp.com/user/history-booking-before"));
         apiList.add(new Message("user - get list booking after now", "https://hotels-booking-server.herokuapp.com/user/history-booking-after"));
 

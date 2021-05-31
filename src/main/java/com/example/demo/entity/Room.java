@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -29,6 +28,10 @@ public class Room {
 	@JsonBackReference(value = "booking")
 	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
 	private List<BookingRoom> bookingRoom;
+
+	@JsonBackReference(value = "cancelBooking")
+	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+	private List<CancelBooking> cancelBookings;
 
 	@JsonBackReference(value = "room")
 	@ManyToOne
