@@ -236,7 +236,10 @@ try {
         return ResponseEntity.ok().body(new MessageResponse("Save changes"));
     }
 
-
+    @GetMapping("/hotel/thongke/{hotelId}")
+    public ResponseEntity<?> thongKeDirector(@PathVariable("hotelId") Long hotelId){
+        return  ResponseEntity.ok().body(dateService.thongKeDirectors(hotelId));
+    }
 
     @GetMapping("/hotel/thongke/{hotelId}/{month}")
     public ResponseEntity<?> thongKeDirector(@PathVariable("hotelId") Long hotelId, @PathVariable("month") int month){
