@@ -211,7 +211,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
             room.setDescription(roomRequest.getDescription());
             room.setCapacity(roomRequest.getCapacity());
             room.setArea(roomRequest.getArea());
-
+            imageService.deleteImgRoom(roomId);
             for(int i = 0; i < images.length; i++) {
                 imageService.save(new Image(images[i].getBytes(), room));
             }
