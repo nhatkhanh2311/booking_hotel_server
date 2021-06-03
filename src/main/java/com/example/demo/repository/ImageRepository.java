@@ -15,7 +15,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     List<Image> findAllByRoom_Id(Long roomId);
 
     @Modifying
-    @Query(value ="delete from hotel_images where hotel_id = ?", nativeQuery=true)
+    @Query(value ="delete from image where hotel_id = ?", nativeQuery=true)
     void deleteHotelInImg(Long id);
 
     @Modifying

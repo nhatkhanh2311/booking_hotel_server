@@ -24,10 +24,8 @@ public class Hotel {
     @Min(0)
     private float standard;
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "localizationId")
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "hotel")
     private Localization address;
-
     @JsonManagedReference(value = "hotel")
     @ManyToOne
     private User hOwner;
