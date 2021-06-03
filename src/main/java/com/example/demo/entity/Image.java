@@ -14,8 +14,6 @@ public class Image {
 	@Lob
 	@Column(name = "img")
 	private byte[] img;
-
-
 	
 	@OneToOne
 	@JsonBackReference

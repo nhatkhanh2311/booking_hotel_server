@@ -19,4 +19,8 @@ public class CancelBookingService {
     public List<CancelBooking> getCancelByHostId(Long id) {
         return cancelBookingRepository.findAllByHost_Id(id);
     }
+
+    public void deleteBookingByRoom(Long roomId) {
+        cancelBookingRepository.deleteRoomInCancelBookingRoom(roomId);
+    }
 }

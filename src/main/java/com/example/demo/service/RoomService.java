@@ -83,12 +83,9 @@ public class RoomService {
         return listRoomFreeInPeriodtime;
     }
 
-
-
     public void deleteRoom(Long roomId){
         dateRepository.deleteRoomInBookingRoom(roomId);
-        imageRepository.deleteRoomInImg(roomId);
+        imageRepository.deleteImgRoom(roomId);
         roomRepository.deleteRoom(roomId);
-
     }
 }
