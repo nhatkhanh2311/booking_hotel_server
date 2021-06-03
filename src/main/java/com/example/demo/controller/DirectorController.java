@@ -254,9 +254,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
 
         List<Room> roomList = roomService.getAllRoomByHotelId(hotelId);
         for(Room room: roomList) {
-            dateService.deleteBookingByRoom(room.getId());
-            cancelBookingService.deleteBookingByRoom(room.getId());
-            imageService.deleteImgRoom(room.getId());
+//
             roomService.deleteRoom(room.getId());
         }
         localizationService.deleteLocalizionHotel(hotelId);
