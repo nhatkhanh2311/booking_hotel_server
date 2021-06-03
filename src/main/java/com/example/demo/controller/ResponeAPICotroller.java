@@ -107,6 +107,8 @@ public class ResponeAPICotroller {
 
         apiList.add(new Message("director - get hotel update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/update"));
         apiList.add(new Message("director - save hotel update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/update/save"));
+        apiList.add(new Message("director - delete hotel", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/delete"));
+
         apiList.add(new Message("director - get room update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/update"));
         apiList.add(new Message("director - save room update", "https://hotels-booking-server.herokuapp.com/director/hotel/{hotelId}/{idRoom}/update/save"));
 
