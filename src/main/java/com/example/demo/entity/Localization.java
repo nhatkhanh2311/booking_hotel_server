@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,8 +17,10 @@ public class Localization {
 	
 	private String street;
 
-	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "hotelId")
+	@JsonBackReference
+	@OneToOne(cascade = CascadeType.ALL)
+	@MapsId
+	@JoinColumn(name = "hotelId", nullable = false)
 	private Hotel hotel;
 
 	public Localization() {	}

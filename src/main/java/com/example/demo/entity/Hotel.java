@@ -25,7 +25,9 @@ public class Hotel {
     private float standard;
 
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "hotel")
+    @PrimaryKeyJoinColumn
     private Localization address;
+
     @JsonManagedReference(value = "hotel")
     @ManyToOne
     private User hOwner;
@@ -36,8 +38,6 @@ public class Hotel {
 
     @JsonManagedReference(value = "image")
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-//    @OneToMany
-//    @MapKeyColumn(name = "id")
     private List<Image> images;
 
     public Hotel() {
