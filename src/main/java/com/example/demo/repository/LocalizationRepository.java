@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.entity.Localization;
 import com.example.demo.payload.reponse.ThongKeKhachSanResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +21,8 @@ public interface LocalizationRepository extends JpaRepository<Localization, Long
     List<ThongKeKhachSanResponse> thongKeKhachSan();
 
     Localization findAllByHotelId(Long id);
+
+    @Modifying
+    @Query(value ="delete from localization where hotel_id = ?", nativeQuery=true)
+    void deleteLocalizationHotel(Long hotelid);
 }

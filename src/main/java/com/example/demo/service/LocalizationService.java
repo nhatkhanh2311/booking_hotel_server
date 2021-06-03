@@ -46,6 +46,9 @@ public class LocalizationService {
         return localizationRepository.getOne(id);
     }
 
+    public void deleteLocalizionHotel(Long hotelId) {
+        localizationRepository.deleteLocalizationHotel(hotelId);
+    }
 
 
 }

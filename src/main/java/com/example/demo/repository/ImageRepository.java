@@ -20,5 +20,5 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Modifying
     @Query(value ="delete from image where room_id = ?", nativeQuery=true)
-    void deleteRoomInImg(Long roomId);
+    void deleteImgRoom(Long roomId);
 }

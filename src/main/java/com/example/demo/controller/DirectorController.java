@@ -39,6 +39,8 @@ public class DirectorController {
     private UserService userService;
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private CancelBookingService cancelBookingService;
 
     @GetMapping(value = "/hotel")
     public ResponseEntity<?> getAllHotel(@RequestHeader("Authorization") String token) {
@@ -149,7 +151,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
 
             localizationService.saveLoacation(localization);
             hotel.setAddress(localization);
-            imageService.deleteHotelInImg(hotelId);
+            imageService.deleteImgHotel(hotelId);
             for(int i = 0; i < images.length; i++) {
                 imageService.save(new Image(images[i].getBytes(), hotel));
             }
@@ -161,47 +163,38 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
         return ResponseEntity.ok().body(new MessageResponse("Save changes"));
     }
 
-//    @Transactional
-//    @PostMapping(value = "/hotel/{hotelId}/delete")
-//    public ResponseEntity<?> deleteHotel(@PathVariable("hotelId") Long hotelId) {
-//        roomService.deleteHotelInRoom(hotelId);
-//        imageService.deleteHotelInImg(hotelId);
-//        hotelService.deleteHotel(hotelId);
-//        return ResponseEntity.ok().body(new MessageResponse("Delete hotel successful"));
-//    }
+
 
 
     @PostMapping("/hotel/{hotelId}/new-room")
     public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId,@RequestParam(name = "images") MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom) throws IOException {
-try {
+        try {
+            Hotel hotel = hotelService.findHotelById(hotelId);
+            Gson gson = new Gson();
+            RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class);
+            Room room = new Room();
 
-
-    Hotel hotel = hotelService.findHotelById(hotelId);
-                Gson gson = new Gson();
-                RoomRequest roomRequest = gson.fromJson(jsonRoom, RoomRequest.class);
-    Room room = new Room();
-    for (int i = 0; i < images.length; i++) {
-        imageService.save(new Image(images[i].getBytes(), room));
-    }
-    room.setHotel(hotel);
-    room.setType(roomRequest.getType());
-    room.setArea(roomRequest.getArea());
-    room.setCapacity(roomRequest.getCapacity());
-    room.setDescription(roomRequest.getDescription());
-    room.setName(roomRequest.getName());
-    room.setPrice(roomRequest.getPrice());
-    room.setAdded(LocalDate.now());
-    roomService.saveRoom(room);
-}catch (IOException e){
-    e.printStackTrace();
-}
+            for (int i = 0; i < images.length; i++) {
+                imageService.save(new Image(images[i].getBytes(), room));
+            }
+            room.setHotel(hotel);
+            room.setType(roomRequest.getType());
+            room.setArea(roomRequest.getArea());
+            room.setCapacity(roomRequest.getCapacity());
+            room.setDescription(roomRequest.getDescription());
+            room.setName(roomRequest.getName());
+            room.setPrice(roomRequest.getPrice());
+            room.setAdded(LocalDate.now());
+            roomService.saveRoom(room);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
         return ResponseEntity.ok().body(new MessageResponse("add room successfully"));
     }
 //-----------------------
 
     @GetMapping(value = "/hotel/{roomId}/updateRoom")
     public ResponseEntity<?> update(@PathVariable("roomId") Long id) {
-        System.out.println("co le do return ----------------------------------------------");
         return ResponseEntity.ok().body(roomRepository.getOne(id));
     }
 
@@ -255,4 +248,20 @@ try {
         return  ResponseEntity.ok().body("Done delete room");
     }
 
+    @Transactional
+    @DeleteMapping(value = "/hotel/{hotelId}/delete")
+    public ResponseEntity<?> deleteHotel(@PathVariable("hotelId") Long hotelId) {
+
+        List<Room> roomList = roomService.getAllRoomByHotelId(hotelId);
+        for(Room room: roomList) {
+            dateService.deleteBookingByRoom(room.getId());
+            cancelBookingService.deleteBookingByRoom(room.getId());
+            imageService.deleteImgRoom(room.getId());
+            roomService.deleteRoom(room.getId());
+        }
+        localizationService.deleteLocalizionHotel(hotelId);
+        imageService.deleteImgHotel(hotelId);
+        hotelService.deleteHotel(hotelId);
+        return ResponseEntity.ok().body(new MessageResponse("Delete hotel successful"));
+    }
 }

@@ -25,11 +25,11 @@ public class ImageService {
         imageRepository.save(img);
     }
 
-    public void deleteHotelInImg(Long id) {
+    public void deleteImgHotel(Long id) {
         imageRepository.deleteHotelInImg(id);
     }
 
-    public void deleteRoomInImg(Long id) {
-        imageRepository.deleteRoomInImg(id);
+    public void deleteImgRoom(Long id) {
+        imageRepository.deleteImgRoom(id);
     }
 }

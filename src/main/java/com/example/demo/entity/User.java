@@ -95,11 +95,6 @@ public class User {
         this.password = password;
     }
 
-//    public Set<Role> getRole() {
-//        return roles;
-//    }
-
-
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }

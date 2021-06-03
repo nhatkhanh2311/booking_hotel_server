@@ -17,9 +17,10 @@ public class Localization {
 	
 	private String street;
 
-	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "hotelId")
 	@JsonBackReference
+	@OneToOne(cascade = CascadeType.ALL)
+	@MapsId
+	@JoinColumn(name = "hotelId", nullable = false)
 	private Hotel hotel;
 
 	public Localization() {	}

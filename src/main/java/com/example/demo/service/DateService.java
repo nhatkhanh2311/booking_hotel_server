@@ -134,4 +134,8 @@ public class DateService  {
     public List<ThongKeDirector> thongKeDirectors(Long hotelId){
         return dateRepository.thongKeDirector(hotelId);
     }
+
+    public void deleteBookingByRoom(Long roomId) {
+        dateRepository.deleteRoomInBookingRoom(roomId);
+    }
 }
