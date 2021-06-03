@@ -130,4 +130,8 @@ public class DateService  {
         List<ThongKeDirector> thongKeDirectors = dateRepository.thongKeDirector(hotelId, month);
         return thongKeDirectors;
     }
+
+    public List<ThongKeDirector> thongKeDirectors(Long hotelId){
+        return dateRepository.thongKeDirector(hotelId);
+    }
 }

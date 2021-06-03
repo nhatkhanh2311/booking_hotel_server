@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.BookingRoom;
-import com.example.demo.entity.Hotel;
-import com.example.demo.entity.Room;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
 import com.example.demo.payload.request.BookingRequest;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.*;
@@ -25,24 +22,20 @@ public class UserController {
 
     @Autowired
     HotelService hotelService;
-
     @Autowired
     RoomService roomService;
-
     @Autowired
     LocalizationService localizationService;
-
     @Autowired
     DateService dateService;
-
     @Autowired
     GetUserFromToken getUserFromToken;
-
     @Autowired
     UserService userService;
-
     @Autowired
     EmailSenderService emailSenderService;
+    @Autowired
+    CancelBookingService cancelBookingService;
 
     @GetMapping(value = "/")
     public ResponseEntity<?> getUser(@RequestHeader(name ="Authorization") String token) {
@@ -169,12 +162,26 @@ public class UserController {
         return ResponseEntity.ok().body(historyBooking);
     }
 
+    @GetMapping(value = "/cancelBooking")
+    public ResponseEntity<?> cancelBooking(@RequestHeader("Authorization") String token) {
+        List<CancelBooking> cancelBookings = cancelBookingService.getCancelByHostId((getUserFromToken.getUserByUserNameFromJwt(token.substring(7))).getId());
+        return ResponseEntity.ok().body(cancelBookings);
+    }
+
     @Transactional
-    @DeleteMapping(value = "/cancelBooing/{bookingId}")
+    @DeleteMapping(value = "/cancelBooking/{bookingId}")
     public ResponseEntity<?> cancelBooking(@PathVariable("bookingId") Long bookingId, @RequestHeader("Authorization") String token){
         User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
         BookingRoom bookingRoom = dateService.findOneBooking(bookingId);
         Room room = roomService.findOne(bookingRoom.getRoom().getId());
+
+        CancelBooking cancelBooking = new CancelBooking();
+        cancelBooking.setRoom(room);
+        cancelBooking.setStart(bookingRoom.getStart());
+        cancelBooking.setEnd(bookingRoom.getEnd());
+        cancelBooking.setHost(user);
+        System.out.println("-------------" + cancelBooking.getId());
+        cancelBookingService.saveCancelBooking(cancelBooking);
         // Create the email
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());

@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -9,9 +11,12 @@ public class BookingRoom {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+
+	@JsonManagedReference(value = "booking")
 	@ManyToOne
 	@JoinColumn(name = "roomId")
 	private Room room;
+
 //	@Column(columnDefinition = "DATE")
 	private LocalDate start;
 	private LocalDate end;
