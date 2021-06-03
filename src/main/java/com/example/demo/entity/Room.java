@@ -27,7 +27,6 @@ public class Room {
 
 	@JsonBackReference(value = "booking")
 	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-	@JsonBackReference
 	private List<BookingRoom> bookingRoom;
 
 	@JsonBackReference(value = "cancelBooking")
