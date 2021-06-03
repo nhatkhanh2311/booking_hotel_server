@@ -123,8 +123,8 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
     }
 
     @GetMapping(value = "/hotel/{hotelId}")
-    public ResponseEntity<?> getAllRoom(@PathVariable("hotelId") Long hotelId) {
-        return ResponseEntity.ok().body(roomService.getAllRoomByHotelId(hotelId));
+    public ResponseEntity<?> getHotel(@PathVariable("hotelId") Long hotelId) {
+        return ResponseEntity.ok().body(hotelService.findHotelById(hotelId));
     }
 
     @GetMapping(value = "/hotel/{hotelId}/update")
@@ -242,10 +242,13 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
     }
 
     @Transactional
-    @PostMapping("/hotel/delete_room/{roomId}")
+    @PostMapping("/hotel/{hotelId}/{roomId}/delete")
     public ResponseEntity<?> deleteRoom(@PathVariable("roomId") Long roomId){
+        dateService.deleteBookingByRoom(roomId);
+        cancelBookingService.deleteBookingByRoom(roomId);
+        imageService.deleteImgRoom(roomId);
         roomService.deleteRoom(roomId);
-        return  ResponseEntity.ok().body("Done delete room");
+        return  ResponseEntity.ok().body("Delete room successful");
     }
 
     @Transactional
