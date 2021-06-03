@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -46,9 +47,8 @@ public class Room {
 
 	private String description;
 
-	@OneToMany(cascade = CascadeType.ALL)
-//	@JsonManagedReference
-	@MapKeyColumn(name = "id")
+	@JsonManagedReference(value = "imageRoom")
+	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	private List<Image> images;
 
 	private LocalDate added;

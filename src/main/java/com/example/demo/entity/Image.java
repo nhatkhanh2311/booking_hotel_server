@@ -19,11 +19,12 @@ public class Image {
 	@JsonBackReference
 	private User user;
 
-	@JsonBackReference
-	@ManyToOne(fetch =  FetchType.LAZY,cascade = {CascadeType.ALL})
+
+	@JsonBackReference(value = "imageRoom")
+	@ManyToOne(cascade = {CascadeType.ALL})
 	private Room room;
 
-	@JsonBackReference(value = "image")
+	@JsonBackReference(value = "imageHotel")
 	@ManyToOne(cascade = {CascadeType.ALL})
 	private Hotel hotel;
 	
