@@ -36,7 +36,7 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
     private List<Room> rooms;
 
-    @JsonManagedReference(value = "image")
+    @JsonManagedReference(value = "imageHotel")
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Image> images;
 

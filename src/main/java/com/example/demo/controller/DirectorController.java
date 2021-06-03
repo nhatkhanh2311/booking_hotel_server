@@ -191,13 +191,6 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
         }
         return ResponseEntity.ok().body(new MessageResponse("add room successfully"));
     }
-//-----------------------
-
-    @GetMapping(value = "/hotel/{roomId}/updateRoom")
-    public ResponseEntity<?> update(@PathVariable("roomId") Long id) {
-        return ResponseEntity.ok().body(roomRepository.getOne(id));
-    }
-
 
     @GetMapping(value = "/hotel/{hotelId}/{roomId}/update")
     public ResponseEntity<?> updateRoom(@PathVariable("roomId") Long roomId, @PathVariable("hotelId") Long hotelId) {
@@ -248,7 +241,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
         cancelBookingService.deleteBookingByRoom(roomId);
         imageService.deleteImgRoom(roomId);
         roomService.deleteRoom(roomId);
-        return  ResponseEntity.ok().body("Delete room successful");
+        return  ResponseEntity.ok().body(new MessageResponse("Delete room successful"));
     }
 
     @Transactional
