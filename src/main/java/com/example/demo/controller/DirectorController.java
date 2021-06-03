@@ -235,7 +235,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
     }
 
     @Transactional
-    @PostMapping("/hotel/{hotelId}/{roomId}/delete")
+    @DeleteMapping("/hotel/{hotelId}/{roomId}/delete")
     public ResponseEntity<?> deleteRoom(@PathVariable("roomId") Long roomId){
         dateService.deleteBookingByRoom(roomId);
         cancelBookingService.deleteBookingByRoom(roomId);
