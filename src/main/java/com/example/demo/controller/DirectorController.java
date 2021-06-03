@@ -132,6 +132,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
         return ResponseEntity.ok().body(hotelService.findHotelById(hotelId));
     }
 
+    @Transactional
     @PostMapping(value = "/hotel/{hotelId}/update/save")
     public ResponseEntity<?> SaveUpdateHotel(@RequestParam("hotelRequest") String jsonHotel, @PathVariable("hotelId") Long hotelId,@RequestParam(name = "images") MultipartFile[] images ) {
         try {
@@ -149,8 +150,8 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
             hotel.setAddress(localization);
 
             localizationService.saveLoacation(localization);
-
             hotel.setAddress(localization);
+            imageService.deleteImgHotel(hotelId);
             for(int i = 0; i < images.length; i++) {
                 imageService.save(new Image(images[i].getBytes(), hotel));
             }

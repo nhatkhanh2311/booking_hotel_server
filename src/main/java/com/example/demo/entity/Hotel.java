@@ -24,10 +24,8 @@ public class Hotel {
     @Min(0)
     private float standard;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "hotel", cascade = CascadeType.PERSIST)
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "hotel")
     private Localization address;
-
     @JsonManagedReference(value = "hotel")
     @ManyToOne
     private User hOwner;
