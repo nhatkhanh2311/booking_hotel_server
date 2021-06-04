@@ -198,6 +198,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
     }
 
 //    -------------------------
+    @Transactional
     @PostMapping(value = "/hotel/{hotelId}/{roomId}/update/save")
     public ResponseEntity<?> SaveUpdateRoom(@RequestParam("roomRequest") String jsonRoom, @PathVariable("hotelId") Long hotelId,@PathVariable("roomId") Long roomId, @RequestParam(required = false, name = "images") MultipartFile[] images ) {
         try {
