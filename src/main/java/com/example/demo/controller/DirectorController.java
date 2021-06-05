@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -163,9 +164,6 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
         return ResponseEntity.ok().body(new MessageResponse("Save changes"));
     }
 
-
-
-
     @PostMapping("/hotel/{hotelId}/new-room")
     public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId,@RequestParam(name = "images") MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom) throws IOException {
         try {
@@ -198,6 +196,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
     }
 
 //    -------------------------
+    @Transactional
     @PostMapping(value = "/hotel/{hotelId}/{roomId}/update/save")
     public ResponseEntity<?> SaveUpdateRoom(@RequestParam("roomRequest") String jsonRoom, @PathVariable("hotelId") Long hotelId,@PathVariable("roomId") Long roomId, @RequestParam(required = false, name = "images") MultipartFile[] images ) {
         try {
@@ -223,6 +222,22 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
         return ResponseEntity.ok().body(new MessageResponse("Save changes"));
     }
 
+    @GetMapping("/hotel/thongke")
+    public ResponseEntity<?> thongKeDirector(@RequestHeader("Authorization") String token) {
+        String newToken = token.substring(7);
+        User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
+        List<Hotel> hotels = hotelService.findAllHotelByHotelOwnerId(hOwner.getId());
+        List<ThongKeDirector> thongKeDirectors = new ArrayList<>();
+
+        for(Hotel hotel: hotels) {
+            List<ThongKeDirector> thongKeDirectors1 = dateService.thongKeDirectors(hotel.getId());
+            for (ThongKeDirector thongKeDirector: thongKeDirectors1) {
+                thongKeDirectors.add(thongKeDirector);
+            }
+        }
+        return ResponseEntity.ok().body(thongKeDirectors);
+    }
+
     @GetMapping("/hotel/thongke/{hotelId}")
     public ResponseEntity<?> thongKeDirector(@PathVariable("hotelId") Long hotelId){
         return  ResponseEntity.ok().body(dateService.thongKeDirectors(hotelId));
@@ -235,7 +250,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
     }
 
     @Transactional
-    @PostMapping("/hotel/{hotelId}/{roomId}/delete")
+    @DeleteMapping("/hotel/{hotelId}/{roomId}/delete")
     public ResponseEntity<?> deleteRoom(@PathVariable("roomId") Long roomId){
         dateService.deleteBookingByRoom(roomId);
         cancelBookingService.deleteBookingByRoom(roomId);
