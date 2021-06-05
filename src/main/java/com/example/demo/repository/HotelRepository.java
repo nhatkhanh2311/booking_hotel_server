@@ -29,7 +29,7 @@ public interface HotelRepository  extends JpaRepository<Hotel,Long > {
     @Query(value ="delete from hotel where hotel.id = ?", nativeQuery=true)
     void deleteHotel(Long id);
 
-    @Query(value = "SELECT hotel.id as hotelId, hotel.name as hotelName, hotel.standard as hotelStandard, localization.street ,localization.city, user_detail.name_user_detail as hotelOwner, user_detail.phone_number FROM hotel join localization on hotel.localization_id = localization.id\n" +
+    @Query(value = "SELECT hotel.id as hotelId, hotel.name as hotelName, hotel.standard as hotelStandard, localization.street ,localization.city, user_detail.name_user_detail as hotelOwner, user_detail.phone_number FROM localization join hotel on localization.hotel_id = hotel.id\n" +
             "join user on hotel.h_owner_id = user.id \n" +
             "join user_detail on user.id = user_detail.user_id\n" +
             "where city like ?%" , nativeQuery = true)
