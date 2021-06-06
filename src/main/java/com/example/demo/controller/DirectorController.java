@@ -165,7 +165,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
     }
 
     @PostMapping("/hotel/{hotelId}/new-room")
-    public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId,@RequestParam(name = "images") MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom) throws IOException {
+    public ResponseEntity<?> addRoom(@PathVariable("hotelId") Long hotelId,@RequestParam(name = "images") MultipartFile[] images, @RequestParam("roomRequest") String jsonRoom) {
         try {
             Hotel hotel = hotelService.findHotelById(hotelId);
             Gson gson = new Gson();
