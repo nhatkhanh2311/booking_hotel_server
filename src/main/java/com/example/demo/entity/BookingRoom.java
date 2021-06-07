@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 public class BookingRoom {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@JsonManagedReference(value = "booking")

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Entity
 public class CancelBooking {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @JsonManagedReference(value = "cancelBooking")
