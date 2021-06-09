@@ -37,6 +37,8 @@ public class UserController {
     @Autowired
     CancelBookingService cancelBookingService;
 
+
+
     @GetMapping(value = "/")
     public ResponseEntity<?> getUser(@RequestHeader(name ="Authorization") String token) {
         String newToken = token.substring(7);
@@ -67,6 +69,7 @@ public class UserController {
         List<Room> rooms = roomService.searchRoomByCapacity(hotelId,capacity);
         return ResponseEntity.ok(rooms);
     }
+
 
    
     @PostMapping("/booking")

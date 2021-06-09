@@ -9,6 +9,7 @@ import com.example.demo.payload.request.SearchRequest;
 import com.example.demo.payload.request.UpdateInformationRequest;
 import com.example.demo.repository.ConfirmationTokenRepository;
 import com.example.demo.repository.ImageRepository;
+import com.example.demo.repository.UserDetailRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.GetUserFromToken;
 import com.example.demo.service.*;
@@ -17,7 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +64,8 @@ public class ResponeAPICotroller {
 
     @Autowired
     LocalizationService localizationService;
+    @Autowired
+    UserDetailRepository userDetailRepository;
 
     @GetMapping("/message")
     public ResponseEntity<?> message() {
@@ -255,6 +260,19 @@ public class ResponeAPICotroller {
         } else {
             return ResponseEntity.ok().body(new MessageResponse("current password incorrect"));
         }
+    }
+    @PostMapping(value = "/change-avatar")
+    public ResponseEntity<?> changeAvatar(@RequestHeader("Authorization") String token,@RequestParam(name = "avatar") MultipartFile avatar){
+        User user = getUserFromToken.getUserByUserNameFromJwt(token.substring(7));
+        UserDetail userDetail = user.getUserDetail();
+        try {
+            userDetail.setAvatar(avatar.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        userDetailRepository.save(userDetail);
+
+        return ResponseEntity.ok().body(new MessageResponse("Change Avatar successfully"));
     }
 
     @GetMapping(value = "/all-cities")

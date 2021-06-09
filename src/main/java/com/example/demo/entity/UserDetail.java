@@ -13,7 +13,7 @@ public class UserDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonIgnore
+//    @JsonIgnore
     @Lob
     @Column(name = "avatar", nullable = true)
     private byte[] avatar;

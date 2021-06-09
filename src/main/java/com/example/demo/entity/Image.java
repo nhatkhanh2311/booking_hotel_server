@@ -14,11 +14,6 @@ public class Image {
 	@Lob
 	@Column(name = "img")
 	private byte[] img;
-	
-	@OneToOne
-	@JsonBackReference
-	private User user;
-
 
 	@JsonBackReference(value = "imageRoom")
 	@ManyToOne(cascade = {CascadeType.ALL})
@@ -36,14 +31,6 @@ public class Image {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public Room getRoom() {
@@ -73,10 +60,9 @@ public class Image {
 	public Image() {
 	}
 
-	public Image(long id, byte[] img, User user, Room room, Hotel hotel) {
+	public Image(long id, byte[] img, Room room, Hotel hotel) {
 		this.id = id;
 		this.img = img;
-		this.user = user;
 		this.room = room;
 		this.hotel = hotel;
 	}

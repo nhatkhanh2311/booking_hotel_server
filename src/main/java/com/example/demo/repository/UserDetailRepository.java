@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface UserDetailRepository extends JpaRepository<UserDetail, Long> {
     @Query(value = "SELECT * FROM user_detail where user_id = ?1" , nativeQuery = true)
     UserDetail findOne(Long userId);
+
 }

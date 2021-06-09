@@ -88,4 +88,6 @@ public class UserManageController {
         List<ThongKeKhachSanAdminResponse> thongKeKhachSanAdminResponses = hotelService.thongKeAdmin(cityName);
         return  ResponseEntity.ok().body(thongKeKhachSanAdminResponses);
     }
+
+
 }
