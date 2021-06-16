@@ -58,6 +58,7 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
     try {
         String newToken = token.substring(7);
         User hOwner = getUserFromToken.getUserByUserNameFromJwt(newToken);
+        if(hOwner.isLocked()){
         Gson gson = new Gson();
         HotelRequest hotelRequest = gson.fromJson(jsonHotel, HotelRequest.class) ;
 
@@ -79,7 +80,10 @@ public ResponseEntity<?> addHotell(@RequestParam("hotelRequest") String jsonHote
         hotel.setAddress(localization);
 
         localizationService.saveLoacation(localization);
-        hotelService.saveHotel(hotel);
+        hotelService.saveHotel(hotel);}
+        else{
+            return ResponseEntity.ok(new MessageResponse("Your account is not active, Please wait!"));
+        }
     } catch (IOException e) {
         e.printStackTrace();
     }

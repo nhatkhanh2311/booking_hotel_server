@@ -271,7 +271,6 @@ public class ResponeAPICotroller {
             e.printStackTrace();
         }
         userDetailRepository.save(userDetail);
-
         return ResponseEntity.ok().body(new MessageResponse("Change Avatar successfully"));
     }
 
