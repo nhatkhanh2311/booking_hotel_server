@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class BookingRoom {
 	private LocalDate start;
 	private LocalDate end;
 	@OneToOne
+	@JsonIgnore
 	private User host;
 	//======================
 

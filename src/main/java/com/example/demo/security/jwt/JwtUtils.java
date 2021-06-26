@@ -1,15 +1,15 @@
 package com.example.demo.security.jwt;
 
-import java.util.Date;
-
 import com.example.demo.security.services.UserDetailsImpl;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 //import com.bezkoder.springjwt.security.services.UserDetailsImpl;
-import io.jsonwebtoken.*;
 
 @Component
 public class JwtUtils {
@@ -17,7 +17,7 @@ public class JwtUtils {
 
     private final String jwtSecret = "Hotel";
 
-    private final int jwtExpirationMs = 10*3600*24;
+    private final int jwtExpirationMs = 12*3600*24;
 
     public String generateJwtToken(Authentication authentication) {
 
