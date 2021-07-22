@@ -1,0 +1,9 @@
+{
+  "build": {
+    "type": "gradle",
+    "goal": "build"
+  },
+  "deploy": {
+    "jarName": "./build/libs/booking_hotel_server-0.1.0.jar"
+  }
+}
