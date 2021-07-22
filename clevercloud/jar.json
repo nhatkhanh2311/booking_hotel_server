@@ -4,6 +4,6 @@
     "goal": "build"
   },
   "deploy": {
-    "jarName": "./build/libs/booking_hotel_server-0.1.0.jar"
+    "jarName": "./.mvn/wrapper/maven-wrapper.jar"
   }
 }
