@@ -4,6 +4,6 @@
     "goal": "build"
   },
   "deploy": {
-    "jarName": "./.mvn/wrapper/maven-wrapper.jar"
+    "jarName": "build/libs/gs-spring-boot-0.1.0.jar"
   }
 }
